@@ -1,0 +1,41 @@
+[root@centos72test ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0    8G  0 disk 
+└─sda1   8:1    0    8G  0 part /
+sdb      8:16   0    8G  0 disk 
+sdc      8:32   0    8G  0 disk 
+sr0     11:0    1 1024M  0 rom 
+
+[root@centos72test ~]# lsblk -f
+NAME   FSTYPE LABEL UUID                                 MOUNTPOINT
+sda                                                      
+└─sda1 ext4         44de557a-4ed9-4eae-99ac-8e1bb2a3eebc /
+sdb                                                      
+sdc                                                      
+sr0
+
+[root@centos72test ~]# lsblk 
+NAME    MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda       8:0    0    8G  0 disk  
+└─sda1    8:1    0    8G  0 part  
+sdb       8:16   0    8G  0 disk  
+└─sdb1    8:17   0    8G  0 part  
+  └─md0   9:0    0    8G  0 raid1 /
+sdc       8:32   0    8G  0 disk  
+└─sdc1    8:33   0    8G  0 part  
+  └─md0   9:0    0    8G  0 raid1 /
+sr0      11:0    1 1024M  0 rom   
+[root@centos72test ~]# lsblk -f
+NAME    FSTYPE            LABEL UUID                                 MOUNTPOINT
+sda                                                                  
+└─sda1  ext4                    44de557a-4ed9-4eae-99ac-8e1bb2a3eebc 
+sdb                                                                  
+└─sdb1  linux_raid_member       648f99dc-f9e9-0958-142a-87f136578830 
+  └─md0 ext4                    dca1434b-21fa-4f5b-8b29-ed0afe3d2a87 /
+sdc                                                                  
+└─sdc1  linux_raid_member       648f99dc-f9e9-0958-142a-87f136578830 
+  └─md0 ext4                    dca1434b-21fa-4f5b-8b29-ed0afe3d2a87 /
+
+
+[root@centos72test ~]# mount | grep md0
+/dev/md0 on / type ext4 (rw,relatime,data=ordered)
