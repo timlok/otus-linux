@@ -1,0 +1,21 @@
+Script started on 2019-02-21 22:32:53+07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="210" LINES="57"]
+timur@timnuc-home:/home/hdd/timur/Downloads/_tmp> ./cpu_nice.sh 
+Для запуска с отрицательным значением уступчивости (nice) требуются права root
+timur@timnuc-home:/home/hdd/timur/Downloads/_tmp> sudo ./cpu_nice.sh 
+[sudo] пароль для root: 
+timur@timnuc-home:/home/hdd/timur/Downloads/_tmp> tar: Удаляется начальный `/' из имен объектов
+tar: Удаляется начальный `/' из имен объектов
+tar: /home/timur/.config/deadbeef/socket: сокет проигнорирован
+tar: /home/timur/.config/deadbeef/socket: сокет проигнорирован
+1[K
+timur@timnuc-home:/home/hdd/timur/Downloads/_tmp> df -h[K[K[K[K[Kll -h
+итого 5,4G
+-rw-r--r-- 1 root  root   198 фев 21 22:44 [0m[00mcpu_nice.log[0m
+-rwxr-xr-x 1 timur users  819 фев 21 22:32 [00;32mcpu_nice.sh[0m
+-rwxr-xr-x 1 timur users  819 фев 21 22:44 [00;32mio_nice.sh[0m
+-rw-r--r-- 1 root  root  2,7G фев 21 22:44 [00;31mnice+19.tar.bz2[0m
+-rw-r--r-- 1 root  root  2,7G фев 21 22:38 [00;31mnice-19.tar.bz2[0m
+-rw-r--r-- 1 timur users    0 фев 21 22:32 [00mtypescript[0m
+timur@timnuc-home:/home/hdd/timur/Downloads/_tmp> exit
+
+Script done on 2019-02-21 22:45:46+07:00 [COMMAND_EXIT_CODE="0"]
