@@ -1,0 +1,28 @@
+Script started on 2019-02-22 21:01:21+07:00 [TERM="screen.xterm-256color" TTY="/dev/pts/3" COLUMNS="210" LINES="56"]
+[1m[31mtimnuc-home:/home/hdd/timur/Downloads/_tmp #(B[m ion[K
+ionice  iostat  iotop   
+[1m[31mtimnuc-home:/home/hdd/timur/Downloads/_tmp #(B[m io_.io_/io_[C[C[Cnice.sh 
+проверяем планировщик для выбраного диска
+mq-deadline kyber [bfq] none
+чистим дисковые кеши
+запускаем оба процесса чтения-записи
+ищем их PID и меняем им классы ввода-вывода
+Для PID=3998 установлен класс ввода-вывода real time
+Для PID=3997 установлен класс ввода-вывода idle
+[1m[31mtimnuc-home:/home/hdd/timur/Downloads/_tmp #(B[m 100+0 записей получено
+100+0 записей отправлено
+10485760000 байт (10 GB, 9,8 GiB) скопирован, 410,765 s, 25,5 MB/s
+100+0 записей получено
+100+0 записей отправлено
+10485760000 байт (10 GB, 9,8 GiB) скопирован, 676,354 s, 15,5 MB/s
+
+[1m[31mtimnuc-home:/home/hdd/timur/Downloads/_tmp #(B[m df[K[Kll -h
+итого 20G
+-rw-r--r-- 1 root  root  9,8G фев 22 21:08 ionice1
+-rw-r--r-- 1 root  root  9,8G фев 22 21:12 ionice3
+-rw-r--r-- 1 root  root   198 фев 22 21:12 ionice.log
+-rwxr-xr-x 1 timur users 1,4K фев 22 21:00 io_nice.sh
+-rw-r--r-- 1 root  root     0 фев 22 21:01 typescript
+[1m[31mtimnuc-home:/home/hdd/timur/Downloads/_tmp #(B[m exit
+
+Script done on 2019-02-22 21:14:01+07:00 [COMMAND_EXIT_CODE="0"]
