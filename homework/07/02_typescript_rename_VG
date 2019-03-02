@@ -1,0 +1,165 @@
+Script started on 2019-03-02 18:12:27+07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="210" LINES="57"]
+timur@timbook-home2:~/vagrant/03_LVM> vagrant ssh
+/usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
+/usr/lib64/ruby/gems/2.5.0/gems/vagrant-2.2.0/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
+Last login: Sat Mar  2 10:48:41 2019 from 10.0.2.2
+]0;vagrant@otuslvm:~[?1034h[vagrant@otuslvm ~]$ sudo su -
+Last login: Sat Mar  2 10:50:20 UTC 2019 on pts/0
+]0;root@otuslvm:~[?1034h[root@otuslvm ~]# lsblk -f
+NAME                    FSTYPE      LABEL     UUID                                   MOUNTPOINT
+sda                                                                                  
+├─sda1                                                                               
+├─sda2                  xfs                   570897ca-e759-4c81-90cf-389da6eee4cc   /boot
+└─sda3                  LVM2_member           vrrtbx-g480-HcJI-5wLn-4aOf-Olld-rC03AY 
+  ├─VolGroup00-LogVol00 xfs                   b60e9498-0baa-4d9f-90aa-069048217fee   /
+  └─VolGroup00-LogVol01 swap                  c39c5bed-f37c-4263-bee8-aeb6a6659d7b   [SWAP]
+sdb                                                                                  
+├─sdb1                  zfs_member  otuszpool 14309549248520873379                   
+└─sdb9                                                                               
+sdc                                                                                  
+├─sdc1                  zfs_member  otuszpool 14309549248520873379                   
+└─sdc9                                                                               
+sdd                                                                                  
+├─sdd1                  zfs_member  otuszpool 14309549248520873379                   
+└─sdd9                                                                               
+sde                                                                                  
+├─sde1                                                                               
+└─sde9                                                                               
+]0;root@otuslvm:~[root@otuslvm ~]# [K[root@otuslvm ~]# vgrename VolGroup00[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kvgs
+  VG         #PV #LV #SN Attr   VSize   VFree
+  VolGroup00   1   2   0 wz--n- <38.97g    0 
+]0;root@otuslvm:~[root@otuslvm ~]# vgrename VolGroup00 OtusRoot
+  Volume group "VolGroup00" successfully renamed to "OtusRoot"
+]0;root@otuslvm:~[root@otuslvm ~]# cat /etc/fstab 
+
+#
+# /etc/fstab
+# Created by anaconda on Sat May 12 18:50:26 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup00-LogVol00 /                       xfs     defaults        0 0
+UUID=570897ca-e759-4c81-90cf-389da6eee4cc /boot                   xfs     defaults        0 0
+/dev/mapper/VolGroup00-LogVol01 swap                    swap    defaults        0 0
+]0;root@otuslvm:~[root@otuslvm ~]# sed -i ''s'/'V'o'l'G'r'o'u'p'0'0'/'O't'u's'R'o'o't'/'g'[C /tecfst[K[K[K[K[K[Ketc/fstab 
+]0;root@otuslvm:~[root@otuslvm ~]# sed -i 's/VolGroup00/OtusRoot/g' /etc/fstab [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[29Pcat[C[C[C[C[C[C[C[C[C[C[C[C| rgoe[K[K[K[Kgrep mapper
+/dev/[01;31m[Kmapper[m[K/OtusRoot-LogVol00 /                       xfs     defaults        0 0
+/dev/[01;31m[Kmapper[m[K/OtusRoot-LogVol01 swap                    swap    defaults        0 0
+]0;root@otuslvm:~[root@otuslvm ~]# cat /etc/fstab | grep mapper[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kgrep [K[K[K[K[Kcat /etc/fstab | grep mapper[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csed -i 's/VolGroup00/OtusRoot/g' /etc/fstab [K[K[K[K[K[Kdefault/grub 
+]0;root@otuslvm:~[root@otuslvm ~]# sed -i 's/VolGroup00/OtusRoot/g' /etc/default/grub [K[K[Kbooo[Kt/grub2/grub.cfg 
+]0;root@otuslvm:~[root@otuslvm ~]# mkinitrd -f -v /boot/initramfs-3.10.0-862.2.3.el7.x86_64.img [K[K[K[K[K[K[K[K[K[K[K[K[K$()u)n)m)a)e) )-)r)[C[1P -r)[1P -r)[1P -r)a -r)m -r)e -r)[C[C[C[C.img $()u)n)m)a)e) )=)[1P)-)r)[1P -r)[1P -r)[1P -r)a -r)m -r)e -r)
+Executing: /sbin/dracut -f -v /boot/initramfs-3.10.0-862.2.3.el7.x86_64.img 3.10.0-862.2.3.el7.x86_64
+zfsexpandknowledge: host device /dev/dm-0
+zfsexpandknowledge: host device /dev/dm-0
+zfsexpandknowledge: host device /dev/sda2
+zfsexpandknowledge: host device /dev/sda2
+zfsexpandknowledge: host device /dev/dm-1
+zfsexpandknowledge: device /dev/dm-1 of type swap
+zfsexpandknowledge: device /dev/dm-0 of type xfs
+zfsexpandknowledge: device /dev/sda3 of type LVM2_member
+zfsexpandknowledge: device /dev/sda2 of type xfs
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+zfsexpandknowledge: host device /dev/dm-0
+zfsexpandknowledge: host device /dev/dm-0
+zfsexpandknowledge: host device /dev/sda2
+zfsexpandknowledge: host device /dev/sda2
+zfsexpandknowledge: host device /dev/dm-1
+zfsexpandknowledge: device /dev/dm-1 of type swap
+zfsexpandknowledge: device /dev/dm-0 of type xfs
+zfsexpandknowledge: device /dev/sda3 of type LVM2_member
+zfsexpandknowledge: device /dev/sda2 of type xfs
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+*** Including module: bash ***
+*** Including module: nss-softokn ***
+*** Including module: i18n ***
+*** Including module: drm ***
+*** Including module: plymouth ***
+*** Including module: dm ***
+Skipping udev rule: 64-device-mapper.rules
+Skipping udev rule: 60-persistent-storage-dm.rules
+Skipping udev rule: 55-dm.rules
+*** Including module: kernel-modules ***
+Omitting driver floppy
+*** Including module: lvm ***
+Skipping udev rule: 64-device-mapper.rules
+Skipping udev rule: 56-lvm.rules
+Skipping udev rule: 60-persistent-storage-lvm.rules
+*** Including module: qemu ***
+*** Including module: zfs ***
+*** Including module: resume ***
+*** Including module: rootfs-block ***
+*** Including module: terminfo ***
+*** Including module: udev-rules ***
+Skipping udev rule: 40-redhat-cpu-hotplug.rules
+Skipping udev rule: 91-permissions.rules
+*** Including module: biosdevname ***
+*** Including module: systemd ***
+*** Including module: usrmount ***
+*** Including module: base ***
+*** Including module: fs-lib ***
+*** Including module: shutdown ***
+*** Including modules done ***
+*** Installing kernel module dependencies and firmware ***
+*** Installing kernel module dependencies and firmware done ***
+*** Resolving executable dependencies ***
+*** Resolving executable dependencies done***
+*** Hardlinking files ***
+*** Hardlinking files done ***
+*** Stripping files ***
+*** Stripping files done ***
+*** Generating early-microcode cpio image contents ***
+*** No early-microcode cpio image needed ***
+*** Store current command line parameters ***
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
+]0;root@otuslvm:~[root@otuslvm ~]# reboot
+Connection to 127.0.0.1 closed by remote host.
+Connection to 127.0.0.1 closed.
+timur@timbook-home2:~/vagrant/03_LVM> vagrant ssh
+/usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
+/usr/lib64/ruby/gems/2.5.0/gems/vagrant-2.2.0/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
+Last login: Sat Mar  2 11:12:43 2019 from 10.0.2.2
+]0;vagrant@otuslvm:~[?1034h[vagrant@otuslvm ~]$ sudo su -
+Last login: Sat Mar  2 11:12:46 UTC 2019 on pts/0
+]0;root@otuslvm:~[?1034h[root@otuslvm ~]# reboot[Klsblk -f
+NAME                  FSTYPE      LABEL     UUID                                   MOUNTPOINT
+sda                                                                                
+├─sda1                                                                             
+├─sda2                xfs                   570897ca-e759-4c81-90cf-389da6eee4cc   /boot
+└─sda3                LVM2_member           vrrtbx-g480-HcJI-5wLn-4aOf-Olld-rC03AY 
+  ├─OtusRoot-LogVol00 xfs                   b60e9498-0baa-4d9f-90aa-069048217fee   /
+  └─OtusRoot-LogVol01 swap                  c39c5bed-f37c-4263-bee8-aeb6a6659d7b   [SWAP]
+sdb                                                                                
+├─sdb1                zfs_member  otuszpool 14309549248520873379                   
+└─sdb9                                                                             
+sdc                                                                                
+├─sdc1                zfs_member  otuszpool 14309549248520873379                   
+└─sdc9                                                                             
+sdd                                                                                
+├─sdd1                zfs_member  otuszpool 14309549248520873379                   
+└─sdd9                                                                             
+sde                                                                                
+├─sde1                                                                             
+└─sde9                                                                             
+]0;root@otuslvm:~[root@otuslvm ~]# vgs
+vgs      vgscan   vgsplit  
+[root@otuslvm ~]# vgs
+  VG       #PV #LV #SN Attr   VSize   VFree
+  OtusRoot   1   2   0 wz--n- <38.97g    0 
+]0;root@otuslvm:~[root@otuslvm ~]# poweroff
+Connection to 127.0.0.1 closed by remote host.
+Connection to 127.0.0.1 closed.
+timur@timbook-home2:~/vagrant/03_LVM> ^C
+timur@timbook-home2:~/vagrant/03_LVM> exit
+
+Script done on 2019-03-02 18:20:53+07:00 [COMMAND_EXIT_CODE="255"]
