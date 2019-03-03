@@ -1,0 +1,232 @@
+Script started on 2019-03-03 11:08:19+07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="189" LINES="25"]
+timur@timbook-home2:~/vagrant/06_сборка rpm> vagrant ssh
+/usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
+/usr/lib64/ruby/gems/2.5.0/gems/vagrant-2.2.0/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
+Last login: Fri Mar  1 15:21:12 2019 from 10.0.2.2
+]0;vagrant@otusrpm:~[?1034h[vagrant@otusrpm ~]$ sudo su -
+Last login: Sat Mar  2 08:46:31 UTC 2019 on tty1
+]0;root@otusrpm:~[?1034h[root@otusrpm ~]# cat /123[1Pll[C[C[C[C[C[1Prebootll /123[1Prebootvi /etc/sysctl.conf [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[12Puname -a[6@lsb_releas[C[C[C[Cyum install redhat-lsb-core[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cpoweroff[K[1Passwd [2@sestatus[C[2Ppasswd[Coweroffyum install redhat-lsb-core[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[13Plsb_release -a[6Punam[C[C[C[Cvi /etc/sysctl.conf [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Creboot[Kll /123[1@cat[C[C[C[C[C[Kdracup[Kt --list-modules[K[root@otusrpm ~]# dracut --list-modules
+bash
+systemd-bootchart
+modsign
+rescue
+watchdog
+busybox
+nss-softokn
+i18n
+convertfs
+url-lib
+drm
+plymouth
+cms
+bcache
+btrfs
+crypt
+dm
+dmraid
+dmsquash-live
+dmsquash-live-ntfs
+kernel-modules
+lvm
+mdraid
+multipath
+qemu
+crypt-gpg
+crypt-loop
+dasd
+dasd_mod
+debug
+fstab-sys
+resume
+rootfs-block
+terminfo
+udev-rules
+virtfs
+zfcp
+biosdevname
+ecryptfs
+pollcdrom
+selinux
+syslog
+systemd
+usrmount
+base
+fs-lib
+img-lib
+shutdown
+]0;root@otusrpm:~[root@otusrpm ~]# dracut --list-modules[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[root@otusrpm ~]# dracut --list-modules[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kcd usr[K[K[K/usr/libdra[K[K[K/dracut/modules.d/
+]0;root@otusrpm:/usr/lib/dracut/modules.d[root@otusrpm modules.d]# ll[K[root@otusrpm modules.d]# ll
+total 8
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [0m[38;5;27m00bash[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m00systemd-bootchart[0m
+drwxr-xr-x. 2 root root   57 Jan 28 21:13 [38;5;27m03modsign[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m03rescue[0m
+drwxr-xr-x. 2 root root   72 Jan 28 21:13 [38;5;27m04watchdog[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m05busybox[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:12 [38;5;27m05nss-softokn[0m
+drwxr-xr-x. 2 root root  111 Jan 28 21:13 [38;5;27m10i18n[0m
+drwxr-xr-x. 2 root root   72 Jan 28 21:13 [38;5;27m30convertfs[0m
+drwxr-xr-x. 2 root root   47 Jan 28 21:13 [38;5;27m45url-lib[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m50drm[0m
+drwxr-xr-x. 2 root root  150 Jan 28 21:13 [38;5;27m50plymouth[0m
+drwxr-xr-x. 2 root root   92 Jan 28 21:13 [38;5;27m80cms[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m90bcache[0m
+drwxr-xr-x. 2 root root  129 Jan 28 21:13 [38;5;27m90btrfs[0m
+drwxr-xr-x. 2 root root  195 Jan 28 21:13 [38;5;27m90crypt[0m
+drwxr-xr-x. 2 root root  130 Jan 28 21:13 [38;5;27m90dm[0m
+drwxr-xr-x. 2 root root   93 Jan 28 21:13 [38;5;27m90dmraid[0m
+drwxr-xr-x. 2 root root  258 Jan 28 21:13 [38;5;27m90dmsquash-live[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m90dmsquash-live-ntfs[0m
+drwxr-xr-x. 2 root root   73 Jan 28 21:13 [38;5;27m90kernel-modules[0m
+drwxr-xr-x. 2 root root   88 Jan 28 21:13 [38;5;27m90lvm[0m
+drwxr-xr-x. 2 root root 4096 Jan 28 21:13 [38;5;27m90mdraid[0m
+drwxr-xr-x. 2 root root  110 Jan 28 21:13 [38;5;27m90multipath[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m90qemu[0m
+drwxr-xr-x. 2 root root   53 Jan 28 21:13 [38;5;27m91crypt-gpg[0m
+drwxr-xr-x. 2 root root   54 Jan 28 21:13 [38;5;27m91crypt-loop[0m
+drwxr-xr-x. 2 root root   50 Jan 28 21:13 [38;5;27m95dasd[0m
+drwxr-xr-x. 2 root root   54 Jan 28 21:13 [38;5;27m95dasd_mod[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m95debug[0m
+drwxr-xr-x. 2 root root   49 Jan 28 21:13 [38;5;27m95fstab-sys[0m
+drwxr-xr-x. 2 root root   69 Jan 28 21:13 [38;5;27m95resume[0m
+drwxr-xr-x. 2 root root  120 Jan 28 21:13 [38;5;27m95rootfs-block[0m
+drwxr-xr-x. 2 root root   29 Jan 28 21:13 [38;5;27m95terminfo[0m
+drwxr-xr-x. 2 root root  122 Jan 28 21:13 [38;5;27m95udev-rules[0m
+drwxr-xr-x. 2 root root  102 Jan 28 21:13 [38;5;27m95virtfs[0m
+drwxr-xr-x. 2 root root   50 Jan 28 21:13 [38;5;27m95zfcp[0m
+drwxr-xr-x. 2 root root   57 Jan 28 21:13 [38;5;27m97biosdevname[0m
+drwxr-xr-x. 2 root root   68 Jan 28 21:13 [38;5;27m98ecryptfs[0m
+drwxr-xr-x. 2 root root   49 Jan 28 21:13 [38;5;27m98pollcdrom[0m
+drwxr-xr-x. 2 root root   58 Jan 28 21:13 [38;5;27m98selinux[0m
+drwxr-xr-x. 2 root root  191 Jan 28 21:13 [38;5;27m98syslog[0m
+drwxr-xr-x. 2 root root 4096 Jan 28 21:13 [38;5;27m98systemd[0m
+drwxr-xr-x. 2 root root   49 Jan 28 21:13 [38;5;27m98usrmount[0m
+drwxr-xr-x. 2 root root  173 Jan 28 21:13 [38;5;27m99base[0m
+drwxr-xr-x. 2 root root   46 Jan 28 21:13 [38;5;27m99fs-lib[0m
+drwxr-xr-x. 2 root root   47 Jan 28 21:13 [38;5;27m99img-lib[0m
+drwxr-xr-x. 2 root root   48 Jan 28 21:13 [38;5;27m99shutdown[0m
+]0;root@otusrpm:/usr/lib/dracut/modules.d[root@otusrpm modules.d]# [K[root@otusrpm modules.d]# mkdir 01test
+]0;root@otusrpm:/usr/lib/dracut/modules.d[root@otusrpm modules.d]# cd 01test/
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# vi module-setup.sh
+[?1049h[?1h=[1;25r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[25;1H"module-setup.sh" [New File][2;1H[94m~                                                                                                                                                                                            [3;1H~                                                                                                                                                                                            [4;1H~                                                                                                                                                                                            [5;1H~                                                                                                                                                                                            [6;1H~                                                                                                                                                                                            [7;1H~                                                                                                                                                                                            [8;1H~                                                                                                                                                                                            [9;1H~                                                                                                                                                                                            [10;1H~                                                                                                                                                                                            [11;1H~                                                                                                                                                                                            [12;1H~                                                                                                                                                                                            [13;1H~                                                                                                                                                                                            [14;1H~                                                                                                                                                                                            [15;1H~                                                                                                                                                                                            [16;1H~                                                                                                                                                                                            [17;1H~                                                                                                                                                                                            [18;1H~                                                                                                                                                                                            [19;1H~                                                                                                                                                                                            [20;1H~                                                                                                                                                                                            [21;1H~                                                                                                                                                                                            [22;1H~                                                                                                                                                                                            [23;1H~                                                                                                                                                                                            [24;1H~                                                                                                                                                                                            [1;1H[?12l[?25h[?25l[m[25;1H[1m-- INSERT --[m[25;13H[K[1;1H[?12l[?25h[27m[m[H[2J[?25l[2;1H[94m~                                                                                                                                                                                                                 [3;1H~                                                                                                                                                                                                                 [4;1H~                                                                                                                                                                                                                 [5;1H~                                                                                                                                                                                                                 [6;1H~                                                                                                                                                                                                                 [7;1H~                                                                                                                                                                                                                 [8;1H~                                                                                                                                                                                                                 [9;1H~                                                                                                                                                                                                                 [10;1H~                                                                                                                                                                                                                 [11;1H~                                                                                                                                                                                                                 [12;1H~                                                                                                                                                                                                                 [13;1H~                                                                                                                                                                                                                 [14;1H~                                                                                                                                                                                                                 [15;1H~                                                                                                                                                                                                                 [16;1H~                                                                                                                                                                                                                 [17;1H~                                                                                                                                                                                                                 [18;1H~                                                                                                                                                                                                                 [19;1H~                                                                                                                                                                                                                 [20;1H~                                                                                                                                                                                                                 [21;1H~                                                                                                                                                                                                                 [22;1H~                                                                                                                                                                                                                 [23;1H~                                                                                                                                                                                                                 [24;1H~                                                                                                                                                                                                                 [25;1H~                                                                                                                                                                                                                 [26;1H~                                                                                                                                                                                                                 [27;1H~                                                                                                                                                                                                                 [28;1H~                                                                                                                                                                                                                 [29;1H~                                                                                                                                                                                                                 [30;1H~                                                                                                                                                                                                                 [31;1H~                                                                                                                                                                                                                 [32;1H~                                                                                                                                                                                                                 [33;1H~                                                                                                                                                                                                                 [34;1H~                                                                                                                                                                                                                 [35;1H~                                                                                                                                                                                                                 [36;1H~                                                                                                                                                                                                                 [37;1H~                                                                                                                                                                                                                 [38;1H~                                                                                                                                                                                                                 [39;1H~                                                                                                                                                                                                                 [40;1H~                                                                                                                                                                                                                 [41;1H~                                                                                                                                                                                                                 [42;1H~                                                                                                                                                                                                                 [43;1H~                                                                                                                                                                                                                 [44;1H~                                                                                                                                                                                                                 [45;1H~                                                                                                                                                                                                                 [46;1H~                                                                                                                                                                                                                 [47;1H~                                                                                                                                                                                                                 [48;1H~                                                                                                                                                                                                                 [49;1H~                                                                                                                                                                                                                 [50;1H~                                                                                                                                                                                                                 [51;1H~                                                                                                                                                                                                                 [52;1H~                                                                                                                                                                                                                 [53;1H~                                                                                                                                                                                                                 [54;1H~                                                                                                                                                                                                                 [55;1H~                                                                                                                                                                                                                 [56;1H~                                                                                                                                                                                                                 [m[57;1H[1m-- INSERT --[1;1H[?12l[?25h[?25l[m#!/bin/bash[2;1H[K[3;1Hcheck() {[3;10H[K[4;1H    return 0[4;13H[K[5;1H}[5;2H[K[6;1H[K[7;1Hdepends() {[7;12H[K[8;1H    return 0[8;13H[K[9;1H}[9;2H[K[10;1H[K[11;1Hinstall() {[11;12H[K[12;1H    inst_hook cleanup 00 "${moddir}/test.sh"[12;45H[K[13;1H}[13;2H[K[13;2H[?12l[?25h[57;1H[K[13;1H[?25l[?12l[?25h[?25l[57;1H:[?12l[?25hwq[?25l"module-setup.sh" [New] 13L, 126C written
+[?1l>[?12l[?25h[?1049l]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# vi test.sh
+[?1049h[?1h=[1;57r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[57;1H"test.sh" [New File][2;1H[94m~                                                                                                                                                                                                                 [3;1H~                                                                                                                                                                                                                 [4;1H~                                                                                                                                                                                                                 [5;1H~                                                                                                                                                                                                                 [6;1H~                                                                                                                                                                                                                 [7;1H~                                                                                                                                                                                                                 [8;1H~                                                                                                                                                                                                                 [9;1H~                                                                                                                                                                                                                 [10;1H~                                                                                                                                                                                                                 [11;1H~                                                                                                                                                                                                                 [12;1H~                                                                                                                                                                                                                 [13;1H~                                                                                                                                                                                                                 [14;1H~                                                                                                                                                                                                                 [15;1H~                                                                                                                                                                                                                 [16;1H~                                                                                                                                                                                                                 [17;1H~                                                                                                                                                                                                                 [18;1H~                                                                                                                                                                                                                 [19;1H~                                                                                                                                                                                                                 [20;1H~                                                                                                                                                                                                                 [21;1H~                                                                                                                                                                                                                 [22;1H~                                                                                                                                                                                                                 [23;1H~                                                                                                                                                                                                                 [24;1H~                                                                                                                                                                                                                 [25;1H~                                                                                                                                                                                                                 [26;1H~                                                                                                                                                                                                                 [27;1H~                                                                                                                                                                                                                 [28;1H~                                                                                                                                                                                                                 [29;1H~                                                                                                                                                                                                                 [30;1H~                                                                                                                                                                                                                 [31;1H~                                                                                                                                                                                                                 [32;1H~                                                                                                                                                                                                                 [33;1H~                                                                                                                                                                                                                 [34;1H~                                                                                                                                                                                                                 [35;1H~                                                                                                                                                                                                                 [36;1H~                                                                                                                                                                                                                 [37;1H~                                                                                                                                                                                                                 [38;1H~                                                                                                                                                                                                                 [39;1H~                                                                                                                                                                                                                 [40;1H~                                                                                                                                                                                                                 [41;1H~                                                                                                                                                                                                                 [42;1H~                                                                                                                                                                                                                 [43;1H~                                                                                                                                                                                                                 [44;1H~                                                                                                                                                                                                                 [45;1H~                                                                                                                                                                                                                 [46;1H~                                                                                                                                                                                                                 [47;1H~                                                                                                                                                                                                                 [48;1H~                                                                                                                                                                                                                 [49;1H~                                                                                                                                                                                                                 [50;1H~                                                                                                                                                                                                                 [51;1H~                                                                                                                                                                                                                 [52;1H~                                                                                                                                                                                                                 [53;1H~                                                                                                                                                                                                                 [54;1H~                                                                                                                                                                                                                 [55;1H~                                                                                                                                                                                                                 [56;1H~                                                                                                                                                                                                                 [1;1H[?12l[?25h[?25l[m[57;1H[1m-- INSERT --[m[57;13H[K[1;1H[?12l[?25h[27m[m[H[2J[?25l[2;1H[94m~                                                                                                                                                                                            [3;1H~                                                                                                                                                                                            [4;1H~                                                                                                                                                                                            [5;1H~                                                                                                                                                                                            [6;1H~                                                                                                                                                                                            [7;1H~                                                                                                                                                                                            [8;1H~                                                                                                                                                                                            [9;1H~                                                                                                                                                                                            [10;1H~                                                                                                                                                                                            [11;1H~                                                                                                                                                                                            [12;1H~                                                                                                                                                                                            [13;1H~                                                                                                                                                                                            [14;1H~                                                                                                                                                                                            [15;1H~                                                                                                                                                                                            [16;1H~                                                                                                                                                                                            [17;1H~                                                                                                                                                                                            [18;1H~                                                                                                                                                                                            [19;1H~                                                                                                                                                                                            [20;1H~                                                                                                                                                                                            [21;1H~                                                                                                                                                                                            [22;1H~                                                                                                                                                                                            [23;1H~                                                                                                                                                                                            [24;1H~                                                                                                                                                                                            [m[25;1H[1m-- INSERT --[1;1H[?12l[?25h[?25l[m#!/bin/bash[2;1H[K[3;1Hexec 0<>/dev/console 1<>/dev/console 2<>/dev/console[3;53H[K[4;1Hcat <<'msgend'[4;15H[K[5;1HHello! You are in dracut module![5;33H[K[6;1H ___________________[6;21H[K[7;1H< I'm dracut module >[7;22H[K[8;1H -------------------[8;21H[K[9;1H   \[9;5H[K[10;1H    \[10;6H[K[11;1H        .--.[11;13H[K[12;1H       |o_o |[12;14H[K[13;1H       |:_/ |[13;14H[K[14;1H      //   \ \[14;15H[K[15;1H     (|     | )[15;16H[K[16;1H    /'\_   _/`\[16;16H[K[17;1H    \___)=(___/[17;16H[K[18;1Hmsgend[18;7H[K[19;1Hsleep 10[19;9H[K[20;1Hecho " continuing...."[20;23H[K[20;23H[?12l[?25h[25;1H[K[20;22H[?25l[?12l[?25h[?25l[25;1H:[?12l[?25hwq[?25l"test.sh" [New] 20L, 332C written
+[?1l>[?12l[?25h[?1049l]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# ll
+total 8
+-rw-r--r--. 1 root root 126 Mar  3 04:11 module-setup.sh
+-rw-r--r--. 1 root root 332 Mar  3 04:11 test.sh
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# chmod +x *.sh
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# ll
+total 8
+-rwxr-xr-x. 1 root root 126 Mar  3 04:11 [0m[38;5;34mmodule-setup.sh[0m
+-rwxr-xr-x. 1 root root 332 Mar  3 04:11 [38;5;34mtest.sh[0m
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# llchmod +x *.shll[Kvi test.shmodule-setup.sh[8Pcd 01test/mkdir 01testll[Kcd /usr/lib/dracut/modules.d/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[8Pdracut --list-modules[K[root@otusrpm 01test]# dracut --list-modules
+bash
+systemd-bootchart
+test
+modsign
+rescue
+watchdog
+busybox
+nss-softokn
+i18n
+convertfs
+url-lib
+drm
+plymouth
+cms
+bcache
+btrfs
+crypt
+dm
+dmraid
+dmsquash-live
+dmsquash-live-ntfs
+kernel-modules
+lvm
+mdraid
+multipath
+qemu
+crypt-gpg
+crypt-loop
+dasd
+dasd_mod
+debug
+fstab-sys
+resume
+rootfs-block
+terminfo
+udev-rules
+virtfs
+zfcp
+biosdevname
+ecryptfs
+pollcdrom
+selinux
+syslog
+systemd
+usrmount
+base
+fs-lib
+img-lib
+shutdown
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# [K[root@otusrpm 01test]# mkinitrd -f -v /boot/initramfs-3.10.0-957.1.3.el7.x86_64.img [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K$()u)n)m)e)[1P)a)[1P)[1P)a)m)r)[1P)e) )-)r)[C.img $()u)n)a)m)e) )-)r)[K[root@otusrpm 01test]# mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+Executing: /sbin/dracut -f -v /boot/initramfs-3.10.0-957.1.3.el7.x86_64.img 3.10.0-957.1.3.el7.x86_64
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'plymouth' will not be installed, because command 'plymouthd' could not be found!
+dracut module 'plymouth' will not be installed, because command 'plymouth' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'lvm' will not be installed, because command 'lvm' could not be found!
+dracut module 'mdraid' will not be installed, because command 'mdadm' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+dracut module 'busybox' will not be installed, because command 'busybox' could not be found!
+dracut module 'crypt' will not be installed, because command 'cryptsetup' could not be found!
+dracut module 'dmraid' will not be installed, because command 'dmraid' could not be found!
+dracut module 'dmsquash-live-ntfs' will not be installed, because command 'ntfs-3g' could not be found!
+dracut module 'lvm' will not be installed, because command 'lvm' could not be found!
+dracut module 'mdraid' will not be installed, because command 'mdadm' could not be found!
+dracut module 'multipath' will not be installed, because command 'multipath' could not be found!
+*** Including module: bash ***
+*** Including module: test ***
+*** Including module: nss-softokn ***
+*** Including module: i18n ***
+*** Including module: kernel-modules ***
+Omitting driver floppy
+*** Including module: qemu ***
+*** Including module: rootfs-block ***
+*** Including module: terminfo ***
+*** Including module: udev-rules ***
+Skipping udev rule: 40-redhat-cpu-hotplug.rules
+Skipping udev rule: 91-permissions.rules
+*** Including module: biosdevname ***
+*** Including module: systemd ***
+*** Including module: usrmount ***
+*** Including module: base ***
+*** Including module: fs-lib ***
+*** Including module: shutdown ***
+*** Including modules done ***
+*** Installing kernel module dependencies and firmware ***
+*** Installing kernel module dependencies and firmware done ***
+*** Resolving executable dependencies ***
+*** Resolving executable dependencies done***
+*** Hardlinking files ***
+*** Hardlinking files done ***
+*** Stripping files ***
+*** Stripping files done ***
+*** Generating early-microcode cpio image contents ***
+*** No early-microcode cpio image needed ***
+*** Store current command line parameters ***
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-957.1.3.el7.x86_64.img' done ***
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# [K[root@otusrpm 01test]# lsinitrd | grep test
+[01;31m[Ktest[m[K
+-rwxr-xr-x   1 root     root          332 Mar  3 04:11 usr/lib/dracut/hooks/cleanup/00-[01;31m[Ktest[m[K.sh
+]0;root@otusrpm:/usr/lib/dracut/modules.d/01test[root@otusrpm 01test]# reboot
+Connection to 127.0.0.1 closed by remote host.
+Connection to 127.0.0.1 closed.
+timur@timbook-home2:~/vagrant/06_сборка rpm> exit
+
+Script done on 2019-03-03 11:15:13+07:00 [COMMAND_EXIT_CODE="255"]
