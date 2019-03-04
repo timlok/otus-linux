@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-echo "----------------------------------------"
+echo "------------------------------------------------------"
 echo "Start 01_watchlog.sh"
-echo "----------------------------------------"
+echo "------------------------------------------------------"
 
 SRC_DIR="/vagrant/01_watchlog_files/"
 SRC1="$SRC_DIR"watchlog
@@ -18,7 +18,7 @@ DEST4=/usr/lib/systemd/system/watchlog.service
 DEST5=/usr/lib/systemd/system/watchlog.timer
 
 
-echo "Copying files
+echo "------Copying files------
 $SRC1 to $DEST1
 $SRC2 to $DEST2
 $SRC3 to $DEST3
@@ -32,13 +32,13 @@ cp $SRC3 $DEST3
 cp $SRC4 $DEST4
 cp $SRC5 $DEST5
 
-echo "Set access rights for $DEST4 $DEST5"
+echo "------Set access rights for $DEST4 $DEST5------"
 chmod 644 $DEST4 $DEST5
 
-echo "Rebuilding dependency tree"
+echo "------Rebuilding dependency tree------"
 systemctl daemon-reload
 
-echo "Start watchlog.timer"
+echo "------Start watchlog.timer------"
 systemctl enable --now watchlog.timer
 
 

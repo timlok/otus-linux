@@ -86,7 +86,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
             mkdir -p ~root/.ssh
             cp ~vagrant/.ssh/auth* ~root/.ssh
+            echo "alias vi='vim'" >> /root/.bashrc
+            echo "colorscheme desert" >> /etc/vimrc
     SHELL
   #config.vm.provision "shell", path: "00_updateOS.sh"
   config.vm.provision "shell", path: "01_watchlog.sh"
+  config.vm.provision "shell", path: "02_init_to_unit.sh"
 end

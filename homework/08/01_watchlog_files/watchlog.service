@@ -3,5 +3,6 @@ Description=My watchlog service
 
 [Service]
 Type=oneshot
+StartLimitBurst=0
 EnvironmentFile=/etc/sysconfig/watchlog
 ExecStart=/opt/watchlog.sh $WORD $LOG
