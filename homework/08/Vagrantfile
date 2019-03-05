@@ -92,4 +92,6 @@ Vagrant.configure("2") do |config|
   #config.vm.provision "shell", path: "00_updateOS.sh"
   config.vm.provision "shell", path: "01_watchlog.sh"
   config.vm.provision "shell", path: "02_init_to_unit.sh"
+  config.vm.provision "shell", path: "03_httpd_twice.sh"
+  config.vm.provision "shell", path: "04_result.sh"
 end

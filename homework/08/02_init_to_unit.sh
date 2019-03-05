@@ -5,6 +5,7 @@ echo "Start 02_init_to_unit.sh"
 echo "--------------------------------------------------------"
 
 echo "------install packages------"
+yum install -y epel-release
 yum install spawn-fcgi php php-cli mod_fcgid httpd -y
 
 echo "------uncomment variables in /etc/sysconfig/spawn-fcgi------"
@@ -25,8 +26,9 @@ KillMode=process
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/spawn-fcgi.service
 
-echo "------start and status systemd spawn-fcgi.service------"
-systemctl start spawn-fcgi && sleep 3 && systemctl status spawn-fcgi
+echo "------start systemd spawn-fcgi.service------"
+systemctl enable --now spawn-fcgi
+#sleep 3 && systemctl status spawn-fcgi
 
 echo "------------------------------------------------------"
 echo "02_init_to_unit.sh finished"
