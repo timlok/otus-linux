@@ -1,0 +1,10 @@
+- name: Test playbook
+  hosts: ansible-client
+  become: true
+  gather_facts: true
+  vars:
+    nginx_port: 8080
+
+  roles:
+   - nginx
+
