@@ -1,0 +1,307 @@
+Script started on 2019-03-10 13:24:38+07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="189" LINES="25"]
+timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision
+/usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
+/usr/lib64/ruby/gems/2.6.0/gems/vagrant-2.2.2/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
+[0mBringing machine 'ansible-client' up with 'virtualbox' provider...[0m
+[0mBringing machine 'ansible-server' up with 'virtualbox' provider...[0m
+[1m==> ansible-client: Clearing any previously set forwarded ports...[0m
+[1m==> ansible-client: Clearing any previously set network interfaces...[0m
+[1m==> ansible-client: Preparing network interfaces based on configuration...[0m
+[0m    ansible-client: Adapter 1: nat[0m
+[0m    ansible-client: Adapter 2: intnet[0m
+[1m==> ansible-client: Forwarding ports...[0m
+[0m    ansible-client: 22 (guest) => 2222 (host) (adapter 1)[0m
+[1m==> ansible-client: Running 'pre-boot' VM customizations...[0m
+[1m==> ansible-client: Booting VM...[0m
+[1m==> ansible-client: Waiting for machine to boot. This may take a few minutes...[0m
+[0m    ansible-client: SSH address: 127.0.0.1:2222[0m
+[0m    ansible-client: SSH username: vagrant[0m
+[0m    ansible-client: SSH auth method: private key[0m
+[1m==> ansible-client: Machine booted and ready![0m
+[1m==> ansible-client: Checking for guest additions in VM...[0m
+[0m    ansible-client: No guest additions were detected on the base box for this VM! Guest
+    ansible-client: additions are required for forwarded ports, shared folders, host only
+    ansible-client: networking, and more. If SSH fails on this machine, please install
+    ansible-client: the guest additions and repackage the box to continue.
+    ansible-client: 
+    ansible-client: This is not an error message; everything may continue to work properly,
+    ansible-client: in which case you may ignore this message.[0m
+[1m==> ansible-client: Setting hostname...[0m
+[1m==> ansible-client: Configuring and enabling network interfaces...[0m
+[1m==> ansible-client: Rsyncing folder: /home/timur/vagrant/09_ansible/ => /vagrant[0m
+[1m==> ansible-client: Running provisioner: shell...[0m
+[0m    ansible-client: Running: inline script[0m
+[1m==> ansible-client: Running provisioner: shell...[0m
+[0m    ansible-client: Running: inline script[0m
+[1m==> ansible-server: Clearing any previously set forwarded ports...[0m
+[1m==> ansible-server: Fixed port collision for 22 => 2222. Now on port 2200.[0m
+[1m==> ansible-server: Clearing any previously set network interfaces...[0m
+[1m==> ansible-server: Preparing network interfaces based on configuration...[0m
+[0m    ansible-server: Adapter 1: nat[0m
+[0m    ansible-server: Adapter 2: intnet[0m
+[1m==> ansible-server: Forwarding ports...[0m
+[0m    ansible-server: 22 (guest) => 2200 (host) (adapter 1)[0m
+[1m==> ansible-server: Running 'pre-boot' VM customizations...[0m
+[1m==> ansible-server: Booting VM...[0m
+[1m==> ansible-server: Waiting for machine to boot. This may take a few minutes...[0m
+[0m    ansible-server: SSH address: 127.0.0.1:2200[0m
+[0m    ansible-server: SSH username: vagrant[0m
+[0m    ansible-server: SSH auth method: private key[0m
+[1m==> ansible-server: Machine booted and ready![0m
+[1m==> ansible-server: Checking for guest additions in VM...[0m
+[0m    ansible-server: No guest additions were detected on the base box for this VM! Guest
+    ansible-server: additions are required for forwarded ports, shared folders, host only
+    ansible-server: networking, and more. If SSH fails on this machine, please install
+    ansible-server: the guest additions and repackage the box to continue.
+    ansible-server: 
+    ansible-server: This is not an error message; everything may continue to work properly,
+    ansible-server: in which case you may ignore this message.[0m
+[1m==> ansible-server: Setting hostname...[0m
+[1m==> ansible-server: Configuring and enabling network interfaces...[0m
+[1m==> ansible-server: Rsyncing folder: /home/timur/vagrant/09_ansible/ => /vagrant[0m
+[1m==> ansible-server: Running provisioner: shell...[0m
+[0m    ansible-server: Running: inline script[0m
+[1m==> ansible-server: Running provisioner: shell...[0m
+[0m    ansible-server: Running: inline script[0m
+[0;32m    ansible-server: Loaded plugins: fastestmirror[0m
+[0;32m    ansible-server: Determining fastest mirrors[0m
+[0;32m    ansible-server:  * base: mirror.linux-ia64.org
+    ansible-server:  * extras: mirror.corbina.net
+    ansible-server:  * updates: mirror.linux-ia64.org[0m
+[0;32m    ansible-server: Package python-2.7.5-76.el7.x86_64 already installed and latest version[0m
+[0;32m    ansible-server: Resolving Dependencies
+    ansible-server: --> Running transaction check
+    ansible-server: ---> Package nmap.x86_64 2:6.40-16.el7 will be installed[0m
+[0;32m    ansible-server: --> Processing Dependency: nmap-ncat = 2:6.40-16.el7 for package: 2:nmap-6.40-16.el7.x86_64[0m
+[0;32m    ansible-server: --> Processing Dependency: libpcap.so.1()(64bit) for package: 2:nmap-6.40-16.el7.x86_64[0m
+[0;32m    ansible-server: ---> Package python-setuptools.noarch 0:0.9.8-7.el7 will be installed
+    ansible-server: --> Processing Dependency: python-backports-ssl_match_hostname for package: python-setuptools-0.9.8-7.el7.noarch
+    ansible-server: --> Running transaction check
+    ansible-server: ---> Package libpcap.x86_64 14:1.5.3-11.el7 will be installed
+    ansible-server: ---> Package nmap-ncat.x86_64 2:6.40-16.el7 will be installed
+    ansible-server: ---> Package python-backports-ssl_match_hostname.noarch 0:3.5.0.1-1.el7 will be installed
+    ansible-server: --> Processing Dependency: python-ipaddress for package: python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch
+    ansible-server: --> Processing Dependency: python-backports for package: python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch
+    ansible-server: --> Running transaction check
+    ansible-server: ---> Package python-backports.x86_64 0:1.0-8.el7 will be installed
+    ansible-server: ---> Package python-ipaddress.noarch 0:1.0.16-2.el7 will be installed[0m
+[0;32m    ansible-server: --> Finished Dependency Resolution[0m
+[0;32m    ansible-server: 
+    ansible-server: Dependencies Resolved
+    ansible-server: 
+    ansible-server: ================================================================================
+    ansible-server:  Package                               Arch     Version            Repository
+    ansible-server:                                                                            Size
+    ansible-server: ================================================================================
+    ansible-server: Installing:
+    ansible-server:  nmap                                  x86_64   2:6.40-16.el7      base   3.9 M
+    ansible-server:  python-setuptools                     noarch   0.9.8-7.el7        base   397 k
+    ansible-server: Installing for dependencies:
+    ansible-server:  libpcap                               x86_64   14:1.5.3-11.el7    base   138 k
+    ansible-server:  nmap-ncat                             x86_64   2:6.40-16.el7      base   206 k
+    ansible-server:  python-backports                      x86_64   1.0-8.el7          base   5.8 k
+    ansible-server:  python-backports-ssl_match_hostname   noarch   3.5.0.1-1.el7      base    13 k
+    ansible-server:  python-ipaddress                      noarch   1.0.16-2.el7       base    34 k
+    ansible-server: 
+    ansible-server: Transaction Summary
+    ansible-server: ================================================================================
+    ansible-server: Install  2 Packages (+5 Dependent packages)
+    ansible-server: 
+    ansible-server: Total download size: 4.7 M
+    ansible-server: Installed size: 19 M
+    ansible-server: Downloading packages:[0m
+[0;32m    ansible-server: Public key for python-backports-1.0-8.el7.x86_64.rpm is not installed[0m
+[0;31m    ansible-server: warning: /var/cache/yum/x86_64/7/base/packages/python-backports-1.0-8.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY[0m
+[0;32m    ansible-server: --------------------------------------------------------------------------------
+    ansible-server: Total                                              3.0 MB/s | 4.7 MB  00:01     
+    ansible-server: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7[0m
+[0;31m    ansible-server: Importing GPG key 0xF4A80EB5:
+    ansible-server:  Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+    ansible-server:  Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+    ansible-server:  Package    : centos-release-7-6.1810.2.el7.centos.x86_64 (@anaconda)
+    ansible-server:  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7[0m
+[0;32m    ansible-server: Running transaction check[0m
+[0;32m    ansible-server: Running transaction test[0m
+[0;32m    ansible-server: Transaction test succeeded
+    ansible-server: Running transaction[0m
+[0;32m    ansible-server:   Installing : 14:libpcap-1.5.3-11.el7.x86_64                               1/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Installing : 2:nmap-ncat-6.40-16.el7.x86_64                               2/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Installing : python-ipaddress-1.0.16-2.el7.noarch                         3/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Installing : python-backports-1.0-8.el7.x86_64                            4/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Installing : python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch     5/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Installing : python-setuptools-0.9.8-7.el7.noarch                         6/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Installing : 2:nmap-6.40-16.el7.x86_64                                    7/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : 2:nmap-6.40-16.el7.x86_64                                    1/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch     2/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : python-backports-1.0-8.el7.x86_64                            3/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : python-ipaddress-1.0.16-2.el7.noarch                         4/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : 14:libpcap-1.5.3-11.el7.x86_64                               5/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : 2:nmap-ncat-6.40-16.el7.x86_64                               6/7[0m
+[0;32m    ansible-server:  
+    ansible-server:   Verifying  : python-setuptools-0.9.8-7.el7.noarch                         7/7[0m
+[0;32m    ansible-server:  
+    ansible-server: 
+    ansible-server: Installed:
+    ansible-server:   nmap.x86_64 2:6.40-16.el7        python-setuptools.noarch 0:0.9.8-7.el7       
+    ansible-server: 
+    ansible-server: Dependency Installed:
+    ansible-server:   libpcap.x86_64 14:1.5.3-11.el7                                                
+    ansible-server:   nmap-ncat.x86_64 2:6.40-16.el7                                                
+    ansible-server:   python-backports.x86_64 0:1.0-8.el7                                           
+    ansible-server:   python-backports-ssl_match_hostname.noarch 0:3.5.0.1-1.el7                    
+    ansible-server:   python-ipaddress.noarch 0:1.0.16-2.el7                                        
+    ansible-server: 
+    ansible-server: Complete![0m
+[0;32m    ansible-server: Searching for pip
+    ansible-server: Reading https://pypi.python.org/simple/pip/[0m
+[0;32m    ansible-server: Best match: pip 19.0.3
+    ansible-server: Downloading https://files.pythonhosted.org/packages/36/fa/51ca4d57392e2f69397cd6e5af23da2a8d37884a605f9e3f2d3bfdc48397/pip-19.0.3.tar.gz#sha256=6e6f197a1abfb45118dbb878b5c859a0edbdd33fd250100bc015b67fded4b9f2[0m
+[0;32m    ansible-server: Processing pip-19.0.3.tar.gz[0m
+[0;32m    ansible-server: Writing /tmp/easy_install-pKdzwd/pip-19.0.3/setup.cfg[0m
+[0;32m    ansible-server: Running pip-19.0.3/setup.py -q bdist_egg --dist-dir /tmp/easy_install-pKdzwd/pip-19.0.3/egg-dist-tmp-uV_YpP[0m
+[0;31m    ansible-server: /usr/lib64/python2.7/distutils/dist.py:267: UserWarning: Unknown distribution option: 'python_requires'
+    ansible-server:   warnings.warn(msg)[0m
+[0;31m    ansible-server: warning: no files found matching 'docs/docutils.conf'
+    ansible-server: warning: no previously-included files found matching '.coveragerc'
+    ansible-server: warning: no previously-included files found matching '.mailmap'
+    ansible-server: warning: no previously-included files found matching '.appveyor.yml'[0m
+[0;31m    ansible-server: warning: no previously-included files found matching '.travis.yml'
+    ansible-server: warning: no previously-included files found matching 'tox.ini'
+    ansible-server: warning: no files found matching 'Makefile' under directory 'docs'
+    ansible-server: warning: no files found matching '*.bat' under directory 'docs'
+    ansible-server: warning: no previously-included files found matching 'src/pip/_vendor/six'
+    ansible-server: warning: no previously-included files found matching 'src/pip/_vendor/six/moves'
+    ansible-server: warning: no previously-included files matching '*.pyi' found under directory 'src/pip/_vendor'
+    ansible-server: no previously-included directories found matching '.github'
+    ansible-server: no previously-included directories found matching '.azure-pipelines'
+    ansible-server: no previously-included directories found matching 'docs/build'[0m
+[0;31m    ansible-server: no previously-included directories found matching 'news'
+    ansible-server: no previously-included directories found matching 'tasks'
+    ansible-server: no previously-included directories found matching 'tests'
+    ansible-server: no previously-included directories found matching 'tools'[0m
+[0;32m    ansible-server: Adding pip 19.0.3 to easy-install.pth file[0m
+[0;32m    ansible-server: Installing pip script to /usr/bin
+    ansible-server: Installing pip2.7 script to /usr/bin
+    ansible-server: Installing pip2 script to /usr/bin
+    ansible-server: 
+    ansible-server: Installed /usr/lib/python2.7/site-packages/pip-19.0.3-py2.7.egg
+    ansible-server: Processing dependencies for pip
+    ansible-server: Finished processing dependencies for pip[0m
+[0;31m    ansible-server: DEPRECATION: Python 2.7 will reach the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 won't be maintained after that date. A future version of pip will drop support for Python 2.7.[0m
+[0;32m    ansible-server: Collecting ansible[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/e4/22/4325212e609071cd93b8142722d770f5defab34a95511f183e262f8de983/ansible-2.7.8.tar.gz (11.8MB)[0m
+[0;32m    ansible-server: Collecting jinja2 (from ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/7f/ff/ae64bacdfc95f27a016a7bed8e8686763ba4d277a78ca76f32659220a731/Jinja2-2.10-py2.py3-none-any.whl (126kB)[0m
+[0;32m    ansible-server: Collecting PyYAML (from ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/9e/a3/1d13970c3f36777c583f136c136f804d70f500168edc1edea6daa7200769/PyYAML-3.13.tar.gz (270kB)[0m
+[0;32m    ansible-server: Collecting paramiko (from ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/cf/ae/94e70d49044ccc234bfdba20114fa947d7ba6eb68a2e452d89b920e62227/paramiko-2.4.2-py2.py3-none-any.whl (193kB)[0m
+[0;32m    ansible-server: Collecting cryptography (from ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/c3/c1/cf8665c955c9393e9ff0872ba6cd3dc6f46ef915e94afcf6e0410508ca69/cryptography-2.6.1-cp27-cp27mu-manylinux1_x86_64.whl (2.3MB)[0m
+[0;32m    ansible-server: Requirement already satisfied: setuptools in /usr/lib/python2.7/site-packages (from ansible) (0.9.8)[0m
+[0;32m    ansible-server: Collecting MarkupSafe>=0.23 (from jinja2->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/fb/40/f3adb7cf24a8012813c5edb20329eb22d5d8e2a0ecf73d21d6b85865da11/MarkupSafe-1.1.1-cp27-cp27mu-manylinux1_x86_64.whl[0m
+[0;32m    ansible-server: Collecting pynacl>=1.0.1 (from paramiko->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/b3/25/e605574f24948a8a53b497744e93f061eb1dbe7c44b6465fc1c172d591aa/PyNaCl-1.3.0-cp27-cp27mu-manylinux1_x86_64.whl (762kB)[0m
+[0;32m    ansible-server: Collecting pyasn1>=0.1.7 (from paramiko->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/7b/7c/c9386b82a25115cccf1903441bba3cbadcfae7b678a20167347fa8ded34c/pyasn1-0.4.5-py2.py3-none-any.whl (73kB)[0m
+[0;32m    ansible-server: Collecting bcrypt>=3.1.3 (from paramiko->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/50/d8/95f7cb04344033bf9d1a12c5a7969a15999b6a710fbe1969c517333d9a62/bcrypt-3.1.6-cp27-cp27mu-manylinux1_x86_64.whl (59kB)[0m
+[0;32m    ansible-server: Collecting enum34; python_version < "3" (from cryptography->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/c5/db/e56e6b4bbac7c4a06de1c50de6fe1ef3810018ae11732a50f15f62c7d050/enum34-1.1.6-py2-none-any.whl[0m
+[0;32m    ansible-server: Collecting asn1crypto>=0.21.0 (from cryptography->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/ea/cd/35485615f45f30a510576f1a56d1e0a7ad7bd8ab5ed7cdc600ef7cd06222/asn1crypto-0.24.0-py2.py3-none-any.whl (101kB)[0m
+[0;32m    ansible-server: Collecting cffi!=1.11.3,>=1.8 (from cryptography->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/9d/6f/aea9f5559fb593da07ff34e67513bd62483b45715b4a5f5fae6a0a5792ea/cffi-1.12.2-cp27-cp27mu-manylinux1_x86_64.whl (413kB)[0m
+[0;32m    ansible-server: Collecting six>=1.4.1 (from cryptography->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl[0m
+[0;32m    ansible-server: Requirement already satisfied: ipaddress; python_version < "3" in /usr/lib/python2.7/site-packages (from cryptography->ansible) (1.0.16)[0m
+[0;32m    ansible-server: Collecting pycparser (from cffi!=1.11.3,>=1.8->cryptography->ansible)[0m
+[0;32m    ansible-server:   Downloading https://files.pythonhosted.org/packages/68/9e/49196946aee219aead1290e00d1e7fdeab8567783e83e1b9ab5585e6206a/pycparser-2.19.tar.gz (158kB)[0m
+[0;32m    ansible-server: Installing collected packages: MarkupSafe, jinja2, PyYAML, enum34, asn1crypto, pycparser, cffi, six, cryptography, pynacl, pyasn1, bcrypt, paramiko, ansible[0m
+[0;32m    ansible-server:   Running setup.py install for PyYAML: started[0m
+[0;32m    ansible-server:     Running setup.py install for PyYAML: finished with status 'done'[0m
+[0;32m    ansible-server:   Running setup.py install for pycparser: started[0m
+[0;32m    ansible-server:     Running setup.py install for pycparser: finished with status 'done'[0m
+[0;32m    ansible-server:   Running setup.py install for ansible: started[0m
+[0;32m    ansible-server:     Running setup.py install for ansible: finished with status 'done'[0m
+[0;32m    ansible-server: Successfully installed MarkupSafe-1.1.1 PyYAML-3.13 ansible-2.7.8 asn1crypto-0.24.0 bcrypt-3.1.6 cffi-1.12.2 cryptography-2.6.1 enum34-1.1.6 jinja2-2.10 paramiko-2.4.2 pyasn1-0.4.5 pycparser-2.19 pynacl-1.3.0 six-1.12.0[0m
+[0;32m    ansible-server: ansible-client | SUCCESS => {
+    ansible-server:     "changed": false, 
+    ansible-server:     "ping": "pong"
+    ansible-server: }[0m
+[0;32m    ansible-server: 
+    ansible-server: playbook: /home/vagrant/ansible/playbook.yml
+    ansible-server: 
+    ansible-server:   play #1 (ansible-client): Test playbook	TAGS: []
+    ansible-server:     tasks:
+    ansible-server:       nginx : Install epel	TAGS: [install_epel]
+    ansible-server:       nginx : Install nginx	TAGS: [install_nginx]
+    ansible-server:       nginx : Start nginx	TAGS: [start_nginx]
+    ansible-server:       nginx : Replace index.html	TAGS: [insert_html]
+    ansible-server:       nginx : Replace nginx.conf	TAGS: [insert_conf][0m
+[0;32m    ansible-server: 
+    ansible-server: PLAY [Test playbook] ***********************************************************[0m
+[0;32m    ansible-server: 
+    ansible-server: TASK [Gathering Facts] *********************************************************[0m
+[0;32m    ansible-server: ok: [ansible-client][0m
+[0;32m    ansible-server: 
+    ansible-server: TASK [nginx : Install epel] ****************************************************[0m
+[0;32m    ansible-server: changed: [ansible-client][0m
+[0;32m    ansible-server: 
+    ansible-server: TASK [nginx : Install nginx] ***************************************************[0m
+[0;32m    ansible-server: changed: [ansible-client][0m
+[0;32m    ansible-server: 
+    ansible-server: TASK [nginx : Start nginx] *****************************************************[0m
+[0;32m    ansible-server: changed: [ansible-client][0m
+[0;32m    ansible-server: 
+    ansible-server: TASK [nginx : Replace index.html] **********************************************[0m
+[0;32m    ansible-server: changed: [ansible-client][0m
+[0;32m    ansible-server: 
+    ansible-server: TASK [nginx : Replace nginx.conf] **********************************************[0m
+[0;32m    ansible-server: changed: [ansible-client]
+    ansible-server: 
+    ansible-server: RUNNING HANDLER [nginx : NGINX start] ******************************************[0m
+[0;32m    ansible-server: changed: [ansible-client][0m
+[0;32m    ansible-server: 
+    ansible-server: PLAY RECAP *********************************************************************
+    ansible-server: ansible-client             : ok=7    changed=6    unreachable=0    failed=0   [0m
+[0;32m    ansible-server: ------------------------------RESULT for nmap-----------------------------------[0m
+[0;32m    ansible-server: 
+    ansible-server: Starting Nmap 6.40 ( http://nmap.org ) at 2019-03-10 06:27 UTC[0m
+[0;32m    ansible-server: Nmap scan report for ansible-client (172.17.177.11)
+    ansible-server: Host is up (0.00028s latency).
+    ansible-server: Other addresses for ansible-client (not scanned): 172.17.177.11
+    ansible-server: PORT     STATE SERVICE
+    ansible-server: 8080/tcp open  http-proxy
+    ansible-server: MAC Address: 08:00:27:C5:B0:8F (Cadmus Computer Systems)
+    ansible-server: 
+    ansible-server: Nmap done: 1 IP address (1 host up) scanned in 0.05 seconds
+    ansible-server: ------------------------------RESULT for curl-----------------------------------[0m
+[0;31m    ansible-server:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+    ansible-server:                                  Dload  Upload   Total   Spent    Left  Speed
+    ansible-server:   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[0m
+[0;31m    ansible-server: 100  3747  100  3747    0     0   586k      0 --:--:-- --:--:-- --:--:--  609k[0m
+[0;32m    ansible-server:         <h1>Welcome to <strong>nginx</strong> on ansible-client:8080!</h1>
+    ansible-server: --------------------------------END RESULTS-------------------------------------[0m
+timur@timbook-home2:~/vagrant/09_ansible> vagrant halt
+/usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
+/usr/lib64/ruby/gems/2.6.0/gems/vagrant-2.2.2/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
+[1m==> ansible-server: Attempting graceful shutdown of VM...[0m
+[1m==> ansible-client: Attempting graceful shutdown of VM...[0m
+timur@timbook-home2:~/vagrant/09_ansible> ^C
+timur@timbook-home2:~/vagrant/09_ansible> exit
+
+Script done on 2019-03-10 13:28:28+07:00 [COMMAND_EXIT_CODE="130"]
