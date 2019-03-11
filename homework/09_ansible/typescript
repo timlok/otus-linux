@@ -1,10 +1,12 @@
-Script started on 2019-03-10 13:24:38+07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="189" LINES="25"]
-timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision
+Script started on 2019-03-11 13:16:02+07:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="189" LINES="25"]
+timur@timbook-home2:~/vagrant/09_ansible> vagrant sshtatusbox updateup[Kll[Kvagrant up
 /usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
 /usr/lib64/ruby/gems/2.6.0/gems/vagrant-2.2.2/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
 [0mBringing machine 'ansible-client' up with 'virtualbox' provider...[0m
 [0mBringing machine 'ansible-server' up with 'virtualbox' provider...[0m
-[1m==> ansible-client: Clearing any previously set forwarded ports...[0m
+[1m==> ansible-client: Importing base box 'centos/7'...[0m
+[0m[K[0m[0mProgress: 20%[0m[0m[K[0m[0mProgress: 40%[0m[0m[K[0m[0mProgress: 50%[0m[0m[K[0m[0mProgress: 70%[0m[0m[K[0m[0mProgress: 90%[0m[0m[K[0m[1m==> ansible-client: Matching MAC address for NAT networking...[0m
+[1m==> ansible-client: Setting the name of the VM: ansible-client[0m
 [1m==> ansible-client: Clearing any previously set network interfaces...[0m
 [1m==> ansible-client: Preparing network interfaces based on configuration...[0m
 [0m    ansible-client: Adapter 1: nat[0m
@@ -17,6 +19,13 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
 [0m    ansible-client: SSH address: 127.0.0.1:2222[0m
 [0m    ansible-client: SSH username: vagrant[0m
 [0m    ansible-client: SSH auth method: private key[0m
+[0m    ansible-client: 
+    ansible-client: Vagrant insecure key detected. Vagrant will automatically replace
+    ansible-client: this with a newly generated keypair for better security.[0m
+[0m    ansible-client: 
+    ansible-client: Inserting generated public key within guest...[0m
+[0m    ansible-client: Removing insecure key from the guest if it's present...[0m
+[0m    ansible-client: Key inserted! Disconnecting and reconnecting using new SSH key...[0m
 [1m==> ansible-client: Machine booted and ready![0m
 [1m==> ansible-client: Checking for guest additions in VM...[0m
 [0m    ansible-client: No guest additions were detected on the base box for this VM! Guest
@@ -33,7 +42,9 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
 [0m    ansible-client: Running: inline script[0m
 [1m==> ansible-client: Running provisioner: shell...[0m
 [0m    ansible-client: Running: inline script[0m
-[1m==> ansible-server: Clearing any previously set forwarded ports...[0m
+[1m==> ansible-server: Importing base box 'centos/7'...[0m
+[0m[K[0m[0mProgress: 20%[0m[0m[K[0m[0mProgress: 40%[0m[0m[K[0m[0mProgress: 70%[0m[0m[K[0m[0mProgress: 90%[0m[0m[K[0m[1m==> ansible-server: Matching MAC address for NAT networking...[0m
+[1m==> ansible-server: Setting the name of the VM: ansible-server[0m
 [1m==> ansible-server: Fixed port collision for 22 => 2222. Now on port 2200.[0m
 [1m==> ansible-server: Clearing any previously set network interfaces...[0m
 [1m==> ansible-server: Preparing network interfaces based on configuration...[0m
@@ -47,6 +58,13 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
 [0m    ansible-server: SSH address: 127.0.0.1:2200[0m
 [0m    ansible-server: SSH username: vagrant[0m
 [0m    ansible-server: SSH auth method: private key[0m
+[0m    ansible-server: 
+    ansible-server: Vagrant insecure key detected. Vagrant will automatically replace
+    ansible-server: this with a newly generated keypair for better security.[0m
+[0m    ansible-server: 
+    ansible-server: Inserting generated public key within guest...[0m
+[0m    ansible-server: Removing insecure key from the guest if it's present...[0m
+[0m    ansible-server: Key inserted! Disconnecting and reconnecting using new SSH key...[0m
 [1m==> ansible-server: Machine booted and ready![0m
 [1m==> ansible-server: Checking for guest additions in VM...[0m
 [0m    ansible-server: No guest additions were detected on the base box for this VM! Guest
@@ -65,18 +83,18 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
 [0m    ansible-server: Running: inline script[0m
 [0;32m    ansible-server: Loaded plugins: fastestmirror[0m
 [0;32m    ansible-server: Determining fastest mirrors[0m
-[0;32m    ansible-server:  * base: mirror.linux-ia64.org
-    ansible-server:  * extras: mirror.corbina.net
+[0;32m    ansible-server:  * base: mirror.yandex.ru
+    ansible-server:  * extras: mirror.linux-ia64.org
     ansible-server:  * updates: mirror.linux-ia64.org[0m
 [0;32m    ansible-server: Package python-2.7.5-76.el7.x86_64 already installed and latest version[0m
 [0;32m    ansible-server: Resolving Dependencies
     ansible-server: --> Running transaction check
     ansible-server: ---> Package nmap.x86_64 2:6.40-16.el7 will be installed[0m
 [0;32m    ansible-server: --> Processing Dependency: nmap-ncat = 2:6.40-16.el7 for package: 2:nmap-6.40-16.el7.x86_64[0m
-[0;32m    ansible-server: --> Processing Dependency: libpcap.so.1()(64bit) for package: 2:nmap-6.40-16.el7.x86_64[0m
-[0;32m    ansible-server: ---> Package python-setuptools.noarch 0:0.9.8-7.el7 will be installed
-    ansible-server: --> Processing Dependency: python-backports-ssl_match_hostname for package: python-setuptools-0.9.8-7.el7.noarch
-    ansible-server: --> Running transaction check
+[0;32m    ansible-server: --> Processing Dependency: libpcap.so.1()(64bit) for package: 2:nmap-6.40-16.el7.x86_64
+    ansible-server: ---> Package python-setuptools.noarch 0:0.9.8-7.el7 will be installed
+    ansible-server: --> Processing Dependency: python-backports-ssl_match_hostname for package: python-setuptools-0.9.8-7.el7.noarch[0m
+[0;32m    ansible-server: --> Running transaction check
     ansible-server: ---> Package libpcap.x86_64 14:1.5.3-11.el7 will be installed
     ansible-server: ---> Package nmap-ncat.x86_64 2:6.40-16.el7 will be installed
     ansible-server: ---> Package python-backports-ssl_match_hostname.noarch 0:3.5.0.1-1.el7 will be installed
@@ -110,10 +128,10 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
     ansible-server: Total download size: 4.7 M
     ansible-server: Installed size: 19 M
     ansible-server: Downloading packages:[0m
-[0;32m    ansible-server: Public key for python-backports-1.0-8.el7.x86_64.rpm is not installed[0m
-[0;31m    ansible-server: warning: /var/cache/yum/x86_64/7/base/packages/python-backports-1.0-8.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY[0m
+[0;32m    ansible-server: Public key for python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch.rpm is not installed[0m
+[0;31m    ansible-server: warning: /var/cache/yum/x86_64/7/base/packages/python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY[0m
 [0;32m    ansible-server: --------------------------------------------------------------------------------
-    ansible-server: Total                                              3.0 MB/s | 4.7 MB  00:01     
+    ansible-server: Total                                              2.7 MB/s | 4.7 MB  00:01     
     ansible-server: Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7[0m
 [0;31m    ansible-server: Importing GPG key 0xF4A80EB5:
     ansible-server:  Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
@@ -169,25 +187,25 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
 [0;32m    ansible-server: Best match: pip 19.0.3
     ansible-server: Downloading https://files.pythonhosted.org/packages/36/fa/51ca4d57392e2f69397cd6e5af23da2a8d37884a605f9e3f2d3bfdc48397/pip-19.0.3.tar.gz#sha256=6e6f197a1abfb45118dbb878b5c859a0edbdd33fd250100bc015b67fded4b9f2[0m
 [0;32m    ansible-server: Processing pip-19.0.3.tar.gz[0m
-[0;32m    ansible-server: Writing /tmp/easy_install-pKdzwd/pip-19.0.3/setup.cfg[0m
-[0;32m    ansible-server: Running pip-19.0.3/setup.py -q bdist_egg --dist-dir /tmp/easy_install-pKdzwd/pip-19.0.3/egg-dist-tmp-uV_YpP[0m
+[0;32m    ansible-server: Writing /tmp/easy_install-4vd8st/pip-19.0.3/setup.cfg
+    ansible-server: Running pip-19.0.3/setup.py -q bdist_egg --dist-dir /tmp/easy_install-4vd8st/pip-19.0.3/egg-dist-tmp-zljMhz[0m
 [0;31m    ansible-server: /usr/lib64/python2.7/distutils/dist.py:267: UserWarning: Unknown distribution option: 'python_requires'
     ansible-server:   warnings.warn(msg)[0m
 [0;31m    ansible-server: warning: no files found matching 'docs/docutils.conf'
     ansible-server: warning: no previously-included files found matching '.coveragerc'
     ansible-server: warning: no previously-included files found matching '.mailmap'
-    ansible-server: warning: no previously-included files found matching '.appveyor.yml'[0m
-[0;31m    ansible-server: warning: no previously-included files found matching '.travis.yml'
-    ansible-server: warning: no previously-included files found matching 'tox.ini'
-    ansible-server: warning: no files found matching 'Makefile' under directory 'docs'
+    ansible-server: warning: no previously-included files found matching '.appveyor.yml'
+    ansible-server: warning: no previously-included files found matching '.travis.yml'
+    ansible-server: warning: no previously-included files found matching 'tox.ini'[0m
+[0;31m    ansible-server: warning: no files found matching 'Makefile' under directory 'docs'
     ansible-server: warning: no files found matching '*.bat' under directory 'docs'
     ansible-server: warning: no previously-included files found matching 'src/pip/_vendor/six'
     ansible-server: warning: no previously-included files found matching 'src/pip/_vendor/six/moves'
     ansible-server: warning: no previously-included files matching '*.pyi' found under directory 'src/pip/_vendor'
-    ansible-server: no previously-included directories found matching '.github'
-    ansible-server: no previously-included directories found matching '.azure-pipelines'
-    ansible-server: no previously-included directories found matching 'docs/build'[0m
-[0;31m    ansible-server: no previously-included directories found matching 'news'
+    ansible-server: no previously-included directories found matching '.github'[0m
+[0;31m    ansible-server: no previously-included directories found matching '.azure-pipelines'
+    ansible-server: no previously-included directories found matching 'docs/build'
+    ansible-server: no previously-included directories found matching 'news'
     ansible-server: no previously-included directories found matching 'tasks'
     ansible-server: no previously-included directories found matching 'tests'
     ansible-server: no previously-included directories found matching 'tools'[0m
@@ -274,34 +292,31 @@ timur@timbook-home2:~/vagrant/09_ansible> vagrant up --provision[Ktimur@timboo
 [0;32m    ansible-server: changed: [ansible-client]
     ansible-server: 
     ansible-server: RUNNING HANDLER [nginx : NGINX start] ******************************************[0m
+[0;32m    ansible-server: changed: [ansible-client]
+    ansible-server: 
+    ansible-server: RUNNING HANDLER [nginx : NGINX restart] ****************************************[0m
 [0;32m    ansible-server: changed: [ansible-client][0m
 [0;32m    ansible-server: 
     ansible-server: PLAY RECAP *********************************************************************
-    ansible-server: ansible-client             : ok=7    changed=6    unreachable=0    failed=0   [0m
+    ansible-server: ansible-client             : ok=8    changed=7    unreachable=0    failed=0   [0m
 [0;32m    ansible-server: ------------------------------RESULT for nmap-----------------------------------[0m
 [0;32m    ansible-server: 
-    ansible-server: Starting Nmap 6.40 ( http://nmap.org ) at 2019-03-10 06:27 UTC[0m
+    ansible-server: Starting Nmap 6.40 ( http://nmap.org ) at 2019-03-11 06:19 UTC[0m
 [0;32m    ansible-server: Nmap scan report for ansible-client (172.17.177.11)
-    ansible-server: Host is up (0.00028s latency).
-    ansible-server: Other addresses for ansible-client (not scanned): 172.17.177.11
+    ansible-server: Host is up (0.00024s latency).
     ansible-server: PORT     STATE SERVICE
     ansible-server: 8080/tcp open  http-proxy
-    ansible-server: MAC Address: 08:00:27:C5:B0:8F (Cadmus Computer Systems)
+    ansible-server: MAC Address: 08:00:27:7C:E5:4A (Cadmus Computer Systems)
     ansible-server: 
     ansible-server: Nmap done: 1 IP address (1 host up) scanned in 0.05 seconds
     ansible-server: ------------------------------RESULT for curl-----------------------------------[0m
 [0;31m    ansible-server:   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
     ansible-server:                                  Dload  Upload   Total   Spent    Left  Speed
     ansible-server:   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0[0m
-[0;31m    ansible-server: 100  3747  100  3747    0     0   586k      0 --:--:-- --:--:-- --:--:--  609k[0m
+[0;31m    ansible-server: 100  3747  100  3747    0     0   442k      0 --:--:-- --:--:-- --:--:--  457k[0m
 [0;32m    ansible-server:         <h1>Welcome to <strong>nginx</strong> on ansible-client:8080!</h1>
     ansible-server: --------------------------------END RESULTS-------------------------------------[0m
-timur@timbook-home2:~/vagrant/09_ansible> vagrant halt
-/usr/share/vagrant/plugins/commands/login/client.rb:8: warning: already initialized constant VagrantPlugins::LoginCommand::Client::APP
-/usr/lib64/ruby/gems/2.6.0/gems/vagrant-2.2.2/plugins/commands/login/client.rb:8: warning: previous definition of APP was here
-[1m==> ansible-server: Attempting graceful shutdown of VM...[0m
-[1m==> ansible-client: Attempting graceful shutdown of VM...[0m
 timur@timbook-home2:~/vagrant/09_ansible> ^C
 timur@timbook-home2:~/vagrant/09_ansible> exit
 
-Script done on 2019-03-10 13:28:28+07:00 [COMMAND_EXIT_CODE="130"]
+Script done on 2019-03-11 13:19:39+07:00 [COMMAND_EXIT_CODE="130"]

@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
     machine.vm.hostname = "ansible-client"
     machine.vm.network "private_network", ip: "172.17.177.11", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "ansible_net"
     machine.vm.provision "shell", inline: $script1
+    #machine.vm.provision "shell", path: "00_updateOS.sh"
     machine.vm.provision "shell", inline: <<-SHELL
     cat /vagrant/keys/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
     echo "172.17.177.22 ansible-server ansible-server" >> /etc/hosts
@@ -48,11 +49,16 @@ Vagrant.configure("2") do |config|
     machine.vm.provision "shell", inline: $script1
     machine.vm.provision "shell", inline: <<-SHELL
     cp /vagrant/keys/id_rsa* /home/vagrant/.ssh/
+    chmod 700 /home/vagrant/.ssh/ && chmod 600 /home/vagrant/.ssh/*
     chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
     echo "172.17.177.11 ansible-client ansible-client" >> /etc/hosts
     yum install -y python python-setuptools nmap
     easy_install pip
     pip install ansible
+    mkdir -p /etc/ansible/
+    echo "[defaults]
+host_key_checking = False" > /etc/ansible/ansible.cfg
+
     mkdir /home/vagrant/ansible
 
     #not_role
