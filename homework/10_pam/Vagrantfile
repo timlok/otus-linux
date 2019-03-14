@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "otuspam" do |t|
+  end
+
+  config.vm.hostname = "otuspam"
+
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.network "public_network", bridge: "wlp2s0"
+
+  config.vm.provider "virtualbox" do |vb|
+     vb.name = "otuspam"
+     vb.gui = true
+     vb.memory = "512"
+     vb.cpus = "1"
+   end
+
+  config.vm.provision "shell", inline: <<-SHELL
+            mkdir -p ~root/.ssh
+            cp ~vagrant/.ssh/auth* ~root/.ssh
+            #yum install -y vim redhat-lsb-core wget yum-utils htop mc screen sudo net-tools elinks traceroute bind-utils deltarpm lsof vim vim-enhanced nmap
+            #echo "alias vi='vim'" >> /root/.bashrc
+            #echo "colorscheme desert" >> /etc/vimrc
+    SHELL
+  config.vm.provision "shell", path: "pam_modules/pam_modules.sh"
+  #config.vm.provision "shell", path: "01_watchlog.sh"
+  #config.vm.provision "shell", path: "02_init_to_unit.sh"
+  #config.vm.provision "shell", path: "03_httpd_twice.sh"
+  #config.vm.provision "shell", path: "04_result.sh"
+end
