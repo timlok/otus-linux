@@ -37,7 +37,7 @@ END
 done
 
 #подкладываем файл скрипта
-cp /vagrant/pam_modules/pam_script_auth /etc/pam-script.d/pam_script_auth
+cp /vagrant/files/pam_script_auth /etc/pam-script.d/pam_script_auth
 chown root:root /etc/pam-script.d/pam_script_auth && chmod 755 /etc/pam-script.d/pam_script_auth
 
 #добавляем строку с модулем pam_script.so в файлы login и sshd
@@ -47,11 +47,3 @@ sed '/#%PAM-1.0/a auth required  pam_script.so dir=/etc/pam-script.d/' /etc/pam.
 sed '/#%PAM-1.0/a auth required  pam_script.so dir=/etc/pam-script.d/' /etc/pam.d/login > /etc/pam.d/login_tmp
 mv -f /etc/pam.d/sshd_tmp /etc/pam.d/sshd
 mv -f /etc/pam.d/login_tmp /etc/pam.d/login
-
-echo "-------------------------------------------------------------------------------"
-echo -e "Теперь необходимо залогиниться в ВМ, выставить желаемую дату такой командой\ndate -s "2019-03-14 14:43:00"\nи можно пробовать логиниться в терминале или по ssh."
-echo "ip-адреса ВМ:"
-ip a | grep inet | grep -v inet6 | grep -v 127.0.0.1
-echo "Логины-пароль пользователей есть в выводе выше."
-echo "Лог попыток логина можно посмотреть в ВМ в файле /tmp/pam_script_auth.log"
-echo "-------------------------------------------------------------------------------"

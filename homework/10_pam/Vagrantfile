@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
      vb.name = "otuspam"
-     vb.gui = true
+#     vb.gui = true
      vb.memory = "512"
      vb.cpus = "1"
    end
@@ -29,9 +29,7 @@ Vagrant.configure("2") do |config|
             #echo "alias vi='vim'" >> /root/.bashrc
             #echo "colorscheme desert" >> /etc/vimrc
     SHELL
-  config.vm.provision "shell", path: "pam_modules/pam_modules.sh"
-  #config.vm.provision "shell", path: "01_watchlog.sh"
-  #config.vm.provision "shell", path: "02_init_to_unit.sh"
-  #config.vm.provision "shell", path: "03_httpd_twice.sh"
-  #config.vm.provision "shell", path: "04_result.sh"
+  config.vm.provision "shell", path: "files/01_pam_modules.sh"
+  config.vm.provision "shell", path: "files/02_capabilities.sh"
+  config.vm.provision "shell", path: "files/03_result.sh"
 end
