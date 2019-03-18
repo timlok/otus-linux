@@ -9,7 +9,7 @@ sed -i '/pam_nologin.so/iauth    optional    pam_cap.so' /etc/pam.d/login
 
 echo -e "проверяем, что пользователь user3 будет получать все capabilites\n$(su -c 'capsh --print' - user3 | grep -i current)"
 
-echo "устанавливаем наследуемые capabilites на некоторые программы, в т.ч и на bash"
+echo "устанавливаем наследуемые capabilites на некоторые программы (в зависимости от наших потребностей), в т.ч и на bash"
 #setcap cap_setgid,cap_setuid+ie /bin/su
 setcap cap_dac_override,cap_dac_read_search+ie /usr/bin/rm
 setcap cap_dac_override,cap_dac_read_search+ie /usr/bin/ls
