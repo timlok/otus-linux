@@ -1,0 +1,6 @@
+[ipaclients]
+ipaclient.otus.loc ansible_host=172.17.177.11
+
+[ipaservers]
+#ipaserver.otus.loc ansible_host=172.17.177.22
+127.0.0.1 ansible_connection=local transport=local

@@ -1,0 +1,31 @@
+- name: Playbook to configure IPA servers with username/password
+  hosts: ipaservers
+  become: yes
+  gather_facts: true
+
+  vars:
+    ipa_domain: otus.loc
+    ipa_realm: OTUS.LOC
+    ipa_admin: admin
+    ipa_admin_pass: otusotus
+    ipa_server: ipaserver.otus.loc
+
+  tasks:
+  
+   - name: Install ipa-server
+     yum:
+       name: ipa-server
+       state: present
+     tags:
+      - install_ipa-server
+    
+   - name: Configure ipa-server
+     shell: ipa-server-install 
+      --hostname={{ ipa_server }}
+      -r {{ ipa_realm }}
+      -n {{ ipa_domain }}
+      -p {{ ipa_admin_pass }}
+      -a {{ ipa_admin_pass }}
+      -U
+     tags:
+       - configure_ipa-server

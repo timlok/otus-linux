@@ -1,0 +1,33 @@
+- name: Playbook to configure IPA clients with username/password
+  hosts: ipaclients
+  become: yes
+  gather_facts: true
+
+  vars:
+    ipa_domain: otus.loc
+    ipa_realm: OTUS.LOC
+    ipa_admin: admin
+    ipa_admin_pass: otusotus
+    ipa_server: ipaserver.otus.loc
+
+  tasks:
+  
+   - name: Install ipa-client
+     yum:
+       name: ipa-client
+       state: present
+     tags:
+      - install_ipa-client
+    
+   - name: Configure ipa-client
+     shell: ipa-client-install 
+      --domain {{ ipa_domain }}
+      --principal {{ ipa_admin }}@{{ ipa_realm }}
+      --password {{ ipa_admin_pass }}
+      --server {{ ipa_server }}
+      --realm {{ ipa_realm }}
+      --force-join
+      --mkhomedir
+      --unattended
+     tags:
+       - configure_ipa-client
