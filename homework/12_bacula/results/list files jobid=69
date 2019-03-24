@@ -1,0 +1,19 @@
+*list files jobid=69
++----------------------------------+
+| filename                         |
++----------------------------------+
+| /etc/otus                        |
+| /etc/bacula/bacula-fd.conf       |
+| /etc/bacula/                     |
+| /etc/bacula/keys/fd-example.cert |
+| /etc/bacula/keys/fd-example.key  |
+| /etc/bacula/keys/fd-example.pem  |
+| /etc/bacula/keys/master.cert     |
+| /etc/bacula/keys/master.key      |
+| /etc/bacula/keys/                |
++----------------------------------+
++-------+---------------+---------------------+------+-------+----------+----------+-----------+
+| jobid | name          | starttime           | type | level | jobfiles | jobbytes | jobstatus |
++-------+---------------+---------------------+------+-------+----------+----------+-----------+
+|    69 | BackupClient1 | 2019-03-24 15:45:02 | B    | D     |        9 |   11,920 | T         |
++-------+---------------+---------------------+------+-------+----------+----------+-----------+

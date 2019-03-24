@@ -1,0 +1,93 @@
+24-Mar 15:45 bacula-dir JobId 69: No prior or suitable Differential backup found in catalog. Doing Differential backup.
+24-Mar 15:45 bacula-dir JobId 70: No prior or suitable Differential backup found in catalog. Doing Differential backup.
+24-Mar 15:45 bacula-dir JobId 69: Start Backup JobId 69, Job=BackupClient1.2019-03-24_15.45.00_15
+24-Mar 15:45 bacula-dir JobId 69: Using Device "FileStorage" to write.
+24-Mar 15:45 bacula-dir JobId 69: Sending Accurate information.
+24-Mar 15:45 bacula-sd JobId 69: Volume "BackupVol0001" previously written, moving to end of data.
+24-Mar 15:45 bacula-sd JobId 69: Ready to append to end of Volume "BackupVol0001" size=36622632
+24-Mar 15:45 bacula-sd JobId 69: Elapsed time=00:00:01, Transfer rate=15.10 K Bytes/second
+24-Mar 15:45 bacula-dir JobId 69: Bacula bacula-dir 5.2.13 (19Jan13):
+  Build OS:               x86_64-redhat-linux-gnu redhat (Core)
+  JobId:                  69
+  Job:                    BackupClient1.2019-03-24_15.45.00_15
+  Backup Level:           Differential (upgraded from Incremental)
+  Client:                 "client1-fd" 5.2.13 (19Jan13) x86_64-redhat-linux-gnu,redhat,(Core)
+  FileSet:                "OTUS" 2019-03-24 11:15:00
+  Pool:                   "File" (From Job resource)
+  Catalog:                "MyCatalog" (From Client resource)
+  Storage:                "File" (From Job resource)
+  Scheduled time:         24-Mar-2019 15:45:00
+  Start time:             24-Mar-2019 15:45:02
+  End time:               24-Mar-2019 15:45:03
+  Elapsed time:           1 sec
+  Priority:               10
+  FD Files Written:       9
+  SD Files Written:       9
+  FD Bytes Written:       11,920 (11.92 KB)
+  SD Bytes Written:       15,101 (15.10 KB)
+  Rate:                   11.9 KB/s
+  Software Compression:   None
+  VSS:                    no
+  Encryption:             yes
+  Accurate:               yes
+  Volume name(s):         BackupVol0001
+  Volume Session Id:      69
+  Volume Session Time:    1553425809
+  Last Volume Bytes:      36,638,655 (36.63 MB)
+  Non-fatal FD errors:    0
+  SD Errors:              0
+  FD termination status:  OK
+  SD termination status:  OK
+  Termination:            Backup OK
+ 
+24-Mar 15:45 bacula-dir JobId 69: Begin pruning Jobs older than 6 months .
+24-Mar 15:45 bacula-dir JobId 69: No Jobs found to prune.
+24-Mar 15:45 bacula-dir JobId 69: Begin pruning Files.
+24-Mar 15:45 bacula-dir JobId 69: No Files found to prune.
+24-Mar 15:45 bacula-dir JobId 69: End auto prune.
+
+24-Mar 15:45 bacula-dir JobId 70: Start Backup JobId 70, Job=BackupClient2.2019-03-24_15.45.00_16
+24-Mar 15:45 bacula-dir JobId 70: Using Device "FileStorage" to write.
+24-Mar 15:45 bacula-dir JobId 70: Sending Accurate information.
+24-Mar 15:45 bacula-sd JobId 70: Volume "BackupVol0001" previously written, moving to end of data.
+24-Mar 15:45 bacula-sd JobId 70: Ready to append to end of Volume "BackupVol0001" size=36638655
+24-Mar 15:45 bacula-sd JobId 70: Elapsed time=00:00:01, Transfer rate=54.52 K Bytes/second
+24-Mar 15:45 bacula-dir JobId 70: Bacula bacula-dir 5.2.13 (19Jan13):
+  Build OS:               x86_64-redhat-linux-gnu redhat (Core)
+  JobId:                  70
+  Job:                    BackupClient2.2019-03-24_15.45.00_16
+  Backup Level:           Differential (upgraded from Incremental)
+  Client:                 "client2-fd" 5.2.13 (19Jan13) x86_64-redhat-linux-gnu,redhat,(Core)
+  FileSet:                "OTUS" 2019-03-24 11:15:00
+  Pool:                   "File" (From Job resource)
+  Catalog:                "MyCatalog" (From Client resource)
+  Storage:                "File" (From Job resource)
+  Scheduled time:         24-Mar-2019 15:45:00
+  Start time:             24-Mar-2019 15:45:05
+  End time:               24-Mar-2019 15:45:05
+  Elapsed time:           0 secs
+  Priority:               10
+  FD Files Written:       42
+  SD Files Written:       42
+  FD Bytes Written:       40,592 (40.59 KB)
+  SD Bytes Written:       54,520 (54.52 KB)
+  Rate:                   0.0 KB/s
+  Software Compression:   31.3 %
+  VSS:                    no
+  Encryption:             yes
+  Accurate:               yes
+  Volume name(s):         BackupVol0001
+  Volume Session Id:      70
+  Volume Session Time:    1553425809
+  Last Volume Bytes:      36,695,849 (36.69 MB)
+  Non-fatal FD errors:    0
+  SD Errors:              0
+  FD termination status:  OK
+  SD termination status:  OK
+  Termination:            Backup OK
+
+24-Mar 15:45 bacula-dir JobId 70: Begin pruning Jobs older than 6 months .
+24-Mar 15:45 bacula-dir JobId 70: No Jobs found to prune.
+24-Mar 15:45 bacula-dir JobId 70: Begin pruning Files.
+24-Mar 15:45 bacula-dir JobId 70: No Files found to prune.
+24-Mar 15:45 bacula-dir JobId 70: End auto prune.

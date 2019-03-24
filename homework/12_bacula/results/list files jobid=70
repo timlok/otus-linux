@@ -1,0 +1,52 @@
+*list files jobid=70
++---------------------------------------------------------------+
+| filename                                                      |
++---------------------------------------------------------------+
+| /etc/bacula/examples/bacula-fd.conf                           |
+| /etc/bacula/examples/                                         |
+| /etc/sysconfig/network                                        |
+| /etc/sysconfig/bacula-fd                                      |
+| /etc/sysconfig/                                               |
+| /etc/lvm/cache/                                               |
+| /etc/sysconfig/network-scripts/ifcfg-lo                       |
+| /etc/sysconfig/network-scripts/ifcfg-enp0s3                   |
+| /etc/sysconfig/network-scripts/                               |
+| /etc/resolv.conf                                              |
+| /etc/vimrc                                                    |
+| /etc/otus                                                     |
+| /etc/group                                                    |
+| /etc/gshadow                                                  |
+| /etc/passwd                                                   |
+| /etc/shadow                                                   |
+| /etc/ld.so.cache                                              |
+| /etc/passwd-                                                  |
+| /etc/group-                                                   |
+| /etc/gshadow-                                                 |
+| /etc/shadow-                                                  |
+| /etc/client-inited                                            |
+| /etc/                                                         |
+| /etc/systemd/system/multi-user.target.wants/bacula-fd.service |
+| /etc/systemd/system/multi-user.target.wants/                  |
+| /etc/profile.d/vim.csh                                        |
+| /etc/profile.d/vim.sh                                         |
+| /etc/profile.d/                                               |
+| /etc/rpm/macros.perl                                          |
+| /etc/rpm/                                                     |
+| /etc/bacula/bacula-fd.conf                                    |
+| /etc/bacula/.bacula-fd.conf.swp                               |
+| /etc/bacula/                                                  |
+| /etc/logrotate.d/bacula                                       |
+| /etc/logrotate.d/                                             |
+| /etc/tuned/active_profile                                     |
+| /etc/bacula/keys/fd-example.cert                              |
+| /etc/bacula/keys/fd-example.key                               |
+| /etc/bacula/keys/fd-example.pem                               |
+| /etc/bacula/keys/master.cert                                  |
+| /etc/bacula/keys/master.key                                   |
+| /etc/bacula/keys/                                             |
++---------------------------------------------------------------+
++-------+---------------+---------------------+------+-------+----------+----------+-----------+
+| jobid | name          | starttime           | type | level | jobfiles | jobbytes | jobstatus |
++-------+---------------+---------------------+------+-------+----------+----------+-----------+
+|    70 | BackupClient2 | 2019-03-24 15:45:05 | B    | D     |       42 |   40,592 | T         |
++-------+---------------+---------------------+------+-------+----------+----------+-----------+
