@@ -1,0 +1,40 @@
+- name: Install audit
+  yum:
+    name:
+      - audit
+      - audit-libs
+      - audispd-plugins
+    state: latest
+  tags:
+  - install_audit
+
+- name: Replace auditd.conf on client
+  template:
+    src: auditd.conf.j2
+    dest: /etc/audit/auditd.conf
+  tags:
+  - insert_auditd.conf
+
+- name: Replace audisp-remote.conf on client
+  template:
+    src: audisp-remote.conf.j2
+    dest: /etc/audisp/audisp-remote.conf
+  tags:
+  - insert_audisp-remote.conf
+
+- name: Replace au-remote.conf on client
+  template:
+    src: au-remote.conf.j2
+    dest: /etc/audisp/plugins.d/au-remote.conf
+  tags:
+  - insert_au-remote.conf
+
+- name: Replace audit.rules on client
+  template:
+    src: audit.rules.j2
+    dest: /etc/audit/rules.d/audit.rules
+  tags:
+  - insert_audit.rules
+#  notify:
+#  - auditd restart
+- command: /sbin/service auditd restart

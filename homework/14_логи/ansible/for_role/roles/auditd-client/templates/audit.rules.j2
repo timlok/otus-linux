@@ -1,0 +1,12 @@
+## First rule - delete all
+-D
+
+## Increase the buffers to survive stress events.
+## Make this bigger for busy systems
+-b 8192
+
+## Set failure mode to syslog
+-f 1
+
+-w /etc/nginx/nginx.conf -p rxwa -k nginx_config_change
+

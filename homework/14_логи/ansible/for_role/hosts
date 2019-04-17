@@ -1,0 +1,2 @@
+web-server ansible_host=172.17.177.11
+localhost ansible_host=localhost transport=local

@@ -1,0 +1,19 @@
+- name: rsyslog-server provision
+  hosts: localhost
+  connection: local
+  become: true
+  tags:
+   - rsyslog-server_provision
+
+  roles:
+   - rsyslog-server
+
+- name: rsyslog-client provision
+  hosts: web-server
+  become: true
+  gather_facts: true
+  tags:
+   - rsyslog-client_provision
+
+  roles:
+   - rsyslog-client

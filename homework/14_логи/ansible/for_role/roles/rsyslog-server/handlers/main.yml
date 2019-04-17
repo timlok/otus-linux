@@ -1,0 +1,9 @@
+- name: rsyslog stop
+  systemd:
+    name: rsyslog
+    state: stopped
+
+- name: rsyslog start
+  systemd:
+    name: rsyslog
+    state: started

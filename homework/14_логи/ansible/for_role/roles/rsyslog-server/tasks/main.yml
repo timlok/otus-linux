@@ -1,0 +1,16 @@
+- name: Install rsyslog
+  yum:
+    name: rsyslog
+    state: latest
+  tags:
+  - install_rsyslog
+
+- name: Replace rsyslog.conf on server
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+  tags:
+  - insert_rsyslog.conf
+  notify:
+  - rsyslog stop
+  - rsyslog start

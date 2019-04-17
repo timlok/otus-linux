@@ -1,0 +1,97 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+$script1 = <<END
+    mkdir -p ~root/.ssh
+    cp ~vagrant/.ssh/auth* ~root/.ssh
+    #yum install -y epel-release
+    #yes | rpm -ivh http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el7/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+    #yum install -y redhat-lsb-core wget yum-utils htop mc screen sudo iotop net-tools elinks traceroute bind-utils deltarpm lsof vim vim-enhanced nmap
+    #yum install -y redhat-lsb-core wget yum-utils mc screen net-tools elinks traceroute bind-utils deltarpm lsof vim vim-enhanced nmap
+    #echo "alias vi='vim'" >> /root/.bashrc
+    #echo "colorscheme desert" >> /etc/vimrc
+END
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "web-server" do |t|
+  end
+
+  config.vm.define "web-server" do |machine|
+
+    machine.vm.hostname = "web-server"
+    machine.vm.network "private_network", ip: "172.17.177.11", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "log_net"
+    machine.vm.provision "shell", inline: $script1
+    #machine.vm.provision "shell", path: "00_updateOS.sh"
+    machine.vm.provision "shell", inline: <<-SHELL
+    yum install -y yum-utils
+    cp /vagrant/files/nginx.repo /etc/yum.repos.d/nginx.repo
+    yum-config-manager --enable nginx-mainline
+    #yum install nginx
+    cat /vagrant/keys/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+    echo "172.17.177.22 log-server log-server" >> /etc/hosts
+    SHELL
+
+     config.vm.provider "virtualbox" do |vb|
+       vb.name = "web-server"
+       vb.memory = "512"
+       vb.cpus = "1"
+     end
+  end
+
+  config.vm.define "log-server" do |t|
+  end
+
+  config.vm.define "log-server" do |machine|
+
+    machine.vm.hostname = "log-server"
+    machine.vm.network "private_network", ip: "172.17.177.22", adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "log_net"
+    machine.vm.provision "shell", inline: $script1
+    machine.vm.provision "shell", inline: <<-SHELL
+    cp /vagrant/keys/id_rsa* /home/vagrant/.ssh/
+    chmod 700 /home/vagrant/.ssh/ && chmod 600 /home/vagrant/.ssh/*
+    chown vagrant:vagrant /home/vagrant/.ssh/id_rsa*
+    echo "172.17.177.11 web-server web-server" >> /etc/hosts
+    yum install -y python python-setuptools nmap
+    easy_install pip
+    pip install ansible
+    mkdir -p /etc/ansible/
+    echo "[defaults]
+host_key_checking = False" > /etc/ansible/ansible.cfg
+
+    mkdir /home/vagrant/ansible
+
+    #not_role
+    #cp -r /vagrant/ansible/not_role/* /home/vagrant/ansible/
+
+    #for_role
+    cp -r /vagrant/ansible/for_role/* /home/vagrant/ansible/
+
+    chown vagrant:vagrant -R /home/vagrant/ansible
+    #sudo -u vagrant ansible all -i /home/vagrant/ansible/hosts -m ping
+    su -l vagrant -c 'ansible-playbook /home/vagrant/ansible/nginx.yml -i /home/vagrant/ansible/hosts --list-tasks'
+    su -l vagrant -c 'ansible-playbook /home/vagrant/ansible/nginx.yml -i /home/vagrant/ansible/hosts'
+    su -l vagrant -c 'ansible-playbook /home/vagrant/ansible/rsyslog.yml -i /home/vagrant/ansible/hosts --list-tasks'
+    su -l vagrant -c 'ansible-playbook /home/vagrant/ansible/rsyslog.yml -i /home/vagrant/ansible/hosts'
+    su -l vagrant -c 'ansible-playbook /home/vagrant/ansible/auditd.yml -i /home/vagrant/ansible/hosts --list-tasks'
+    su -l vagrant -c 'ansible-playbook /home/vagrant/ansible/auditd.yml -i /home/vagrant/ansible/hosts'
+    echo "------------------------------RESULT for nmap-----------------------------------"
+    nmap -Pn -p 8080 web-server
+    echo "------------------------------RESULT for curl-----------------------------------"
+    curl web-server:8080 | grep 8080
+    echo "--------------------------------END RESULTS-------------------------------------"
+    SHELL
+
+     config.vm.provider "virtualbox" do |vb|
+       vb.name = "log-server"
+       vb.memory = "512"
+       vb.cpus = "1"
+     end
+  end
+
+end

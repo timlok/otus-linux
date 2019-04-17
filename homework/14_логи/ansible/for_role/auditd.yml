@@ -1,0 +1,19 @@
+- name: auditd-server provision
+  hosts: localhost
+  connection: local
+  become: true
+  tags:
+   - auditd-server_provision
+
+  roles:
+   - auditd-server
+
+- name: auditd-client provision
+  hosts: web-server
+  become: true
+  gather_facts: true
+  tags:
+   - auditd-client_provision
+
+  roles:
+   - auditd-client

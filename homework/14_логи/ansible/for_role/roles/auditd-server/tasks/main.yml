@@ -1,0 +1,16 @@
+- name: Install audit
+  yum:
+    name: audit
+    state: latest
+  tags:
+  - install_audit
+
+- name: Replace auditd.conf on server
+  template:
+    src: auditd.conf.j2
+    dest: /etc/audit/auditd.conf
+  tags:
+  - insert_auditd.conf
+#  notify:
+#  - auditd restart
+- command: /sbin/service auditd restart

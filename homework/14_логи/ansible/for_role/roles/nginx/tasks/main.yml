@@ -1,0 +1,38 @@
+# - name: Install epel
+#   yum:
+#     name: epel-release
+#     state: present
+#   tags:
+#   - install_epel
+# 
+- name: Install nginx
+  yum:
+    name: nginx
+    state: present
+  notify:
+    - NGINX start
+  tags:
+  - install_nginx
+
+- name: Start nginx
+  systemd:
+    name: nginx
+    enabled: yes
+  tags:
+  - start_nginx
+
+- name: Replace index.html
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+  tags:
+  - insert_html
+
+- name: Replace nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+       - NGINX restart
+  tags:
+  - insert_conf
