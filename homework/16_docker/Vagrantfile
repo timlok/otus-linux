@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+$script1 = <<END
+    mkdir -p ~root/.ssh
+    cp ~vagrant/.ssh/auth* ~root/.ssh
+    yum update -y
+    yum install -y epel-release
+    yes | rpm -ivh http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el7/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
+    yum install -y redhat-lsb-core wget yum-utils htop mc screen sudo iotop net-tools elinks traceroute bind-utils deltarpm lsof vim vim-enhanced nmap
+    echo "alias vi='vim'" >> /root/.bashrc
+    echo "colorscheme desert" >> /etc/vimrc
+    cp /vagrant/files/screenrc /root/.screenrc
+    cp /vagrant/files/screenrc /home/vagrant/.screenrc
+    chown vagrant:vagrant /home/vagrant/.screenrc
+END
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "docker" do |t|
+  end
+
+  config.vm.define "docker" do |machine|
+
+    machine.vm.hostname = "docker"
+    machine.vm.network "public_network", adapter: 2, bridge: "wlp2s0"
+    machine.vm.provision "shell", inline: $script1
+        
+     config.vm.provider "virtualbox" do |vb|
+       vb.name = "docker"
+       vb.memory = "1024"
+       vb.cpus = "2"
+     end
+  end
+
+end
