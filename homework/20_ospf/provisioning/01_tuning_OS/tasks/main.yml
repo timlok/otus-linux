@@ -5,27 +5,6 @@
     - epel-release
 
 - name: install packages
-#  yum: name={{ item }} state=latest
-#  with_items:
-#    - vim
-#    - vim-enhanced
-#    - mc
-#    - screen
-#    - redhat-lsb-core
-#    - wget
-#    - yum-utils
-#    - htop
-#    - sudo
-#    - iotop
-#    - net-tools
-#    - elinks
-#    - lynx
-#    - bind-utils
-#    - deltarpm
-#    - lsof
-#    - tree
-#    - traceroute
-#    - tcpdump
   yum:
     name:
       - vim
@@ -48,8 +27,6 @@
       - traceroute
       - tcpdump
     state: latest
-
-#['vim', 'vim-enhanced', 'mc', 'screen', 'redhat-lsb-core', 'wget', 'yum-utils', 'htop', 'sudo', 'iotop', 'net-tools', 'elinks', 'lynx', 'bind-utils', 'deltarpm', 'lsof', 'tree', 'traceroute', 'tcpdump']
 
 - name: copy .screenrc
   copy: src=screenrc dest=/root/.screenrc owner=root group=root mode=0600
@@ -88,14 +65,6 @@
     sysctl_set: yes
     state: present
     reload: yes
-
-#- hosts: all
-#  become: true
-#  tasks:
-#  - name:  network restart
-#    systemd:
-#      name: network
-#      state: restarted
 
 - name: disable selinux
   selinux: 
