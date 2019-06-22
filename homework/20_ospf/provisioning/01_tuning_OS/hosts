@@ -1,0 +1,3 @@
+abr01 ansible_host=127.0.0.1 ansible_port=2321 ansible_private_key_file=.vagrant/machines/abr01/virtualbox/private_key
+abr02 ansible_host=127.0.0.1 ansible_port=2322 ansible_private_key_file=.vagrant/machines/abr02/virtualbox/private_key
+br03 ansible_host=127.0.0.1 ansible_port=2323 ansible_private_key_file=.vagrant/machines/br03/virtualbox/private_key

@@ -1,0 +1,96 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+MACHINES = {
+    
+    :abr01 => {  
+        :box_name => "centos/7",
+        :net => [
+                {ip: '172.16.12.11', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "ospf-net"},
+                {ip: '172.16.16.11', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "ospf-net"},
+            ]    
+    },
+
+    :abr02 => {  
+        :box_name => "centos/7",
+        :net => [
+                {ip: '172.16.12.12', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "ospf-net"},
+                {ip: '172.16.20.12', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "ospf-net"},
+                ]    
+    },
+    
+    :br03 => {  
+        :box_name => "centos/7",
+        :net => [
+                {ip: '172.16.16.13', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "ospf-net"},
+                {ip: '172.16.20.13', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "ospf-net"},
+            ]    
+    },
+}
+
+Vagrant.configure(2) do |config|
+
+  config.vm.define "abr01" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2321, id: "ssh", host_ip: '127.0.0.1'
+  end
+
+  config.vm.define "abr02" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2322, id: "ssh", host_ip: '127.0.0.1'
+  end
+
+  config.vm.define "br03" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2323, id: "ssh", host_ip: '127.0.0.1'
+  end
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.box_check_update = false
+        box.vm.host_name = boxname.to_s
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        box.vm.provider "virtualbox" do |v|
+          v.memory = "256"
+          v.cpus = "1"
+        end
+  
+        box.vm.provision "shell", inline: <<-SHELL
+          mkdir -p ~root/.ssh
+          cp ~vagrant/.ssh/auth* ~root/.ssh
+          sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
+          sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+          systemctl reload sshd.service
+        SHELL
+        
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "vvv"
+          ansible.playbook = "provisioning/01_tuning_OS.yml"
+          ansible.become = "true"
+        end
+
+#Плейбук с симметричной маршрутизацией        
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "vvv"
+          ansible.playbook = "provisioning/02_quagga_sym.yml"
+          ansible.become = "true"
+        end
+
+#Плейбук с асимметричной маршрутизацией
+#        box.vm.provision "ansible" do |ansible|
+#          ansible.verbose = "vvv"
+#          ansible.playbook = "provisioning/03_quagga_asym.yml"
+#          ansible.become = "true"
+#        end
+
+    end
+
+  end
+  
+end

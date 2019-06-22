@@ -1,0 +1,39 @@
+---
+- name: install quagga
+  yum:
+    name: quagga
+    state: latest
+
+- name: copy daemons
+  copy: src=daemons dest=/etc/quagga/daemons owner=quagga group=quagga mode=0640
+
+
+- name: copy zebra.conf abr01
+  copy: src=abr01/zebra.conf dest=/etc/quagga/zebra.conf owner=quagga group=quagga mode=0640
+  notify: zebra restart
+  when: ansible_facts['hostname'] == "abr01"
+
+- name: copy ospfd.conf abr01
+  copy: src=abr01/ospfd.conf dest=/etc/quagga/ospfd.conf owner=quagga group=quagga mode=0640
+  notify: ospfd restart
+  when: ansible_facts['hostname'] == "abr01"
+  
+- name: copy zebra.conf abr02
+  copy: src=abr02/zebra.conf dest=/etc/quagga/zebra.conf owner=quagga group=quagga mode=0640
+  notify: zebra restart
+  when: ansible_facts['hostname'] == "abr02"
+
+- name: copy ospfd.conf abr02
+  copy: src=abr02/ospfd.conf dest=/etc/quagga/ospfd.conf owner=quagga group=quagga mode=0640
+  notify: ospfd restart
+  when: ansible_facts['hostname'] == "abr02"
+
+- name: copy zebra.conf br03
+  copy: src=br03/zebra.conf dest=/etc/quagga/zebra.conf owner=quagga group=quagga mode=0640
+  notify: zebra restart
+  when: ansible_facts['hostname'] == "br03"
+
+- name: copy ospfd.conf br03
+  copy: src=br03/ospfd.conf dest=/etc/quagga/ospfd.conf owner=quagga group=quagga mode=0640
+  notify: ospfd restart
+  when: ansible_facts['hostname'] == "br03"

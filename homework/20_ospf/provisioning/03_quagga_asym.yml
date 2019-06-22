@@ -1,0 +1,7 @@
+- name: 03_quagga_asym
+  hosts: all
+  become: true
+#  gather_facts: true
+
+  roles:
+   - 03_quagga_asym

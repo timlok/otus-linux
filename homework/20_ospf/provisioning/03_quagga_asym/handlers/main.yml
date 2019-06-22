@@ -1,0 +1,12 @@
+---
+- name: zebra restart
+  systemd:
+    name: zebra
+    state: restarted
+    enabled: yes
+
+- name: ospfd restart
+  systemd:
+    name: ospfd
+    state: restarted
+    enabled: yes
