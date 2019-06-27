@@ -1,8 +1,8 @@
-Для проверки ДЗ выкачиваем всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/21_firewalld-iptables) и выполняем ```vagrant up```.
+Для проверки ДЗ выкачиваем всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/21_iptables) и выполняем ```vagrant up```.
 
 Схема коммутации серверов:
 
-![](https://github.com/timlok/otus-linux/blob/master/homework/21_firewalld-iptables/scheme/scheme.png)
+![](https://github.com/timlok/otus-linux/blob/master/homework/21_iptables/scheme/scheme.png)
 
 ## Port Knocking
 
