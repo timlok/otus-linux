@@ -1,0 +1,46 @@
+---
+- name: install packages
+  yum:
+    name:
+      - sudo
+      - net-tools
+      - bind-utils
+      - traceroute
+      - tcpdump
+      - nmap
+    state: latest
+
+- name: routing tuning
+  shell: |
+    echo "DEFROUTE="no"" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+    echo "GATEWAY=192.168.3.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+    echo "DEFROUTE="yes"" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+    echo "GATEWAY=192.168.3.1" >> /etc/sysconfig/network
+    
+- name: firewalld enable
+  service: name=firewalld state=started enabled=yes
+
+- name: firewalld masquerade
+  firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
+    zone: public
+
+- name: firewalld portforward with rich rule
+  firewalld:
+    rich_rule: rule family="ipv4" forward-port port=8080 protocol=tcp to-port=80 to-addr=192.168.0.2
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: firewalld reload
+  shell: firewall-cmd --reload
+#Через vagrant маршрут по-умолчанию устанавливается не тот, который я указываю при провижиниге.
+#Для автоматического применения маршрута по-умолчанию приходится перезагружать ВМ.
+#Хотя, руками достаточно просто перезпустить сервисы.
+  notify:
+    - system restart
+    - network restart
+    - firewalld start

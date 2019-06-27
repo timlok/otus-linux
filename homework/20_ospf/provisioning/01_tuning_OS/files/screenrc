@@ -40,3 +40,5 @@ hardstatus on
 startup_message off
 screen 0
 vbell on
+multiuser on
+

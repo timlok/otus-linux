@@ -1,0 +1,8 @@
+- name: centralServer
+  hosts: all
+  become: true
+#  gather_facts: true
+
+  roles:
+   - centralServer
+

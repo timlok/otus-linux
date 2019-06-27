@@ -1,0 +1,35 @@
+---
+- name: install packages
+  yum:
+    name:
+      - sudo
+      - net-tools
+      - bind-utils
+      - traceroute
+      - tcpdump
+      - nmap
+      - libselinux-python
+    state: latest
+
+- name: edit sysctl.conf
+  sysctl:
+    name: net.ipv4.conf.all.forwarding
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: copy iptables rules
+  copy: src=iptables_inetRouter dest=/etc/sysconfig/iptables owner=root group=root mode=0640
+
+- name: routing tuning
+  shell: |
+    echo "192.168.0.0/28 via 192.168.255.2" >> /etc/sysconfig/network-scripts/route-eth1
+    echo "192.168.3.0/28 via 192.168.255.2" >> /etc/sysconfig/network-scripts/route-eth1
+    iptables-restore < /etc/sysconfig/iptables
+
+- name: reboot the system without waiting
+  shell: sleep 2 && shutdown -r now "ansible reboot triggered"
+  async: 1
+  poll: 0
+  

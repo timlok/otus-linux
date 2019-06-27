@@ -1,0 +1,16 @@
+---
+- name: system restart
+  reboot: 
+      reboot_timeout: 60
+
+- name: network restart
+  systemd:
+    name: network
+    state: restarted
+    enabled: yes
+
+- name: firewalld start
+  systemd:
+    name: firewalld
+    state: restarted
+    enabled: yes

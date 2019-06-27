@@ -1,0 +1,1 @@
+inetRouter2 ansible_host=127.0.0.1 ansible_port=2621 ansible_private_key_file=.vagrant/machines/inetRouter2/virtualbox/private_key
