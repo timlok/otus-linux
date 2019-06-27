@@ -6,7 +6,6 @@
 MACHINES = {
 :inetRouter => {
         :box_name => "centos/6",
-        #:public => {:ip => '10.10.10.1', :adapter => 1},
         :net => [
                    {ip: '192.168.255.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
                 ]
@@ -79,7 +78,6 @@ Vagrant.configure("2") do |config|
                 cp ~vagrant/.ssh/auth* ~root/.ssh
                 sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
                 sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-                #systemctl reload sshd.service
                 service sshd restart
         SHELL
         
@@ -90,68 +88,24 @@ Vagrant.configure("2") do |config|
             ansible.playbook = "provisioning/inetRouter.yml"
             ansible.become = "true"
           end
-#          box.vm.provision "shell", run: "always", inline: <<-SHELL
-#            echo 'net.ipv4.conf.all.forwarding = 1' >> /etc/sysctl.conf
-#            sysctl -p
-#            echo "192.168.0.0/28 via 192.168.255.2" >> /etc/sysconfig/network-scripts/route-eth1
-#            echo "192.168.3.0/28 via 192.168.255.2" >> /etc/sysconfig/network-scripts/route-eth1
-#            #iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
-#            cp /vagrant/files/iptables_inetRouter /etc/sysconfig/iptables
-#            chown root. /etc/sysconfig/iptables
-#            iptables-restore < /etc/sysconfig/iptables
-#            #service iptables restart
-#            #systemctl restart network
-#            reboot
-#            SHELL
         when "centralRouter"
           box.vm.provision "ansible" do |ansible|
             ansible.verbose = "vvv"
             ansible.playbook = "provisioning/centralRouter.yml"
             ansible.become = "true"
           end
-#          box.vm.provision "shell", run: "always", inline: <<-SHELL
-#            echo 'net.ipv4.conf.all.forwarding = 1' >> /etc/sysctl.conf
-#            sysctl -p
-#            echo "DEFROUTE="no"" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#            echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-#            echo "DEFROUTE="yes"" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-#            cp /vagrant/files/knock.sh /home/vagrant
-#            chown vagrant. /home/vagrant/knock.sh && chmod +x /home/vagrant/knock.sh
-#            yum install -y nmap
-#            #systemctl restart network
-#            reboot
-#            SHELL
         when "centralServer"
           box.vm.provision "ansible" do |ansible|
             ansible.verbose = "vvv"
             ansible.playbook = "provisioning/centralServer.yml"
             ansible.become = "true"
           end
-#          box.vm.provision "shell", run: "always", inline: <<-SHELL
-#            echo "DEFROUTE="no"" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#            echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-#            echo "DEFROUTE="yes"" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-#            #systemctl restart network
-#            reboot
-#            SHELL
         when "inetRouter2"
           box.vm.provision "ansible" do |ansible|
             ansible.verbose = "vvv"
             ansible.playbook = "provisioning/inetRouter2.yml"
             ansible.become = "true"
           end
-#          box.vm.provision "shell", run: "always", inline: <<-SHELL
-#            echo "DEFROUTE="no"" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-#            echo "GATEWAY=192.168.3.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-#            echo "DEFROUTE="yes"" >> /etc/sysconfig/network-scripts/ifcfg-eth1
-#            #reboot
-#            #systemctl restart network
-#            systemctl enable firewalld --now
-#            firewall-cmd --permanent --zone=public --add-masquerade
-#            firewall-cmd --permanent --zone=public --add-forward-port=port=8080:proto=tcp:toport=80:toaddr=192.168.0.2
-#            firewall-cmd --reload
-#            reboot
-#            SHELL
         end
 
       end
