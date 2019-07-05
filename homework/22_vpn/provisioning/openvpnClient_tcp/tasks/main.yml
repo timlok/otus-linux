@@ -1,0 +1,62 @@
+---
+- name: install packages
+  yum:
+    name:
+      - openvpn
+    state: latest
+    
+- name: create and change ownership of a directory with keyfiles
+  file:
+    path: /etc/openvpn/keys
+    state: directory
+#    rescue: yes
+    mode: '0700'
+    owner: root
+    group: root
+
+- name: copy keyfiles to client1
+  copy: src=pki/{{ item }} dest=/etc/openvpn/keys owner=root group=root mode=0600
+  with_items:
+    - client1.crt
+    - client1.key
+    - ta.key
+    - ca.crt
+  when: ansible_facts['hostname'] == "openvpnClient1"
+
+- name: copy keyfiles to client2
+  copy: src=pki/{{ item }} dest=/etc/openvpn/keys owner=root group=root mode=0600
+  with_items:
+    - client2.crt
+    - client2.key
+    - ta.key
+    - ca.crt
+  when: ansible_facts['hostname'] == "openvpnClient2"
+
+#- name: delete openvpnClient2 keyfiles
+#  file:
+#    path: "{{ item }}"
+#    state: absent
+#  with_items:
+#    - /etc/openvpn/keys/client2.crt
+#    - /etc/openvpn/keys/client2.key
+#  when: ansible_facts['hostname'] == "openvpnClient1"
+#
+#- name: delete openvpnClient1 keyfiles
+#  file:
+#    path: "{{ item }}"
+#    state: absent
+#  with_items:
+#    - /etc/openvpn/keys/client1.crt
+#    - /etc/openvpn/keys/client1.key
+#  when: ansible_facts['hostname'] == "openvpnClient2"
+
+- name: copy conf and start vpn-client1
+  copy: src=vpn-client1.conf dest=/etc/openvpn/vpn-client.conf owner=root group=openvpn mode=0640
+  notify: vpn-client restart
+  when: ansible_facts['hostname'] == "openvpnClient1"
+
+- name: copy conf and start vpn-client2
+  copy: src=vpn-client2.conf dest=/etc/openvpn/vpn-client.conf owner=root group=openvpn mode=0640
+  notify: vpn-client restart
+  when: ansible_facts['hostname'] == "openvpnClient2"
+  

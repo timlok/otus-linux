@@ -1,0 +1,10 @@
+export KEY_COUNTRY="RU"
+export KEY_PROVINCE="Novosibirsk"
+export KEY_CITY="Novosibirsk"
+export KEY_ORG="OTUS"
+export KEY_EMAIL="timur@otus.ru"
+export KEY_CN="OTUS"
+export KEY_OU="OTUS"
+export KEY_NAME="openvpn-server"
+export KEY_ALTNAMES="openvpn-server"
+

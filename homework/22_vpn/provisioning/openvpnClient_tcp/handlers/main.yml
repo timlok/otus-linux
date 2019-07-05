@@ -1,0 +1,6 @@
+---
+- name: vpn-client restart
+  systemd:
+    name: openvpn@vpn-client
+    state: restarted
+    enabled: yes

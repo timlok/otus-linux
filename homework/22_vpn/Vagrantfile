@@ -1,0 +1,118 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :openvpnServer => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '10.0.0.1', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "client1-net"},
+                   {ip: '20.0.0.1', adapter: 3, netmask: "255.255.255.0", virtualbox__intnet: "client2-net"},
+                ]
+  },
+  :openvpnClient1 => {
+        :box_name => "centos/7",
+        :net => [
+                    {ip: '10.0.0.10', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "client1-net"},
+                ]
+  },
+  :openvpnClient2 => {
+        :box_name => "centos/7",
+        :net => [
+                    {ip: '20.0.0.10', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "client2-net"},
+                ]
+  },
+}
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "openvpnClient1" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2321, id: "ssh", host_ip: '127.0.0.1'
+  end
+  config.vm.define "openvpnServer" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2421, id: "ssh", host_ip: '127.0.0.1'
+  end
+  config.vm.define "openvpnClient2" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2521, id: "ssh", host_ip: '127.0.0.1'
+  end
+
+  config.vm.define "openvpnServer" do |machine|
+    machine.vm.network "public_network", adapter: 4, bridge: "wlp2s0"
+  end
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.box_check_update = false
+        box.vm.host_name = boxname.to_s
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        if boxconfig.key?(:public)
+          box.vm.network "public_network", boxconfig[:public]
+        end
+        
+        box.vm.provider "virtualbox" do |v|
+          v.memory = "256"
+          v.cpus = "1"
+        end
+
+        box.vm.provision "shell", inline: <<-SHELL
+          mkdir -p ~root/.ssh
+                cp ~vagrant/.ssh/auth* ~root/.ssh
+                sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
+                sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+                systemctl restart sshd
+        SHELL
+        
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "v"
+          ansible.playbook = "provisioning/01_tuning_OS.yml"
+          ansible.become = "true"
+        end
+
+        case boxname.to_s
+        when "openvpnServer"
+          box.vm.provision "ansible" do |ansible|
+            ansible.verbose = "v"
+            ansible.playbook = "provisioning/openvpnServer_tcp.yml"
+            #ansible.playbook = "provisioning/openvpnServer_udp.yml"
+            ansible.become = "true"
+          end
+        when "openvpnClient1"
+          box.vm.provision "ansible" do |ansible|
+            ansible.verbose = "v"
+            ansible.playbook = "provisioning/openvpnClient_tcp.yml"
+            #ansible.playbook = "provisioning/openvpnClient_udp.yml"
+            ansible.become = "true"
+          end
+############################################################################
+#          # Picks up from any failed runs
+#          # Run this with: "vagrant provision --provision-with resume"
+#          box.vm.provision "resume", type: "ansible" do |resume|
+#            resume.playbook = "provisioning/openvpnClient.yml"
+#            resume.limit = "--limit @/home/timur/vagrant/22_vpn/provisioning/openvpnClient.retry"
+#          end
+############################################################################
+        when "openvpnClient2"
+          box.vm.provision "ansible" do |ansible|
+            ansible.verbose = "v"
+            ansible.playbook = "provisioning/openvpnClient_tcp.yml"
+            #ansible.playbook = "provisioning/openvpnClient_udp.yml"
+            ansible.become = "true"
+          end
+############################################################################
+#          # Picks up from any failed runs
+#          # Run this with: "vagrant provision --provision-with resume"
+#          box.vm.provision "resume", type: "ansible" do |resume|
+#            resume.playbook = "provisioning/openvpnClient.yml"
+#            resume.limit = "--limit @/home/timur/vagrant/22_vpn/provisioning/openvpnClient.retry"
+#          end
+############################################################################
+        end
+      end
+  end
+end

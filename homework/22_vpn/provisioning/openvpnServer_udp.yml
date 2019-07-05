@@ -1,0 +1,8 @@
+- name: openvpnServer_udp
+  hosts: all
+  become: true
+#  gather_facts: true
+
+  roles:
+   - openvpnServer_udp
+

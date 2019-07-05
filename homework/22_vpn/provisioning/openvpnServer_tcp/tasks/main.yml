@@ -1,0 +1,42 @@
+---
+- name: install packages
+  yum:
+    name:
+      - openvpn
+      - easy-rsa
+    state: latest
+    
+- name: copy vars
+  copy: src=vars dest=/usr/share/easy-rsa/3.0.3/vars owner=root group=root mode=0700
+
+- name: copy pki folder
+  copy: src=pki dest=/usr/share/easy-rsa/3.0.3/ owner=root group=root mode=preserve
+
+- name: copy keyfiles
+  shell: |
+    mkdir /etc/openvpn/keys
+    cp /usr/share/easy-rsa/3.0.3/pki/ca.crt /etc/openvpn/keys
+    cp /usr/share/easy-rsa/3.0.3/pki/dh.pem /etc/openvpn/keys
+    cp /usr/share/easy-rsa/3.0.3/pki/ta.key /etc/openvpn/keys
+    cp /usr/share/easy-rsa/3.0.3/pki/issued/vpn-server.crt /etc/openvpn/keys
+    cp /usr/share/easy-rsa/3.0.3/pki/private/vpn-server.key /etc/openvpn/keys
+    chown root:root -R /etc/openvpn/keys && chmod 700 /etc/openvpn/keys && chmod 600 /etc/openvpn/keys/*
+
+- name: create and change ownership of a ccd-directory
+  file:
+    path: /etc/openvpn/ccd
+    state: directory
+    mode: '0750'
+    owner: root
+    group: openvpn
+
+- name: copy ccd-files
+  copy: src=ccd/{{ item }} dest=/etc/openvpn/ccd owner=root group=openvpn mode=0640
+  with_items:
+    - client1
+    - client2
+    - host
+
+- name: copy conf and start vpn-server
+  copy: src=vpn-server.conf dest=/etc/openvpn/ owner=root group=openvpn mode=0640
+  notify: vpn-server restart
