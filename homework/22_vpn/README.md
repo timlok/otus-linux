@@ -18,7 +18,7 @@ systemctl start openvpn@vpn-server
 systemctl start openvpn@vpn-client
 ```
 
-На openvpnServer один из интерфейсов настроен в режиме моста. Соответственно, чтобы проверить работу RAS (Remote Access Server) со своего хоста нужно скопировать себе на хост файлы из каталога [host]() и с их помощью создать на своём хосте клиентское подключение openvpn. При этом, в файле [22_vpn_host_tap-tcp.conf]() или [22_vpn_host_tun-udp.conf]() необходимо заменить ```ip_openvpnServer``` на ip-адрес ВМ openvpnServer на соответствующем интерфейсе.
+На openvpnServer один из интерфейсов настроен в режиме моста. Соответственно, чтобы проверить работу RAS (Remote Access Server) со своего хоста нужно скопировать себе на хост файлы из каталога [host](https://github.com/timlok/otus-linux/tree/master/homework/22_vpn/host) и с их помощью создать на своём хосте клиентское подключение openvpn. При этом, в файле [22_vpn_host_tap-tcp.conf](https://github.com/timlok/otus-linux/blob/master/homework/22_vpn/host/22_vpn_host_tap-tcp.conf) или [22_vpn_host_tun-udp.conf](https://github.com/timlok/otus-linux/blob/master/homework/22_vpn/host/22_vpn_host_tun-udp.conf) необходимо заменить ```ip_openvpnServer``` на ip-адрес ВМ openvpnServer на соответствующем интерфейсе.
 
 
 На openvpnServer установлен Easy-RSA 3, поэтому с помощью него можно полноценно управлять всеми сертификатами и ключами. При этом, пароль для корневого сертификата удостоверяющего центра - 1234.
