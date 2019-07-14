@@ -2,16 +2,17 @@
 
 Т.к. провижининг ВМ выполняется с помощью ansible, то  ansible необходим на хостовой машине. Для проверки ДЗ выкачиваем всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/23_VLANs-LACP) и выполняем ```vagrant up```. 
 
-Для того, чтобы существенно ускорить процесс провижининга всех ВМ можно в [соответствующем файле]() плэйбука [01_tuning_OS.yml]() закомментировать установку всех пакетов для всех ВМ. Но, нужно учесть, что для разрешения имён всеми ВМ в стенде, inetRouter требуется пакет dnsmasq.
+Для того, чтобы существенно ускорить процесс провижининга всех ВМ можно в [соответствующем файле](https://github.com/timlok/otus-linux/blob/master/homework/23_VLANs-LACP/provisioning/01_tuning_OS/tasks/main.yml) плэйбука [01_tuning_OS.yml](https://github.com/timlok/otus-linux/blob/master/homework/23_VLANs-LACP/provisioning/01_tuning_OS.yml) закомментировать установку всех пакетов для всех ВМ. Но, нужно учесть, что для разрешения имён всеми ВМ в стенде, inetRouter требуется пакет dnsmasq.
 
 В результате разворачивания стенда из [Vagrantfile](https://github.com/timlok/otus-linux/blob/master/homework/23_VLANs-LACP/Vagrantfile)  получаем схему коммутации всех ВМ (кроме inetRouter), в которой в одной внутренней VirtualBox-сети net-vlans находятся 4 VLANа и ВМ с одинаковыми ip-адресами. Собственно, сама схема:
+
 ![](https://github.com/timlok/otus-linux/blob/master/homework/23_VLANs-LACP/scheme/23_VLANs-LACP.png)
 
 Уже сталкивался ранее с таким поведением ВМ через vagrant, но для того, чтобы на ВМ с centos 7 правильно подхватывались маршруты, пришлось в плэйбуках последовательно перезапустить сеть, отключить NetworkManager, перезагрузить ОС. Ранее, я исправлял такое удалением существующего маршрута по-умолчанию и назначением корректного маршрута по-умолчанию, но в данном случае я решил, чтобы правильные маршруты назначились сами. Как вариант можно было попробовать выполнить настройку сети через NetworkManager и, возможно, тогда не было бы проблем с маршрутами.
 
 ## Bonding и teaming
 
-ВМ inetRouter на centos 6 и пакета teamd для этой ОС нет. Соответственно, на этой ВМ настроен bonding. На ВМ centralRouter с centos 7 интерфейсы настроены в teamnig с помощью утилиты ```bond2team```.
+ВМ inetRouter на centos 6 и пакета teamd для этой ОС нет. Соответственно, на этой ВМ настроен bonding. На ВМ centralRouter с centos 7 интерфейсы настроены в teaming с помощью утилиты ```bond2team```.
 
 ## Выход в интернет
 
