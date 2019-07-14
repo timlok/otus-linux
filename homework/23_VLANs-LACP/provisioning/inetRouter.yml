@@ -1,0 +1,7 @@
+- name: inetRouter
+  hosts: all
+  become: true
+#  gather_facts: true
+
+  roles:
+   - inetRouter

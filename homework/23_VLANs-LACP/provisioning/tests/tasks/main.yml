@@ -1,0 +1,52 @@
+---
+#####дебаг поиска файлов
+#- name: Display paths of all ifcfg files in dir
+#  debug: msg={{ lookup('fileglob', 'testClient1/ifcfg*') }}
+#  when: ansible_facts['hostname'] == "testClient1"
+#####
+- name: testClient1 copy files for interfaces
+  copy: src="{{ item }}" dest="/etc/sysconfig/network-scripts/" owner=root group=root mode=0644
+  with_fileglob:
+    - 'testClient1/ifcfg*'
+  when: ansible_facts['hostname'] == "testClient1"
+
+- name: testClient1 copy network-file
+  copy: src=testClient1/network dest=/etc/sysconfig/network owner=root group=root mode=0644
+  when: ansible_facts['hostname'] == "testClient1"
+
+- name: testServer1 copy files for interfaces
+  copy: src="{{ item }}" dest="/etc/sysconfig/network-scripts/" owner=root group=root mode=0644
+  with_fileglob:
+    - 'testServer1/ifcfg*'
+  when: ansible_facts['hostname'] == "testServer1"
+
+- name: testServer1 copy network-file
+  copy: src=testServer1/network dest=/etc/sysconfig/network owner=root group=root mode=0644
+  when: ansible_facts['hostname'] == "testServer1"
+
+- name: testClient2 copy files for interfaces
+  copy: src="{{ item }}" dest="/etc/sysconfig/network-scripts/" owner=root group=root mode=0644
+  with_fileglob:
+    - 'testClient2/ifcfg*'
+  when: ansible_facts['hostname'] == "testClient2"
+
+- name: testClient2 copy network-file
+  copy: src=testClient2/network dest=/etc/sysconfig/network owner=root group=root mode=0644
+  when: ansible_facts['hostname'] == "testClient2"
+
+- name: testServer2 copy files for interfaces
+  copy: src="{{ item }}" dest="/etc/sysconfig/network-scripts/" owner=root group=root mode=0644
+  with_fileglob:
+    - 'testServer2/ifcfg*'
+  when: ansible_facts['hostname'] == "testServer2"
+
+- name: testServer2 copy network-file
+  copy: src=testServer2/network dest=/etc/sysconfig/network owner=root group=root mode=0644
+  when: ansible_facts['hostname'] == "testServer2"
+
+- name: routing setup and restart network and restart OS
+  shell: echo "DEFROUTE="no"" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+  notify:
+    - restart network
+    - disable NetworkManager
+    - restart system

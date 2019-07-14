@@ -1,0 +1,12 @@
+DEVICE=team0
+ONBOOT=yes
+TYPE=Bond
+IPADDR=192.168.255.2
+PREFIX=30
+GATEWAY=192.168.255.1
+BOOTPROTO=static
+USERCTL=no
+DEVICETYPE="Team"
+TEAM_CONFIG='{ "runner" : {  "name" : "activebackup",  "hwaddr_policy" : "by_active" }, "link_watch" : {  "name" : "ethtool" } }'
+DEFROUTE=yes
+DNS1=192.168.255.1

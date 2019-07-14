@@ -1,0 +1,118 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :inetRouter => {
+        :box_name => "centos/6",
+        :ssh_port => 2421,
+        :net => [
+                   {adapter: 2, auto_config: false, virtualbox__intnet: "net-routers"},
+                   {adapter: 3, auto_config: false, virtualbox__intnet: "net-routers"},
+                ]
+  },
+  :centralRouter => {
+        :box_name => "centos/7",
+        :ssh_port => 2431,
+        :net => [
+                  {adapter: 2, auto_config: false, virtualbox__intnet: "net-routers"},
+                  {adapter: 3, auto_config: false, virtualbox__intnet: "net-routers"},
+                  {adapter: 4, auto_config: false, virtualbox__intnet: "net-vlans"},
+                ]
+  },
+  :testServer1 => {
+        :box_name => "centos/7",
+        :ssh_port => 2441,
+        :net => [
+                  {adapter: 2, auto_config: false, virtualbox__intnet: "net-vlans"},
+                  {adapter: 3, auto_config: false, virtualbox__intnet: "net-vlans"},
+                ]
+  },
+  :testClient1 => {
+        :box_name => "centos/7",
+        :ssh_port => 2451,
+        :net => [
+                  {adapter: 2, auto_config: false, virtualbox__intnet: "net-vlans"},
+                  {adapter: 3, auto_config: false, virtualbox__intnet: "net-vlans"},
+                ]
+  },
+  :testServer2 => {
+        :box_name => "centos/7",
+        :ssh_port => 2461,
+        :net => [
+                  {adapter: 2, auto_config: false, virtualbox__intnet: "net-vlans"},
+                  {adapter: 3, auto_config: false, virtualbox__intnet: "net-vlans"},
+                ]
+  },
+  :testClient2 => {
+        :box_name => "centos/7",
+        :ssh_port => 2471,
+        :net => [
+                  {adapter: 2, auto_config: false, virtualbox__intnet: "net-vlans"},
+                  {adapter: 3, auto_config: false, virtualbox__intnet: "net-vlans"},
+                ]
+  },
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.box_check_update = false
+        box.vm.host_name = boxname.to_s
+
+        box.vm.network :forwarded_port, adapter: 1, guest: 22, host: boxconfig[:ssh_port], id: "ssh", host_ip: '127.0.0.1'
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        if boxconfig.key?(:public)
+          box.vm.network "public_network", boxconfig[:public]
+        end
+        
+        box.vm.provider "virtualbox" do |v|
+          v.memory = "256"
+          v.cpus = "1"
+        end
+
+        box.vm.provision "shell", inline: <<-SHELL
+          mkdir -p ~root/.ssh
+                cp ~vagrant/.ssh/auth* ~root/.ssh
+                sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
+                sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+                service sshd restart
+        SHELL
+        
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "v"
+          ansible.playbook = "provisioning/01_tuning_OS.yml"
+          ansible.become = "true"
+        end
+
+        case boxname.to_s
+          when "inetRouter"
+            box.vm.provision "ansible" do |ansible|
+              ansible.verbose = "v"
+              ansible.playbook = "provisioning/inetRouter.yml"
+              ansible.become = "true"
+            end
+          when "centralRouter"
+            box.vm.provision "ansible" do |ansible|
+              ansible.verbose = "v"
+              ansible.playbook = "provisioning/centralRouter.yml"
+              ansible.become = "true"
+            end
+        end
+
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "v"
+          ansible.playbook = "provisioning/tests.yml"
+          ansible.become = "true"
+        end
+
+      end
+  end
+end

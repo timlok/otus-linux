@@ -1,0 +1,5 @@
+ONBOOT=yes
+BOOTPROTO=none
+DEVICE=eth2
+NM_CONTROLLED=no
+

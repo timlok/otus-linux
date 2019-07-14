@@ -1,0 +1,16 @@
+---
+- name: restart network
+  systemd:
+    name: network
+    state: restarted
+    enabled: yes
+
+- name: disable NetworkManager
+  systemd:
+    name: NetworkManager
+    state: stopped
+    enabled: no
+
+- name: restart system
+  reboot: 
+      reboot_timeout: 120

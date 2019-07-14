@@ -1,0 +1,1 @@
+centralRouter ansible_host=127.0.0.1 ansible_port=2431 ansible_private_key_file=.vagrant/machines/centralRouter/virtualbox/private_key

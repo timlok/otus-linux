@@ -1,0 +1,20 @@
+---
+- name: copy files for interfaces
+  copy: src={{ item }} dest=/etc/sysconfig/network-scripts/ owner=root group=root mode=0644
+  with_fileglob:
+    - ifcfg*
+    - route-bond0
+
+- name: copy iptables
+  copy: src=iptables dest=/etc/sysconfig/iptables owner=root group=root mode=0600
+
+- name: NOZEROCONF
+  shell: echo "NOZEROCONF=yes" >> /etc/sysconfig/network
+  notify: restart network
+
+- name: enable NAT
+  shell: |
+    iptables -t nat -A POSTROUTING -s 192.168.255.0/30 -j MASQUERADE
+    iptables -t nat -A POSTROUTING -s 10.10.100.0/24 -j MASQUERADE
+    iptables -t nat -A POSTROUTING -s 10.10.101.0/24 -j MASQUERADE
+  notify: restart dnsmasq

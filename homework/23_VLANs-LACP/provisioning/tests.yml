@@ -1,0 +1,11 @@
+- name: tests
+  hosts:
+    - testClient1
+    - testServer1
+    - testClient2
+    - testServer2
+  become: true
+#  gather_facts: true
+
+  roles:
+   - tests

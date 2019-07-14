@@ -1,0 +1,15 @@
+---
+- name: copy files for interfaces
+  copy: src={{ item }} dest=/etc/sysconfig/network-scripts/ owner=root group=root mode=0644
+  with_fileglob:
+    - ifcfg*
+
+- name: routing setup
+  shell: |
+    echo "DEFROUTE="no"" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+    echo "GATEWAY=192.168.255.1" >> /etc/sysconfig/network
+    echo "NOZEROCONF=yes" >> /etc/sysconfig/network
+  notify:
+    - restart network
+    - disable NetworkManager
+    - restart system

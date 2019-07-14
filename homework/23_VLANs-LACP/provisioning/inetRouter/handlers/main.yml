@@ -1,0 +1,12 @@
+---
+- name: restart network
+  service:
+    name: network
+    state: restarted
+    enabled: yes
+
+- name: restart dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: yes

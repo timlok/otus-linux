@@ -1,0 +1,6 @@
+DEVICE=eth1
+ONBOOT=yes
+BOOTPROTO=none
+DEVICETYPE="TeamPort"
+TEAM_MASTER="team0"
+TEAM_PORT_CONFIG='{ "prio" : -100 }'
