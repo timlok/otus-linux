@@ -2,9 +2,9 @@
 
 устанавливаем нужное
 
-      yum -y install epel-release kernel-devel
+    yum -y install epel-release kernel-devel
 
-[отсюда](https://github.com/zfsonlinux/zfs/wiki/RHEL-and-CentOS) выбираем правильный репозиторий и устанавлием из него zfs
+[отсюда](https://github.com/zfsonlinux/zfs/wiki/RHEL-and-CentOS) выбираем правильный репозиторий и устанавливаем из него zfs
 
     yum install http://download.zfsonlinux.org/epel/zfs-release.el7_5.noarch.rpm
 
@@ -60,14 +60,14 @@
     
     errors: No known data errors
 
-посмотрим список файловых систме zfs
+посмотрим список файловых систем zfs
 
     zfs list
     NAME        USED  AVAIL  REFER  MOUNTPOINT
     otuszpool  85.5K  12.5G    24K  /otuszpool
 
 создадим файловую систему otuszpool/opt в пуле
-  
+
     zfs create otuszpool/opt
     
     zfs list
@@ -109,10 +109,10 @@
 
     zfs mount otuszpool/opt
 
-перезагружаемся и проверям, что otuszpool/opt монтируется в /opt
+перезагружаемся и проверяем, что otuszpool/opt монтируется в /opt
     
     reboot
-
+    
     mount | grep opt
     otuszpool/opt on /opt type zfs (rw,seclabel,xattr,noacl)
 
@@ -164,6 +164,6 @@
 удалим снапшот
     
     zfs destroy otuszpool/opt@snap1
-
+    
     zfs list -t snapshot
     no datasets available
