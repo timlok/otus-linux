@@ -2,10 +2,14 @@
 
 Т.к. провижининг ВМ выполняется с помощью ansible, то  ansible необходим на хостовой машине. При этом, требуется ansible => 2.8, т.к. в модуле copy используется параметр remote_src. Для проверки ДЗ выкачиваем всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/26_dynamic_web) и выполняем ```vagrant up```. 
 
-Установлены веб-сервера и фреймворки: php-fpm, laravel, uwsgi/django и nodejs/reactjs. Всё это работает за nginx. Соответственно, внутрь гостевой ОС проброшены порты:
-laravel - [http://127.0.0.1:8081](http://127.0.0.1:8081)
+Установлены веб-сервера и фреймворки: php-fpm/laravel, uwsgi/django и nodejs/reactjs. Всё это работает за nginx. Соответственно, внутрь гостевой ОС проброшены порты:
+
+php-fpm/laravel - [http://127.0.0.1:8081](http://127.0.0.1:8081)
+
 uwsgi/django - [http://127.0.0.1:8082](http://127.0.0.1:8082)
+
 django-админка [http://127.0.0.1:8082/admin/](http://127.0.0.1:8082/admin/) (логин admin, пароль password)
+
 nodejs/reactjs - [http://127.0.0.1:8083](http://127.0.0.1:8083)
 
 Сервисы php-fpm и uwsgi взаимодействуют с nginx через соответствующие unix-сокеты.
