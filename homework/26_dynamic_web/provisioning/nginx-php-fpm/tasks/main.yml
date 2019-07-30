@@ -1,0 +1,60 @@
+---
+- name: install repo for php-fpm
+  yum:
+    name: https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+    state: installed
+
+- name: install nginx and php-fpm
+  yum:
+    name:
+    - nginx
+    - php72w, php72w-curl, php72w-common, php72w-cli, php72w-mysql, php72w-mbstring, php72w-fpm, php72w-xml, php72w-pdo, php72w-zip
+    state: latest
+
+- name: editing php.ini
+  lineinfile:
+    path: /etc/php.ini
+    regexp: '^;cgi.fix_pathinfo=1'
+    line: cgi.fix_pathinfo=0
+
+- name: editinig php-fpm.d-www.conf
+  shell: |
+    sed -i 's/user = apache/user = nginx/g' /etc/php-fpm.d/www.conf
+    sed -i 's/group = apache/group = nginx/g' /etc/php-fpm.d/www.conf
+    sed -i 's/listen = 127.0.0.1:9000/listen = \/run\/php-fpm\/php-fpm.sock/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;listen.owner = nobody/listen.owner = nginx/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;listen.group = nobody/listen.group = nginx/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;listen.mode = 0660/listen.mode = 0660/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;env\[HOSTNAME/env\[HOSTNAME/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;env\[PATH/env\[PATH/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;env\[TMP\]/env\[TMP\]/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;env\[TMPDIR/env\[TMPDIR/g' /etc/php-fpm.d/www.conf
+    sed -i 's/;env\[TEMP/env\[TEMP/g' /etc/php-fpm.d/www.conf
+  notify:
+    - restart php-fpm
+
+- name: create and change ownership of a www-directory
+  file:
+    path: /var/www
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: create and change ownership of a laravel-directory
+  file:
+    path: /var/www/laravel
+    state: directory
+    mode: '0755'
+    owner: nginx
+    group: root
+
+- name: copy laravel.conf for nginx
+  copy:
+    src: laravel.conf
+    dest: /etc/nginx/conf.d/laravel.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx

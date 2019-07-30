@@ -1,0 +1,61 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "dynweb" do |t|
+  end
+
+  config.vm.hostname = "dynweb"
+
+#  config.vm.network "public_network", adapter: 2, bridge: "wlp2s0"
+  config.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2321, id: "ssh", host_ip: '127.0.0.1'
+  config.vm.network "forwarded_port", adapter: 1, guest: 8081, host: 8081, host_ip: '127.0.0.1'
+  config.vm.network "forwarded_port", adapter: 1, guest: 8082, host: 8082, host_ip: '127.0.0.1'
+  config.vm.network "forwarded_port", adapter: 1, guest: 8083, host: 8083, host_ip: '127.0.0.1'
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "dynweb"
+    vb.memory = "2048"
+    vb.cpus = "2"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+  mkdir -p ~root/.ssh
+        cp ~vagrant/.ssh/auth* ~root/.ssh
+        sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
+        sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+        systemctl restart sshd
+  SHELL
+
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/01_tuning_OS.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/nginx-php-fpm.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/laravel.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/uwsgi-django.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/react.yml"
+    ansible.become = "true"
+  end
+end

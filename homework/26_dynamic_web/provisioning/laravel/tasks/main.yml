@@ -1,0 +1,23 @@
+---
+- name: install laravel
+  shell: |
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+    cd /var/www/laravel
+    #создаем проект laravel
+    composer create-project laravel/laravel .
+
+- name: change ownership of a directory laravel
+  file:
+    path: /var/www/laravel
+    state: directory
+    recurse: yes
+    owner: nginx
+    group: root
+
+- name: change ownership of a directory laravel-storage
+  file:
+    path: /var/www/laravel/storage
+    state: directory
+    mode: '0755'
+    owner: nginx
+    group: root

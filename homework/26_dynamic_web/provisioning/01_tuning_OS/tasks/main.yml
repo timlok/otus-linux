@@ -1,0 +1,46 @@
+---
+- name: install epel
+  yum:
+    name:
+    - epel-release
+
+- name: install packages
+  yum:
+    name:
+      - libselinux-python
+      - vim
+      - vim-enhanced
+      - mc
+      - screen
+      - ccze
+#      - lnav
+      - redhat-lsb-core
+      - wget
+      - yum-utils
+      - htop
+      - sudo
+      - iftop
+      - net-tools
+      - elinks
+      - lynx
+      - bind-utils
+      - deltarpm
+      - lsof
+      - tree
+      - traceroute
+      - tcpdump
+      - nmap
+      - unzip
+#      - iperf3
+    state: latest
+
+- name: copy .screenrc
+  copy: src=screenrc dest=/root/.screenrc owner=root group=root mode=0600
+- name: edit bashrc, vimrc
+  shell: echo "alias vi='vim'" >> /root/.bashrc && echo "colorscheme desert" >> /etc/vimrc
+
+- name: disable selinux
+  selinux: 
+    state: disabled
+  notify:
+    - system restart

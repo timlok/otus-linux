@@ -1,0 +1,12 @@
+[Unit]
+Description=uWSGI Emperor service
+[Service]
+ExecStartPre=/usr/bin/bash -c 'mkdir -p /run/uwsgi; chown django:nginx /run/uwsgi'
+ExecStart=/usr/bin/uwsgi --emperor /etc/uwsgi/sites
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,110 @@
+---
+- name: install pip
+  yum:
+    name: python-pip, python-devel, gcc
+    state: latest
+
+- name: install python-packages from pip
+  pip:
+    name: virtualenv, virtualenvwrapper, uwsgi 
+
+- name: add the system user 'django' with a primary group of 'nginx'
+  user:
+    name: django
+    group: nginx
+    shell: /bin/bash
+    home: /opt/django
+    system: yes
+
+- name: change group permission on a directory home-django
+  file:
+    path: /opt/django
+    state: directory
+    mode: '0770'
+    owner: django
+    group: nginx
+
+- name: edit django bashrc
+  blockinfile:
+    path: /opt/django/.bashrc
+    block: |
+      export WORKON_HOME=~/Env
+      source /usr/bin/virtualenvwrapper.sh
+  become_user: django
+
+- name: create and change ownership of a firstsite-directory
+  file:
+    path: /opt/django/firstsite
+    state: directory
+    mode: '0750'
+    owner: django
+    group: nginx
+
+- name: extract firstsite.tar.gz
+  unarchive:
+    src: firstsite.tar.gz
+    dest: /opt/django/firstsite
+    owner: django
+    group: nginx
+    mode: '0750'
+
+- name: create and change ownership of a Env-directory
+  file:
+    path: /opt/django/Env
+    state: directory
+    mode: '0750'
+    owner: django
+    group: nginx
+
+- name: extract Env.tar.gz
+  unarchive:
+    src: Env.tar.gz
+    dest: /opt/django/Env
+    owner: django
+    group: nginx
+    mode: '0750'
+
+- name: change group permission on a directory django-static
+  file:
+    path: /opt/django/firstsite/
+    state: directory
+    recurse: yes
+    mode: '0770'
+    owner: django
+    group: nginx
+
+- name: create and change ownership of a uwsgi-directory
+  file:
+    path: /etc/uwsgi/sites
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: copy firstsite.ini for uwsgi
+  copy:
+    src: firstsite.ini
+    dest: /etc/uwsgi/sites/firstsite.ini
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy uwsgi.service
+  copy:
+    src: uwsgi.service
+    dest: /etc/systemd/system/uwsgi.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart uwsgi
+
+- name: copy uwsgi.conf for nginx
+  copy:
+    src: uwsgi.conf
+    dest: /etc/nginx/conf.d/uwsgi.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx

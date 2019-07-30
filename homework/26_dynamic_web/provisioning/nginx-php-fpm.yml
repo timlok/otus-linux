@@ -1,0 +1,8 @@
+- name: nginx-php-fpm
+  hosts: all
+  become: true
+#  gather_facts: true
+
+  roles:
+   - nginx-php-fpm
+

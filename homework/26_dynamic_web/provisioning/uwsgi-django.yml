@@ -1,0 +1,8 @@
+- name: uwsgi-django
+  hosts: all
+  become: true
+#  gather_facts: true
+
+  roles:
+   - uwsgi-django
+

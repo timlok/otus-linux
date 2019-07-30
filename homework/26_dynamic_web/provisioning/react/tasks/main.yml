@@ -1,0 +1,53 @@
+---
+- name: install gcc-c++ make
+  yum:
+    name: gcc-c++, make
+    state: latest
+
+- name: install repo nodesource 10
+  shell: curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+
+- name: install nodejs
+  yum:
+    name: nodejs
+    state: latest
+    
+- name: install and create npm hello-world
+  shell: |
+    cd /root
+    npm install -g create-react-app
+    create-react-app hello-world
+    cd /root/hello-world
+    npm run build
+
+- name: create and change ownership of a react-directory
+  file:
+    path: /var/www/react
+    state: directory
+    mode: '0755'
+    owner: nginx
+    group: root
+
+- name: copy files to react-directory
+  copy:
+    src: /root/hello-world/build/
+    dest: /var/www/react
+    remote_src: yes
+
+- name: change permission of a react-directory
+  file:
+    path: /var/www/react
+    state: directory
+    recurse: yes
+    owner: nginx
+    group: root
+
+- name: copy react.conf for nginx
+  copy:
+    src: react.conf
+    dest: /etc/nginx/conf.d/react.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart nginx
