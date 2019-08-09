@@ -1,0 +1,30 @@
+---
+- name: verify that the database bet does not exist
+  shell: mysql -uroot -e "show databases;" | grep bet
+  register: bet_found
+  ignore_errors: yes
+
+- name: create a new database with name 'bet'
+  when: bet_found is failed
+  mysql_db:
+    name: bet
+    state: present
+
+- name: load bet database
+  when: bet_found is failed
+  mysql_db:
+    name: bet
+    state: import
+    target: /vagrant/provisioning/03_mysql_master/files/bet.dmp
+
+- name: create database user with database replication privileges
+  mysql_user:
+    name: repl
+    host: '%'
+    password: '!OtusLinux2019'
+    priv: "*.*:REPLICATION SLAVE"
+    state: present
+
+- name: dump all databases to master.sql
+  shell:
+    mysqldump --all-databases --set-gtid-purged=OFF --triggers --routines --master-data --ignore-table=bet.events_on_demand --ignore-table=bet.v_same_event -uroot > /tmp/master.sql

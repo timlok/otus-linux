@@ -1,0 +1,2 @@
+mysqlMaster ansible_host=127.0.0.1 ansible_port=2321 ansible_private_key_file=.vagrant/machines/mysqlMaster/virtualbox/private_key
+mysqlSlave ansible_host=127.0.0.1 ansible_port=2421 ansible_private_key_file=.vagrant/machines/mysqlSlave/virtualbox/private_key

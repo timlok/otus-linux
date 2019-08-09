@@ -1,0 +1,57 @@
+---
+####### bash alternative ########
+#- name: configure and start replication
+#  shell: |
+#    mysql -uroot -e "source /tmp/for_mysql_dump/master.sql"
+#    ### start for bash < 4.3 ###
+#    set +H
+#    #### end for bash < 4.3 ####
+#    mysql -uroot -e "change master to master_host = '192.168.11.150', master_port = 3306, master_user = 'repl', master_password = '!OtusLinux2019', master_auto_position = 1;"
+#    ### start for bash < 4.3 ###
+#    set -H
+#    #### end for bash < 4.3 ####
+#    mysql -uroot -e "flush privileges;"
+#    mysql -uroot -e "drop database bet;"
+#    mysql -uroot -e "drop user 'repl'@'%';"
+#    mysql -uroot -e "start slave;"
+#################################
+
+- name: copy dump file from mysqlMaster to mysqlSlave
+  shell: scp vagrant@192.168.11.150:/tmp/master.sql /tmp/
+  become_user: vagrant
+
+- name: import all databases from master.sql
+  mysql_db:
+    state: import
+    name: all
+    target: /tmp/master.sql
+
+- name: configure replication
+  mysql_replication:
+    mode: changemaster
+    master_host: 192.168.11.150
+    master_port: 3306
+    master_user: 'repl'
+    master_password: '!OtusLinux2019'
+    master_auto_position: 1
+  ignore_errors: yes
+
+- name: flush privileges
+  shell:
+    mysql -uroot -e "flush privileges;"
+
+- name: drop bet database
+  mysql_db:
+    name: bet
+    state: absent
+
+- name: drop repl user
+  mysql_user:
+    name: 'repl'
+    host: '%'
+    state: absent
+
+- name: start mysql slave thread
+  mysql_replication:
+    mode: startslave
+  ignore_errors: yes

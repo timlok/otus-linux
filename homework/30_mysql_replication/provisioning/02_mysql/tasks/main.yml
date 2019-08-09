@@ -1,0 +1,54 @@
+---
+- name: import percona repo a key from a url
+  rpm_key:
+    key: https://www.percona.com/downloads/RPM-GPG-KEY-percona
+    state: present
+
+- name: install percona repo
+  yum:
+    name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    state: installed
+
+- name: percona-release setup ps57
+  shell: percona-release setup ps57
+
+- name: install Percona-Server-server-57 and MySQL-python
+  yum:
+    name: Percona-Server-server-57, MySQL-python
+    state: latest
+
+####### May be useful ###########
+#- name: delete old my.cnf
+#  file:
+#    path: /etc/my.cnf
+#    state: absent
+#
+#- name: switching from percona-server.cnf to my.cnf
+#  alternatives:
+#    link: /etc/my.cnf
+#    name: my.cnf
+#    path: /etc/percona-server.cnf
+#    priority: 200
+#################################
+
+- name: copy .conf files
+  copy: src=conf.d/ dest=/etc/my.cnf.d/ owner=root group=root mode=0644
+- name: copy .my.cnf with root password
+  copy: src=root_my.cnf dest=/root/.my.cnf owner=root group=root mode=0600
+
+- name: editing .conf files for slave
+  shell: |
+    sed -i 's/server-id = 1/server-id = 2/g' /etc/my.cnf.d/01-base.cnf
+    sed -i 's/#replicate-ignore-table=bet.events_on_demand/replicate-ignore-table=bet.events_on_demand/g' /etc/my.cnf.d/05-binlog.cnf
+    sed -i 's/#replicate-ignore-table=bet.v_same_event/replicate-ignore-table=bet.v_same_event/g' /etc/my.cnf.d/05-binlog.cnf
+  when: ansible_facts['hostname'] == "mysqlSlave"
+
+- name: restart mysqld
+  systemd:
+    name: mysqld
+    state: restarted
+    enabled: yes
+
+- name: change mysql root password
+  shell: TMP_PASS=$(cat /var/log/mysqld.log | grep root@localhost | awk '{ print $11 }'); echo $TMP_PASS; mysql -uroot -p$TMP_PASS --connect-expired-password -e "alter user 'root'@'localhost' identified by 'New0tus*';"
+  ignore_errors: yes

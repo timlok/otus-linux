@@ -1,0 +1,18 @@
+- name: 02_mysql_install_and_configure
+  hosts: all
+  become: true
+#  gather_facts: true
+  roles:
+    - 02_mysql
+
+- name: 03_mysql_setup_replication_master
+  hosts: mysqlMaster
+  become: true
+  roles:
+    - 03_mysql_master
+
+- name: 03_mysql_setup_replication_slave
+  hosts: mysqlSlave
+  become: true
+  roles:
+    - 03_mysql_slave
