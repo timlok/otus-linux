@@ -82,7 +82,7 @@ docker push timlok/otus-nginx:latest
 
 ## Дополнительное задание
 
-Все файлы по дополнительному заданию расположены в каталоге [advanced(*)](advanced(*)). Файлы для сборки docker-образов находятся в каталогах [otus-nginx2](advanced(*)/otus-nginx2) и [otus-php-fpm](advanced(*)/otus-php-fpm).
+Все файлы по дополнительному заданию расположены в каталоге [advanced(*)](advanced(*)). Файлы для сборки docker-образов находятся в каталогах [otus-nginx2](advanced(*)/otus-nginx2) и [otus-php-fpm](advanced(*)/otus_php-fpm).
 
 Для проверки домашнего задания необходимо скачать файл [docker-compose.yml](advanced(*)/compose/docker-compose.yml) и выполнить ```docker-compose up```. После этого нужно отрыть [http://ip_хоста_с_docker-compose](http://ip_хоста_с_docker-compose) или [http://localhost](http://localhost) и можно будет увидеть страницу с информацией о версии php в образе otus-php-fpm.
 
