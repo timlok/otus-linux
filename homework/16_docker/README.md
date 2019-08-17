@@ -1,6 +1,28 @@
-# Заметки к ДЗ-16
+# Заметки к ДЗ-16 (Docker)
 
-В [Vagrantfile](Vagrantfile) обычная ВМ без каких-либо специфических настроек, но с дополнительной внешней сетью на физическом интерфейсе хоста. Это совершенно необязательно, но сделано для удобства тестирования контейнера с nginx с хоста. Файлы для сборки docker-образа находятся в каталоге [docker](docker).
+## Задача:
+
+> Основное задание:
+> Создайте свой кастомный образ nginx на базе alpine. После запуска nginx должен
+> отдавать кастомную страницу (достаточно изменить дефолтную страницу nginx)
+> Определите разницу между контейнером и образом
+> Вывод опишите в домашнем задании.
+> Ответьте на вопрос: Можно ли в контейнере собрать ядро?
+> Собранный образ необходимо запушить в docker hub и дать ссылку на ваш
+> репозиторий.
+>
+> Дополнительное задание:
+> Создайте кастомные образы nginx и php, объедините их в docker-compose.
+> После запуска nginx должен показывать php info.
+> Все собранные образы должны быть в docker hub
+
+## Решение:
+
+## Основное задание
+
+Все файлы по основному заданию расположены в каталоге [basic](basic).
+
+В [Vagrantfile](basic/Vagrantfile) обычная ВМ без каких-либо специфических настроек, но с дополнительной внешней сетью на физическом интерфейсе хоста. Это совершенно необязательно, но сделано для удобства тестирования контейнера с nginx с хоста. Файлы для сборки docker-образа находятся в каталоге [docker](basic/docker).
 
 ## Разница между контейнером и образом.
 
@@ -20,40 +42,50 @@ https://www.olimex.com/forum/index.php?topic=4498.0
 
 ## Последовательность действий при сборке docker-образа:
 
-Из простецкого [Dockerfile](docker/Dockerfile) собираем образ с именем otus-nginx
+Из простецкого [Dockerfile](basic/docker/Dockerfile) собираем образ с именем otus-nginx
 
-```
+```bash
 docker build -t otus-nginx .
 ```
 
 Запускаем контейнер на основе образа otus-nginx
 
-```
+```bash
 docker run --rm -d -p 80:80 otus-nginx
 ```
 
 Подключиться к этому контейнеру можно так
 
-```
+```bash
 docker exec -it id_контейнера_или_его_имя bash
 ```
 
-Логинимся на https://hub.docker.com
+Логинимся на [https://hub.docker.com](https://hub.docker.com)
 
-```
+```bash
 docker login
 ```
 
 Задаем тэг нашему образу
 
-```
-docker tag otus-nginx:latest timlok/otus:otus01
+```bash
+docker tag 2b205e6d45d3 timlok/otus-nginx:latest
 ```
 
 Пушим образ
 
-```
-docker push timlok/otus:otus01
+```bash
+docker push timlok/otus-nginx:latest
 ```
 
-[Ссылка на репозиторий с образом на docker hub.](https://hub.docker.com/r/timlok/otus)
+[Ссылка на репозиторий с образом на docker hub.](https://hub.docker.com/r/timlok/otus-nginx)
+
+## Дополнительное задание
+
+Все файлы по дополнительному заданию расположены в каталоге [advanced(*)](advanced(*)). Файлы для сборки docker-образов находятся в каталогах [otus-nginx2](advanced(*)/compose/otus-nginx2) и [otus-php-fpm](advanced(*)/compose/otus-php-fpm).
+
+Для проверки домашнего задания необходимо скачать файл [docker-compose.yml](advanced(*)/compose/docker-compose.yml) и выполнить ```docker-compose up```. После этого нужно отрыть [http://ip_хоста_с_docker-compose](http://ip_хоста_с_docker-compose) или [http://localhost](http://localhost) и можно будет увидеть страницу с информацией о версии php в образе otus-php-fpm.
+
+При этом, в конфиге nginx настроено, что любые символы после [http://ip_хоста_с_docker-compose](http://ip_хоста_с_docker-compose) или [http://localhost](http://localhost) будут открывать страницу с информацией о версии php. Это поведение можно изменить и включить раздельную обработку html и php, отредактировав [конфиг-файл nginx](advanced(*)/otus-nginx2/default-php-fpm.conf). В каждом образе установлен bash.
+
+Ссылки на соответствующие репозитории с образами [timlok/otus-nginx2](https://hub.docker.com/r/timlok/otus-nginx2) и [timlok/otus-php-fpm](https://hub.docker.com/r/timlok/otus-php-fpm). 
