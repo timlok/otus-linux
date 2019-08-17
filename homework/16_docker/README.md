@@ -82,10 +82,10 @@ docker push timlok/otus-nginx:latest
 
 ## Дополнительное задание
 
-Все файлы по дополнительному заданию расположены в каталоге [advanced(*)](advanced(*)). Файлы для сборки docker-образов находятся в каталогах [otus-nginx2](advanced(*)/compose/otus-nginx2) и [otus-php-fpm](advanced(*)/compose/otus-php-fpm).
+Все файлы по дополнительному заданию расположены в каталоге [advanced(*)](advanced(*)). Файлы для сборки docker-образов находятся в каталогах [otus-nginx2](advanced(*)/otus-nginx2) и [otus-php-fpm](advanced(*)/otus-php-fpm).
 
 Для проверки домашнего задания необходимо скачать файл [docker-compose.yml](advanced(*)/compose/docker-compose.yml) и выполнить ```docker-compose up```. После этого нужно отрыть [http://ip_хоста_с_docker-compose](http://ip_хоста_с_docker-compose) или [http://localhost](http://localhost) и можно будет увидеть страницу с информацией о версии php в образе otus-php-fpm.
 
-При этом, в конфиге nginx настроено, что любые символы после [http://ip_хоста_с_docker-compose](http://ip_хоста_с_docker-compose) или [http://localhost](http://localhost) будут открывать страницу с информацией о версии php. Это поведение можно изменить и включить раздельную обработку html и php, отредактировав [конфиг-файл nginx](advanced(*)/otus-nginx2/default-php-fpm.conf). В каждом образе установлен bash.
+При этом, в конфиге nginx настроено, что любые символы после первоначально открываемого URI будут открывать страницу с информацией о версии php. Это поведение можно изменить и включить раздельную обработку html и php, отредактировав [конфиг-файл nginx](advanced(*)/otus-nginx2/default-php-fpm.conf). В каждом образе установлен bash.
 
 Ссылки на соответствующие репозитории с образами [timlok/otus-nginx2](https://hub.docker.com/r/timlok/otus-nginx2) и [timlok/otus-php-fpm](https://hub.docker.com/r/timlok/otus-php-fpm). 
