@@ -60,11 +60,8 @@
     shell: |
       restorecon -Rv /etc/named
       restorecon -Rv /etc/named.*
-      #restorecon -Rv /var/named
       restorecon -v /etc/rndc.*
-      #restorecon -v /etc/rndc.key
       restorecon -v /etc/resolv.conf
-      #restorecon -Rv /var/lib/NetworkManager/*
 ### SELinux end ###
 
   - name: ensure named is running and enabled
@@ -103,11 +100,8 @@
     shell: |
       restorecon -Rv /etc/named
       restorecon -Rv /etc/named.*
-      #restorecon -Rv /var/named
       restorecon -v /etc/rndc.*
-      #restorecon -v /etc/rndc.key
       restorecon -v /etc/resolv.conf
-      #restorecon -Rv /var/lib/NetworkManager/*
 ### SELinux end ###
 
   - name: ensure named is running and enabled
@@ -131,14 +125,3 @@
       restorecon -v /etc/motd
       restorecon -v /etc/resolv.conf
 ### SELinux end ###
-
-
-#- hosts: client2
-#  become: true
-#  tasks:
-#  - name: copy resolv.conf to the client2
-#    copy: src=client-resolv.conf dest=/etc/resolv.conf owner=root group=root mode=0644
-#  - name: copy rndc conf file
-#    copy: src=rndc.conf dest=/home/vagrant/rndc.conf owner=vagrant group=vagrant mode=0644
-#  - name: copy motd to the client2
-#    copy: src=client-motd dest=/etc/motd owner=root group=root mode=0644
