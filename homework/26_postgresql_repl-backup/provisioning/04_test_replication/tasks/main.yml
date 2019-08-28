@@ -1,0 +1,31 @@
+---
+- name: download demo base
+  get_url:
+    url: https://edu.postgrespro.ru/demo_small.zip
+    dest: /tmp/demo_small.zip
+    mode: '0600'
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: extract demo_small.zip into /tmp
+  unarchive:
+    remote_src: yes
+    src: /tmp/demo_small.zip
+    dest: /tmp
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: create a new empty database with name "demo"
+  postgresql_db:
+    name: demo
+    encoding: UTF-8
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: restore demo database from demo_small.sql
+  postgresql_db:
+    name: demo
+    state: restore
+    target: /tmp/demo_small.sql
+  delegate_to: pgsqlMaster
+  delegate_facts: true

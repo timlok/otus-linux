@@ -1,0 +1,80 @@
+---
+- name: postgresql stop
+  systemd:
+    name: postgresql-11
+    state: stopped
+  become_user: root
+
+- name: delete and create directory for wal-files archive
+  file:
+    path: /var/lib/pgsql/11/wal_bck/
+    state: "{{ item }}"
+    mode: '0700'
+  with_items:
+    - absent
+    - directory
+
+- name: delete and create PGDATA directory
+  file:
+    path: "{{ PGDATA }}"
+    state: "{{ item }}"
+    mode: '0700'
+  with_items:
+    - absent
+    - directory
+
+- name: create temp directory for mountpoint on pgsqlMaster
+  file:
+    path: "{{ PGDATA_TMP }}"
+    state: directory
+    mode: '0700'
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: mount remote PGDATA directory to pgsqlMaster
+  shell: su -l postgres -c "sshfs postgres@pgsqlSlave:{{ PGDATA }} {{ PGDATA_TMP }}"
+  become_user: root
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: performing pg_basebackup backup on pgsqlMaster
+  shell: pg_basebackup --wal-method=stream --format=plain --host localhost --port=5432 -U repluser --no-password --write-recovery-conf --progress --verbose --checkpoint=fast -D {{ PGDATA_TMP }}
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: umount remote PGDATA directory to pgsqlMaster
+  shell: fusermount -u {{ PGDATA_TMP }}
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: delete mountpoint for remote PGDATA on pgsqlMaster
+  file:
+    path: "{{ PGDATA_TMP }}"
+    state: absent
+  delegate_to: pgsqlMaster
+  delegate_facts: true
+
+- name: edit recovery.conf first (add lines)
+  blockinfile:
+    path: "{{ PG_RECOVERY }}"
+    block: |
+      primary_conninfo = 'host=pgsqlMaster port=5432 user=repluser'
+      primary_slot_name = 'standby_slot'
+
+- name: edit recovery.conf second (comment line)
+  replace:
+    path: "{{ PG_RECOVERY }}"
+    regexp: (^primary_conninfo = 'user.*$)
+    replace: '#\1'
+
+- name: edit postgresql.auto.conf (uncomment line)
+  replace:
+    path: "{{ PGDATA }}/postgresql.auto.conf"
+    regexp: '^#(hot_standby =.*)'
+    replace: '\1'
+
+- name: postgresql start
+  systemd:
+    name: postgresql-11
+    state: started
+  become_user: root

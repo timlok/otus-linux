@@ -1,0 +1,2 @@
+localhost:5432:*:postgres:otuspass
+pgsqlMaster:5432:*:repluser:otuspass

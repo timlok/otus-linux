@@ -1,0 +1,6 @@
+- name: 04_test_replication
+  hosts: pgsqlSlave
+  become: true
+  become_user: postgres
+  roles:
+    - 04_test_replication

@@ -1,0 +1,101 @@
+---
+- name: import postgresql repo a key from a url
+  rpm_key:
+    key: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG-11
+    state: present
+
+- name: install postgresql vanila repo
+  yum:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    state: installed
+
+- name: install PostgreSQL and python2-psycopg2
+  yum:
+    name: postgresql11-server, postgresql11-contrib, python2-psycopg2
+    state: latest
+
+- name: add aliases to postgres /var/lib/pgsql/.bash_profile
+  blockinfile:
+    path: /var/lib/pgsql/.bash_profile
+    block: |
+      alias vi='vim'
+      alias ll='ls -l --color=auto'
+      alias ls='ls --color=auto'
+  become_user: postgres
+
+- name: copy postgres sudoers.d file
+  copy: src=sudoers.d_postgres dest=/etc/sudoers.d/postgres owner=root group=root mode=0440
+
+- name: create and change ownership of a directory for wal-files archive
+  file:
+    path: /var/lib/pgsql/11/wal_bck
+    state: directory
+    mode: '0700'
+    owner: postgres
+    group: postgres
+
+- name: init cluster
+  shell: /usr/pgsql-11/bin/initdb -E UTF8 --locale ru_RU.UTF-8 -D /var/lib/pgsql/11/data/
+#  ignore_errors: yes
+  become_user: postgres
+
+- name: copy postgresql.auto.conf file
+  copy: src=postgresql.auto.conf dest=/var/lib/pgsql/11/data/postgresql.auto.conf owner=postgres group=postgres mode=0600
+
+- name: postgresql restart
+  systemd:
+    name: postgresql-11
+    state: restarted
+    enabled: yes
+
+- name: set the password for the postgres user in the postgresql cluster
+  postgresql_query:
+    db: template1
+    login_user: postgres
+    query: ALTER USER postgres PASSWORD 'otuspass'
+  become_user: postgres
+
+- name: copy pgpass to pgsqlMaster
+  copy: src=pgsqlMaster_pgpass dest=/var/lib/pgsql/.pgpass owner=postgres group=postgres mode=0600
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: copy pgpass to pgsqlSlave
+  copy: src=pgsqlSlave_pgpass dest=/var/lib/pgsql/.pgpass owner=postgres group=postgres mode=0600
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+- name: copy safe pg_hba.conf
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/11/data/ owner=postgres group=postgres mode=0600
+
+- name: postgresql restart
+  systemd:
+    name: postgresql-11
+    state: restarted
+    enabled: yes
+
+- name: create a new test database with name "otus_test" and specific encoding and locale
+  postgresql_db:
+    name: otus_test
+    encoding: UTF-8
+    lc_collate: ru_RU.UTF-8
+    lc_ctype: ru_RU.UTF-8
+    template: template1
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: create user for replication
+  postgresql_user:
+    db: postgres
+    name: repluser
+    password: otuspass
+    encrypted: true
+    role_attr_flags: REPLICATION
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: enable slots support
+  postgresql_query:
+    db: postgres
+    login_user: postgres
+    query: SELECT pg_create_physical_replication_slot('standby_slot')
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"

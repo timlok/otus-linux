@@ -1,0 +1,2 @@
+Defaults:postgres !requiretty
+postgres ALL=NOPASSWD: /usr/bin/systemctl start postgresql-11.service, /usr/bin/systemctl stop postgresql-11.service, /usr/bin/systemctl restart postgresql-11.service, /usr/bin/systemctl status postgresql-11.service, /usr/bin/systemctl reload postgresql-11.service

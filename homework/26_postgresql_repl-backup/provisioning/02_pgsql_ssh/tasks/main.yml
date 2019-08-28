@@ -1,0 +1,39 @@
+---
+- name: create and change ownership of a .ssh-directory on both pgsql servers
+  file:
+    path: /var/lib/pgsql/.ssh
+    state: directory
+    mode: '0700'
+    owner: postgres
+    group: postgres
+
+- name: touch .ssh/config on both pgsql servers
+  file:
+    path: /var/lib/pgsql/.ssh/config
+    state: touch
+    mode: 0600
+  become_user: postgres
+
+- name: edit .ssh/config on both pgsql servers
+  blockinfile:
+    path: /var/lib/pgsql/.ssh/config
+    block: StrictHostKeyChecking=no
+  become_user: postgres
+
+# for ssh postgres user from pgsqlSlave to pgsqlMaster
+- name: edit authorized_keys to pgsqlMaster
+  shell: cat /vagrant/provisioning/02_pgsql_ssh/files/keys_pgsqlSlave/id_rsa.pub >> /var/lib/pgsql/.ssh/authorized_keys
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: copy ssh keys to pgsqlSlave
+  copy: src=keys_pgsqlSlave/ dest=/var/lib/pgsql/.ssh/ owner=postgres group=postgres mode=0600
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+# for ssh postgres user from pgsqlMaster to pgsqlSlave
+- name: edit authorized_keys to pgsqlSlave
+  shell: cat /vagrant/provisioning/02_pgsql_ssh/files/keys_pgsqlMaster/id_rsa.pub >> /var/lib/pgsql/.ssh/authorized_keys
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+- name: copy ssh keys to pgsqlMaster
+  copy: src=keys_pgsqlMaster/ dest=/var/lib/pgsql/.ssh/ owner=postgres group=postgres mode=0600
+  when: ansible_facts['hostname'] == "pgsqlMaster"
