@@ -93,11 +93,11 @@ sync_state       | async
 
 ### [Конфигурационные файлы:](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf)
 
-Полная версия [README_scripts.md](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/scripts/README_scripts.md)
-
-Для настройки ведущего сервера pgsqlMaster я использовал файл [postgresql.auto.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/postgresql.auto_pgsqlMaster.conf) , то файл [postgresql.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/postgresql.conf) остался дефолтным. А т.к. резервное копирование на ведомый сервер pgsqlSlave выполнялось с помощью pg_basebackup, то каталог $PGDATA на обоих серверах идентичный. На pgsqlSlave одним параметром отличается только файл [postgresql.auto.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/postgresql.auto_pgsql.conf) и присутствует файл [recovery.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/recovery.conf).
+Для настройки ведущего сервера pgsqlMaster я использовал файл [postgresql.auto.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/postgresql.auto_pgsqlMaster.conf) , то файл [postgresql.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/postgresql.conf) остался дефолтным. А т.к. резервное копирование на ведомый сервер pgsqlSlave выполнялось с помощью pg_basebackup, то каталог $PGDATA на обоих серверах идентичный. На pgsqlSlave одним параметром отличается только файл [postgresql.auto.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/postgresql.auto.conf) и присутствует файл [recovery.conf](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/conf/recovery.conf).
 
 ### [Скрипты:](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/scripts)
+
+Полная версия [README_scripts.md](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/scripts/README_scripts.md)
 
 - [clone_pg_basebackup.sh](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/scripts/clone_pg_basebackup.sh) (автоматизированный бэкап)
   В результате выполнения полностью автоматизированного скрипта резервного копирования через pg_basebackup имеем настроенную master-slave hot_standby репликацию с использованием слотов. Этот скрипт нужно выполнять на ведущем сервере pgsqlMaster от имени пользователя postgres. pg_basebackup выполняется на мастере и в качестве каталога назначения указан $PGDATA pgsqlSlave, примонтированный на pgsqlMaster с помощью fuse-sshfs.
