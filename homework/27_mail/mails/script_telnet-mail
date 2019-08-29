@@ -1,0 +1,28 @@
+Script started on 2019-08-30 02:08:51+07:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="210" LINES="25"]
+timur@timbook-home2:~> nc vdsina.timvirt.ru 25
+220 vdsina.timvirt.ru ESMTP Postfix
+EHLO mail.mail.ru
+250-vdsina.timvirt.ru
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+mail from: mail@mail.ru
+250 2.1.0 Ok
+rcpt to: otus@timvirt.ru
+250 2.1.5 Ok
+DATA
+354 End data with <CR><LF>.<CR><LF>
+Привет из телнета! Как жизнь?
+.
+250 2.0.0 Ok: queued as 86799154D
+quit
+221 2.0.0 Bye
+exit
+timur@timbook-home2:~> exit
+
+Script done on 2019-08-30 02:11:08+07:00 [COMMAND_EXIT_CODE="0"]

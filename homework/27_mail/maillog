@@ -1,0 +1,25 @@
+Aug 30 02:09:05 vdsina postfix/smtpd[24929]: warning: hostname ws.92.127.232.151.nsk.sibirtelecom.ru does not resolve to address 92.127.232.151: Name or service not known
+Aug 30 02:09:05 vdsina postfix/smtpd[24929]: connect from unknown[92.127.232.151]
+Aug 30 02:10:15 vdsina postfix/smtpd[24929]: 86799154D: client=unknown[92.127.232.151]
+Aug 30 02:10:39 vdsina postfix/cleanup[24965]: 86799154D: message-id=<>
+Aug 30 02:10:39 vdsina postfix/qmgr[22541]: 86799154D: from=<mail@mail.ru>, size=232, nrcpt=1 (queue active)
+Aug 30 02:10:40 vdsina dovecot: lda(otus@timvirt.ru): msgid=unspecified: saved mail to INBOX
+Aug 30 02:10:40 vdsina postfix/pipe[24971]: 86799154D: to=<otus@timvirt.ru>, relay=dovecot, delay=45, delays=44/0.01/0/0.11, dsn=2.0.0, status=sent (delivered via dovecot service)
+Aug 30 02:10:40 vdsina postfix/qmgr[22541]: 86799154D: removed
+Aug 30 02:11:03 vdsina postfix/smtpd[24929]: disconnect from unknown[92.127.232.151]
+Aug 30 02:14:23 vdsina postfix/anvil[24931]: statistics: max connection rate 1/60s for (smtp:92.127.232.151) at Aug 30 02:09:05
+Aug 30 02:14:23 vdsina postfix/anvil[24931]: statistics: max connection count 1 for (smtp:92.127.232.151) at Aug 30 02:09:05
+Aug 30 02:14:23 vdsina postfix/anvil[24931]: statistics: max cache size 1 at Aug 30 02:09:05
+Aug 30 02:20:39 vdsina postfix/smtps/smtpd[25217]: warning: hostname ws.92.127.232.151.nsk.sibirtelecom.ru does not resolve to address 92.127.232.151: Name or service not known
+Aug 30 02:20:39 vdsina postfix/smtps/smtpd[25217]: connect from unknown[92.127.232.151]
+Aug 30 02:20:39 vdsina postfix/smtps/smtpd[25217]: E4C934A9F: client=unknown[92.127.232.151], sasl_method=PLAIN, sasl_username=otus@timvirt.ru
+Aug 30 02:20:40 vdsina postfix/cleanup[25228]: E4C934A9F: message-id=<31905cc6-1d90-ad70-8d4e-1bfb66bd6deb@timvirt.ru>
+Aug 30 02:20:40 vdsina postfix/qmgr[22541]: E4C934A9F: from=<otus@timvirt.ru>, size=1632, nrcpt=1 (queue active)
+Aug 30 02:20:40 vdsina postfix/smtps/smtpd[25217]: disconnect from unknown[92.127.232.151]
+Aug 30 02:20:40 vdsina dovecot: imap(otus@timvirt.ru): Connection closed (noop finished 0.217 secs ago) in=3281 out=7890
+Aug 30 02:20:40 vdsina postfix/smtp[25229]: E4C934A9F: to=<opensuse89@mail.ru>, relay=mxs.mail.ru[94.100.180.31]:25, delay=1.1, delays=0.33/0.01/0.13/0.59, dsn=2.0.0, status=sent (250 OK id=1i3PyK-0007xx-IN)
+Aug 30 02:20:40 vdsina postfix/qmgr[22541]: E4C934A9F: removed
+Aug 30 02:21:18 vdsina dovecot: imap-login: Login: user=<otus@timvirt.ru>, method=PLAIN, rip=92.127.232.151, lip=109.234.38.208, mpid=25250, TLS, session=<CSf2aEaRkoFcf+iX>
+Aug 30 02:24:00 vdsina postfix/anvil[25220]: statistics: max connection rate 1/60s for (smtps:92.127.232.151) at Aug 30 02:20:39
+Aug 30 02:24:00 vdsina postfix/anvil[25220]: statistics: max connection count 1 for (smtps:92.127.232.151) at Aug 30 02:20:39
+Aug 30 02:24:00 vdsina postfix/anvil[25220]: statistics: max cache size 1 at Aug 30 02:20:39

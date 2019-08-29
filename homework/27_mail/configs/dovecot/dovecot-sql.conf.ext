@@ -1,0 +1,6 @@
+driver = mysql
+connect = host=localhost dbname=postfix user=postfix password=sho_zagh6doh9Fog
+default_pass_scheme = MD5-CRYPT
+password_query = SELECT password FROM mailbox WHERE username = '%u'
+user_query = SELECT maildir, 1024 AS uid, 1024 AS gid FROM mailbox WHERE username = '%u'
+user_query = SELECT CONCAT('/home/mail/',LCASE(`domain`),'/',LCASE(`maildir`)), 1024 AS uid, 1024 AS gid FROM mailbox WHERE username = '%u'
