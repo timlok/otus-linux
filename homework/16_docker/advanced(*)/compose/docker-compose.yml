@@ -6,13 +6,17 @@ services:
     ports:
       - "80:80"
     networks:
-      - nginx-phpfpm
+      nginx-phpfpm:
+        aliases:
+          - nginx.nginx-phpfpm
 
   php-fpm:
     image: timlok/otus-php-fpm:latest
     container_name: compose-otus-php-fpm
     networks:
-    - nginx-phpfpm
+      nginx-phpfpm:
+        aliases:
+          - php.nginx-phpfpm
 
 networks:
   nginx-phpfpm:

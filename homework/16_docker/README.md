@@ -86,6 +86,6 @@ docker push timlok/otus-nginx:latest
 
 Для проверки домашнего задания необходимо скачать файл [docker-compose.yml](advanced(*)/compose/docker-compose.yml) и выполнить ```docker-compose up```. После этого нужно отрыть [http://ip_хоста_с_docker-compose](http://ip_хоста_с_docker-compose) или [http://localhost](http://localhost) и можно будет увидеть страницу с информацией о версии php в образе otus-php-fpm.
 
-При этом, в конфиге nginx настроено, что любые символы после первоначально открываемого URI будут открывать страницу с информацией о версии php. Это поведение можно изменить и включить раздельную обработку html и php, отредактировав [конфиг-файл nginx](advanced(*)/otus-nginx2/default-php-fpm.conf). В каждом образе установлен bash.
+При этом, в конфиге nginx настроено, что любые символы после первоначально открываемого URI будут открывать страницу с информацией о версии php. Это поведение можно изменить и включить раздельную обработку html и php, отредактировав [конфиг-файл nginx](advanced(*)/otus-nginx2/default-php-fpm.conf). В каждом образе установлен bash. В файле docker-compose.yml для сети nginx-phpfpm задействованы сетевые алиасы и nginx в своём конфиге обращается к контейнеру с php-fpm именно по его сетевому алиасу php.nginx-phpfpm.
 
 Ссылки на соответствующие репозитории с образами [timlok/otus-nginx2](https://hub.docker.com/r/timlok/otus-nginx2) и [timlok/otus-php-fpm](https://hub.docker.com/r/timlok/otus-php-fpm). 
