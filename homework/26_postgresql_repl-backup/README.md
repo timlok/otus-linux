@@ -16,7 +16,7 @@
 
 Разворачивание стенда полностью автоматизировано. В результате получаем полностью рабочий тандем серверов мастер-слэйв на PostgreSQL 11.5 в режиме hot_stanby репликации с использованием слотов.
 
-Плейбук для получения клона на выбор - через [pg_basebackup](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/provisioning/03_clone_with_pg_basebackup.yml) или через [barman](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/provisioning/03_clone_with_barman.yml).
+В [Vagranfile](https://github.com/timlok/otus-linux/blob/master/homework/26_postgresql_repl-backup/Vagrantfile) на выбор плейбук для получения клона - через [pg_basebackup](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/03_clone_with_pg_basebackup) или через [barman](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/03_clone_with_barman). 
 
 При использовании плейбука [03_clone_with_pg_basebackup](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/03_clone_with_pg_basebackup/tasks/main.yml) в процессе выполнения провижининга pg_basebackup выполняется на ведомом сервере pgsqlSlave, но я применял и [другой вариант](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/03_clone_with_pg_basebackup/tasks/main.yml_with_delegate), где pg_basebackup запускается на ведущем сервере (используется fuse-sshfs).
 
