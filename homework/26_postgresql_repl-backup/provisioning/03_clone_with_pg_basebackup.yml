@@ -1,7 +1,7 @@
-- name: 03_pg_basebackup
+- name: 03_clone_with_pg_basebackup
   hosts: pgsqlSlave
   become: true
   become_user: postgres
   any_errors_fatal: true
   roles:
-    - 03_pg_basebackup
+    - 03_clone_with_pg_basebackup

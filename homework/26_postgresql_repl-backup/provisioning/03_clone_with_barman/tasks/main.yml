@@ -1,0 +1,83 @@
+---
+- name: force verification of archiving WAL and wait 5 seconds
+  shell: |
+    barman switch-xlog --force --archive pgsqlMaster
+    sleep 5
+  become_user: barman
+
+- name: force the start of streaming WAL and wait 30 seconds
+  shell: |
+    barman receive-wal pgsqlMaster
+    sleep 30
+  become_user: barman
+
+- name: create a fresh pgsqlMaster backup and wait 60 seconds
+  shell: |
+    barman backup pgsqlMaster
+    sleep 60
+  become_user: barman
+
+- name: get backup_id and restore backup to the temporary directory
+  shell: |
+    BACKUP_ID=$(barman list-backup --minimal pgsqlMaster | grep -v FAILED | sort -r | head -1); \
+    barman recover pgsqlMaster $BACKUP_ID {{ PGDATA_TMP }}
+  become_user: barman
+
+- name: postgresql stop
+  systemd:
+    name: postgresql-11
+    state: stopped
+
+- name: delete and create directory for WAL-files archive
+  file:
+    path: "{{ WAL_ARCH }}"
+    state: "{{ item }}"
+    mode: '0700'
+    owner: postgres
+    group: postgres
+  with_items:
+    - absent
+    - directory
+
+- name: delete PGDATA directory
+  file:
+    path: "{{ PGDATA }}"
+    state: absent
+
+- name: move PGDATA_TMP to PGDATA
+  shell: mv {{ PGDATA_TMP }} {{ PGDATA }}
+
+- name: create recovery.conf
+  file:
+    path: "{{ PG_RECOVERY }}"
+    state: touch
+    owner: postgres
+    group: postgres
+    mode: '0600'
+
+- name: edit recovery.conf first (add lines)
+  blockinfile:
+    path: "{{ PG_RECOVERY }}"
+    block: |
+      primary_slot_name = 'standby_slot'
+      primary_conninfo = 'host=pgsqlMaster port=5432 user=repluser'
+      standby_mode = 'on'
+
+- name: edit postgresql.auto.conf (uncomment line)
+  replace:
+    path: "{{ PGDATA }}/postgresql.auto.conf"
+    regexp: '^#(hot_standby =.*)'
+    replace: '\1'
+
+- name: recursively change ownership of a PGDATA directory
+  file:
+    path: "{{ PGDATA }}"
+    state: directory
+    recurse: yes
+    owner: postgres
+    group: postgres
+
+- name: postgresql start
+  systemd:
+    name: postgresql-11
+    state: started

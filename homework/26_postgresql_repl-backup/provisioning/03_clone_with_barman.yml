@@ -1,0 +1,7 @@
+- name: 03_clone_with_barman
+  hosts: pgsqlSlave
+  become: true
+  #become_user: postgres
+  any_errors_fatal: true
+  roles:
+    - 03_clone_with_barman

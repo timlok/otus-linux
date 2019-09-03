@@ -15,7 +15,7 @@
       - ccze
 #      - lnav
       - redhat-lsb-core
-#      - wget
+      - wget
       - yum-utils
       - htop
       - sudo

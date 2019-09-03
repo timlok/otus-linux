@@ -69,9 +69,17 @@ Vagrant.configure("2") do |config|
           ansible.playbook = "provisioning/02_pgsql.yml"
           ansible.become = "true"
         end
+
+        #плейбук для получения клона на выбор - через pg_basebackup или через barman
+
+        #box.vm.provision "ansible" do |ansible|
+        #  ansible.verbose = "v"
+        #  ansible.playbook = "provisioning/03_clone_with_pg_basebackup.yml"
+        #  ansible.become = "true"
+        #end
         box.vm.provision "ansible" do |ansible|
           ansible.verbose = "v"
-          ansible.playbook = "provisioning/03_pg_basebackup.yml"
+          ansible.playbook = "provisioning/03_clone_with_barman.yml"
           ansible.become = "true"
         end
         box.vm.provision "ansible" do |ansible|

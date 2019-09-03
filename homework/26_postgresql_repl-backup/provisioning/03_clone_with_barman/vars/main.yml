@@ -1,0 +1,5 @@
+---
+PGDATA: '/var/lib/pgsql/11/data/'
+WAL_ARCH: '/var/lib/pgsql/11/wal_bck/'
+PGDATA_TMP: '/tmp/pgsqlMaster/data/'
+PG_RECOVERY: '{{ PGDATA }}recovery.conf'

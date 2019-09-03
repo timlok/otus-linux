@@ -13,10 +13,48 @@
   yum:
     name: postgresql11-server, postgresql11-contrib, python2-psycopg2
     state: latest
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: install PostgreSQL, python2-psycopg2 and packages for barman
+  yum:
+    name:
+      - postgresql11-server
+      - postgresql11-contrib
+      - python2-psycopg2
+# for barman:
+      - python-argcomplete
+      - python-argh
+      - python-dateutil
+      - python-setuptools
+    state: latest
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+- name: install barman
+  yum:
+    name:
+      - https://sourceforge.net/projects/pgbarman/files/2.9/python-barman-2.9-1.el7.noarch.rpm
+      - https://sourceforge.net/projects/pgbarman/files/2.9/barman-2.9-1.el7.noarch.rpm
+      - https://sourceforge.net/projects/pgbarman/files/2.9/barman-cli-2.9-1.el7.noarch.rpm
+    state: installed
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+- name: copy barman pgsqlMaster.conf file
+  copy: src=barman_pgsqlMaster.conf dest=/etc/barman.d/pgsqlMaster.conf owner=root group=root mode=0644
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+- name: copy barman pgpass to pgsqlSlave
+  copy: src=barman_pgpass dest=/var/lib/barman/.pgpass owner=barman group=barman mode=0600
+  when: ansible_facts['hostname'] == "pgsqlSlave"
+
+- name: barman cron task force update
+  shell: barman cron
+  become_user: barman
+  when: ansible_facts['hostname'] == "pgsqlSlave"
 
 - name: add aliases to postgres /var/lib/pgsql/.bash_profile
   blockinfile:
     path: /var/lib/pgsql/.bash_profile
+    mode: 0600
     block: |
       alias vi='vim'
       alias ll='ls -l --color=auto'
@@ -82,20 +120,56 @@
   become_user: postgres
   when: ansible_facts['hostname'] == "pgsqlMaster"
 
-- name: create user for replication
+- name: create barman semysuperuser
+  postgresql_user:
+    db: postgres
+    name: barman
+    password: barmanpass
+    encrypted: true
+    role_attr_flags: LOGIN,SUPERUSER,NOCREATEDB,NOCREATEROLE
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: create repluser user for replication
   postgresql_user:
     db: postgres
     name: repluser
     password: otuspass
     encrypted: true
+    role_attr_flags: LOGIN,REPLICATION
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: create streaming_barman user for replication
+  postgresql_user:
+    db: postgres
+    name: streaming_barman
+    password: barmanpass
+    encrypted: true
     role_attr_flags: REPLICATION
   become_user: postgres
   when: ansible_facts['hostname'] == "pgsqlMaster"
 
-- name: enable slots support
+- name: enable slots support and create standby_slot
   postgresql_query:
     db: postgres
     login_user: postgres
     query: SELECT pg_create_physical_replication_slot('standby_slot')
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: create barman slot of replication
+  postgresql_query:
+    db: postgres
+    login_user: postgres
+    query: SELECT pg_create_physical_replication_slot('barman')
+  become_user: postgres
+  when: ansible_facts['hostname'] == "pgsqlMaster"
+
+- name: select pg_reload_conf
+  postgresql_query:
+    db: postgres
+    login_user: postgres
+    query: select pg_reload_conf()
   become_user: postgres
   when: ansible_facts['hostname'] == "pgsqlMaster"
