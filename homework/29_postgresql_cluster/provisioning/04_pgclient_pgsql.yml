@@ -1,0 +1,6 @@
+- name: 04_pgclient_pgsql
+  hosts: pgclient
+  become: true
+
+  roles:
+    - 04_pgclient_pgsql

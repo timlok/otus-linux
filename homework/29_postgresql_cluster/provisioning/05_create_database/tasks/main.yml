@@ -1,0 +1,29 @@
+---
+- name: download demo base
+  get_url:
+    url: https://edu.postgrespro.ru/demo_small.zip
+    dest: /tmp/demo_small.zip
+    mode: '0600'
+
+- name: extract demo_small.zip into /tmp
+  unarchive:
+    remote_src: yes
+    src: /tmp/demo_small.zip
+    dest: /tmp
+
+- name: create a new empty database with name "demo"
+  postgresql_db:
+    login_host: haproxy
+    login_user: postgres
+    port: 5000
+    name: demo
+    encoding: UTF-8
+
+- name: restore demo database from demo_small.sql
+  postgresql_db:
+    login_host: haproxy
+    login_user: postgres
+    port: 5000
+    name: demo
+    state: restore
+    target: /tmp/demo_small.sql

@@ -1,0 +1,6 @@
+- name: 05_create_database
+  hosts: pgclient
+  become: false
+
+  roles:
+    - 05_create_database

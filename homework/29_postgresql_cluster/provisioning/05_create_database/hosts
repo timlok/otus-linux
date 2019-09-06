@@ -1,0 +1,1 @@
+pgclient ansible_host=127.0.0.1 ansible_port=2821 ansible_private_key_file=.vagrant/machines/pgclient/virtualbox/private_key
