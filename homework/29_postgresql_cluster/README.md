@@ -14,11 +14,11 @@
 
 Т.к. провижининг ВМ выполняется с помощью ansible и в модуле systemd используется параметр daemon_reload, то на хостовой машине необходим ansible >= 2.4.
 
-Как обычно, выкачиваем всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/29_postgresql_cluster) и выполняем ```vagrant up```. В результате будет развёрнуто 6 виртуальных машин (haproxy, etcd, pg01, pg02, pg03, pgclient) на которых будет настроен кластер PostgreSQL11.5 на patroni+etcd+haproxy. Клиентская ВМ pgclient служит для тестирования клиентских подключений через haproxy и именно с этой ВМ в результате выполнения плейбука [05_create_database](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/05_create_database) будет скачана [демонстрационная БД](https://edu.postgrespro.ru/demo_small.zip) и импортирована в кластер.
+Как обычно, выкачиваем всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/29_postgresql_cluster) и выполняем ```vagrant up```. В результате будет развёрнуто 6 виртуальных машин (haproxy, etcd, pg01, pg02, pg03, pgclient) на которых будет настроен кластер PostgreSQL11.5 на patroni+etcd+haproxy. Клиентская ВМ pgclient служит для тестирования клиентских подключений через haproxy и именно с этой ВМ в результате выполнения плейбука [05_create_database](https://github.com/timlok/otus-linux/tree/master/homework/29_postgresql_cluster/provisioning/05_create_database) будет скачана [демонстрационная БД](https://edu.postgrespro.ru/demo_small.zip) и импортирована в кластер.
 
 На виртуальную машину haproxy с localhost ipv4 хоста проброшены порты 5000 и 7000. Это не обязательно, т.к. проверку ДЗ можно полноценно выполнить со специальной виртуальной машины клиента (pgclient), что и приведено ниже. Тем не менее:
-http://127.0.0.1:7000/ - веб-интерфейс HAProxy
-TCP:127.0.0.0.1:5000 - порт для клиентских подключений к PostgreSQL кластеру otus и для этого можно использовать логин "postgres" и пароль "gfhjkm". 
+- http://127.0.0.1:7000/ - веб-интерфейс HAProxy
+- TCP:127.0.0.0.1:5000 - порт для клиентских подключений к PostgreSQL кластеру otus и для этого можно использовать логин "postgres" и пароль "gfhjkm". 
 
 
 Столкнулся с проблемой - сервис etcd не запускается при старте ОС и падает с ошибкой:
@@ -39,8 +39,7 @@ After=network-online.target
 Wants=network-online.target
 ```
 
-Способов устранения этой проблемы много, я просто добавил задержку 10 секунд между перезапусками сервиса в соответствующий юнит-файл в секцию [Service]:
-```RestartSec=10```
+Способов устранения этой проблемы много, я просто добавил задержку 10 секунд между перезапусками сервиса в соответствующий юнит-файл в секцию [Service]: ```RestartSec=10```
 
 ## Проверка ДЗ:
 
@@ -48,7 +47,7 @@ Wants=network-online.target
 
 Как я писал выше:
 
-> Клиентская ВМ pgclient служит для тестирования клиентских подключений через haproxy и именно с этой ВМ в результате выполнения плейбука [05_create_database](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/provisioning/05_create_database) будет скачана [демонстрационная БД](https://edu.postgrespro.ru/demo_small.zip) и импортирована в кластер.
+> Клиентская ВМ pgclient служит для тестирования клиентских подключений через haproxy и именно с этой ВМ в результате выполнения плейбука [05_create_database](https://github.com/timlok/otus-linux/tree/master/homework/29_postgresql_cluster/provisioning/05_create_database) будет скачана [демонстрационная БД](https://edu.postgrespro.ru/demo_small.zip) и импортирована в кластер.
 
 И именно с этой же ВМ я и проверю статус репликации и проведу короткий нагрузочный тест.
 
