@@ -101,7 +101,7 @@ Fine! mysql01 is RW
 
 ### [Файлы и описание работы с systemd (только Docker Compose)](/homework/31_mysql_cluster/flies/innodb_systemd/)
 
-[docker-compose.yml](/homework/31_mysql_cluster/files/innodb_systemd/compose/docker-compose.yml)
+[docker-compose.yml](/homework/31_mysql_cluster/flies/innodb_systemd/compose/docker-compose.yml)
 
 Первоначально были подготовлены образы с использованием systemd, но из-за ограничений технологии такие образы оказались мало пригодны для использования в Docker Swarm. В частности, для полноценного запуска systemd в контейнере, контейнер должен быть запущен, как привилегированный, т.к. systemd требуется возможность (capability) CAP_SYS_ADMIN, но Docker отбрасывает эту возможность в непривилегированных контейнерах, чтобы повысить безопасность. В свою очередь, в Docker Swarm нельзя запустить контейнер в привилегированном режиме.
 
@@ -118,7 +118,7 @@ echo -e "y\ny\n"| /usr/bin/mysqlsh --uri cladmin@mysql01:3306 -p'StrongPassword!
 sleep 10
 ```
 
-Не смотря на всё выше сказанное, привожу описание работы и файл [docker-compose.yml](/files/innodb_systemd/compose/docker-compose.yml). Кластер развёрнутый с помощью команды ```docker-compose up``` из этого файла отлично работает.
+Не смотря на всё выше сказанное, привожу описание работы и файл [docker-compose.yml](/homework/31_mysql_cluster/flies/innodb_systemd/compose/docker-compose.yml). Кластер развёрнутый с помощью команды ```docker-compose up``` из этого файла отлично работает.
 
 В принципе, использование контейнеров с systemd достаточно удобно, т.к. в Dockerfile указываем просто 
 
