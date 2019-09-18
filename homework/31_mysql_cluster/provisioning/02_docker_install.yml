@@ -1,0 +1,6 @@
+- name: 02_docker_install
+  hosts: all
+  become: true
+#  gather_facts: true
+  roles:
+    - 02_docker_install

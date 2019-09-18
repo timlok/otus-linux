@@ -1,0 +1,18 @@
+---
+- name: import percona repo a key from a url
+  rpm_key:
+    key: https://www.percona.com/downloads/RPM-GPG-KEY-percona
+    state: present
+
+- name: install percona repo
+  yum:
+    name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    state: installed
+
+- name: percona-release setup ps80
+  shell: percona-release setup ps80
+
+- name: install percona-server-client, percona-mysql-shell and MySQL-python
+  yum:
+    name: percona-server-client, percona-mysql-shell, MySQL-python
+    state: latest

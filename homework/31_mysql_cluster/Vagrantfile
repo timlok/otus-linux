@@ -1,0 +1,54 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+home = ENV['HOME']
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "dockermysql" do |t|
+  end
+
+  config.vm.hostname = "dockermysql"
+
+  config.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2321, id: "ssh", host_ip: '127.0.0.1'
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+    vb.name = "dockermysql"
+    vb.memory = "3096"
+    vb.cpus = "2"
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+  mkdir -p ~root/.ssh
+        cp ~vagrant/.ssh/auth* ~root/.ssh
+        sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
+        sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+        systemctl restart sshd
+  SHELL
+
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/01_tuning_OS.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/02_docker_install.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/03_docker_deploy.yml"
+    ansible.become = "true"
+  end
+  config.vm.provision "ansible" do |ansible|
+#    ansible.verbose = "v"
+    ansible.playbook = "provisioning/04_mysql_client_install.yml"
+    ansible.become = "true"
+  end
+
+end

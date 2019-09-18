@@ -1,0 +1,6 @@
+- name: 04_mysql_client_install
+  hosts: all
+  become: true
+#  gather_facts: true
+  roles:
+    - 04_mysql_client_install

@@ -1,0 +1,35 @@
+---
+- name: install pip
+  yum:
+    name:
+      - python2-pip
+    state: latest
+
+- name: upgrade pip setuptools
+  pip:
+    name: setuptools, pip
+    extra_args: --upgrade
+    state: latest
+
+- name: install docker, PyYAML, jsondiff from pip
+  pip:
+    name:
+      - docker
+      - PyYAML
+      - jsondiff
+    state: latest
+
+- name: copy docker-compose_swarm.yml
+  copy: src=docker-compose_swarm.yml dest=/root/docker-compose_swarm.yml
+
+- name: init a new swarm with default parameters
+  docker_swarm:
+    state: present
+
+- name: deploy stack from a docker-compose_swarm.yml file
+  docker_stack:
+    state: present
+    name: percona-mysql8-innodb
+    with_registry_auth: yes
+    compose:
+      - /root/docker-compose_swarm.yml

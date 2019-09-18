@@ -1,0 +1,119 @@
+version: '3.5'
+services:
+
+  mysql01:
+    image: timlok/mysql01-nosysd:swarm
+    command:
+      - /usr/sbin/mysqld
+      - --user=mysql
+    hostname: mysql01
+    volumes:
+      - "mysql01:/var/lib/mysql"
+    stop_grace_period: 45s
+    networks:
+      swarm-mysql-nosysd-net:
+        aliases:
+          - mysql01
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+
+
+  mysql02:
+    image: timlok/mysql02-nosysd:swarm
+    command:
+      - /usr/sbin/mysqld
+      - --user=mysql
+    hostname: mysql02
+    depends_on:
+      - mysql01
+    volumes:
+      - "mysql02:/var/lib/mysql"
+    stop_grace_period: 45s
+    networks:
+      swarm-mysql-nosysd-net:
+        aliases:
+          - mysql02
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+
+
+  mysql03:
+    image: timlok/mysql03-nosysd:swarm
+    command:
+      - /usr/sbin/mysqld
+      - --user=mysql
+    hostname: mysql03
+    depends_on:
+      - mysql01
+      - mysql02
+    volumes:
+      - "mysql03:/var/lib/mysql"
+    stop_grace_period: 45s
+    networks:
+      swarm-mysql-nosysd-net:
+        aliases:
+          - mysql03
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+
+
+  mysqlrouter:
+    image: timlok/mysqlrouter-nosysd:swarm
+    entrypoint: ["/opt/cluster_reconfigure.sh"]
+    command: ["mysqlrouter", "-c", "/etc/mysqlrouter/mysqlrouter.conf"]
+    hostname: mysqlrouter
+    stop_grace_period: 45s
+    depends_on:
+      - mysql03
+    ports:
+      - "6446:6446"
+      - "6447:6447"
+      - "64460:64460"
+      - "64470:64470"
+    networks:
+      swarm-mysql-nosysd-net:
+        aliases:
+          - mysqlrouter
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+
+networks:
+  swarm-mysql-nosysd-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.20.0/24"
+
+volumes:
+  mysql01:
+  mysql02:
+  mysql03:
+

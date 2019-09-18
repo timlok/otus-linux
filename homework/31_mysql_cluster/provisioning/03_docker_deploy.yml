@@ -1,0 +1,6 @@
+- name: 03_docker_deploy
+  hosts: all
+  become: true
+#  gather_facts: true
+  roles:
+    - 03_docker_deploy

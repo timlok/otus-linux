@@ -1,0 +1,103 @@
+version: '3.5'
+services:
+
+  mysql01:
+    image: timlok/mysql01-cl:v3
+    container_name: compose-mysql01
+    hostname: mysql01
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "mysql01:/var/lib/mysql"
+    stop_grace_period: 45s
+    extra_hosts:
+      - "mysql02:172.20.11.152"
+      - "mysql03:172.20.11.153"
+      - "mysqlRouter:172.20.11.100"
+    networks:
+      compose-mysql-net:
+        ipv4_address: 172.20.11.151
+        aliases:
+          - mysql01
+
+  mysql02:
+    image: timlok/mysql02-cl:v3
+    container_name: compose-mysql02
+    hostname: mysql02
+    privileged: true
+    depends_on:
+      - mysql01
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "mysql02:/var/lib/mysql"
+    stop_grace_period: 45s
+    extra_hosts:
+      - "mysql01:172.20.11.151"
+      - "mysql03:172.20.11.153"
+      - "mysqlRouter:172.20.11.100"
+    networks:
+      compose-mysql-net:
+        ipv4_address: 172.20.11.152
+        aliases:
+          - mysql02
+
+
+  mysql03:
+    image: timlok/mysql03-cl:v3
+    container_name: compose-mysql03
+    hostname: mysql03
+    privileged: true
+    depends_on:
+      - mysql01
+      - mysql02
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      - "mysql03:/var/lib/mysql"
+    stop_grace_period: 45s
+    extra_hosts:
+      - "mysql01:172.20.11.151"
+      - "mysql02:172.20.11.152"
+      - "mysqlRouter:172.20.11.100"
+    networks:
+      compose-mysql-net:
+        ipv4_address: 172.20.11.153
+        aliases:
+          - mysql03
+
+
+  mysqlrouter:
+    image: timlok/mysqlrouter-cl:v3
+    container_name: compose-mysqlrouter
+    hostname: mysqlrouter
+    privileged: true
+    volumes:
+      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    extra_hosts:
+      - "mysql01:172.20.11.151"
+      - "mysql02:172.20.11.152"
+      - "mysql03:172.20.11.153"
+    depends_on:
+      - mysql03
+    ports:
+      - "6446:6446"
+      - "6447:6447"
+      - "64460:64460"
+      - "64470:64470"
+    networks:
+      compose-mysql-net:
+        ipv4_address: 172.20.11.100
+        aliases:
+          - mysqlrouter
+
+networks:
+  compose-mysql-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.11.0/24"
+
+volumes:
+  mysql01:
+  mysql02:
+  mysql03:
+
