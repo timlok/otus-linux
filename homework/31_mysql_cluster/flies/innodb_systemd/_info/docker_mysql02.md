@@ -33,11 +33,11 @@ mysqlsh --uri root@127.0.0.1:3306 -p'New0tus*' -e "dba.configureLocalInstance(\"
 ```js
 mysqlsh --uri cladmin@mysql02:3306 -p'StrongPassword!#1' -e "dba.checkInstanceConfiguration()"
 ```
-после добавления всех нод в кластер (у меня это [выполнялось на первой ноде](/flies/innodb_systemd/_info/docker_mysql01.md)) выходим из контейнера и делаем коммит контейнера
+после добавления всех нод в кластер (у меня это [выполнялось на первой ноде](/homework/31_mysql_cluster/flies/innodb_systemd/_info/docker_mysql01.md)) выходим из контейнера и делаем коммит контейнера
 ```bash
 docker commit -m "after add node to cluster" 310eddde1aa6 timlok/mysql02-cl:v2
 ```
-после запуска и [настройки mysqlrouter](/flies/innodb_systemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
+после запуска и [настройки mysqlrouter](/homework/31_mysql_cluster/flies/innodb_systemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
 ```bash
 [root@docker innodb]# docker commit -m "after add mysql-router" d59826c71293 timlok/mysql02-cl:v3
 ```

@@ -41,7 +41,7 @@ mysqlsh --uri cladmin@mysql02:3306 -p'StrongPassword!#1' -e "dba.checkInstanceCo
 ```
 
 добавляем эту ноду кластер
-это не принципиально, но я делал это на [первой ноде](/flies/innodb_nosystemd/_info/docker_mysql01.md)
+это не принципиально, но я делал это на [первой ноде](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysql01.md)
 
 
 после добавления всех нод в кластер (у меня это выполнялось на первой ноде) выходим из контейнера и делаем коммит контейнера
@@ -61,4 +61,4 @@ docker run \
 #--name mysql02-nosysd local/c7-mysql-clean bash
 ```
 
-если это делалось вместе с другими нодами, то после запуска и [настройки mysqlrouter](/flies/innodb_nosystemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
+если это делалось вместе с другими нодами, то после запуска и [настройки mysqlrouter](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит

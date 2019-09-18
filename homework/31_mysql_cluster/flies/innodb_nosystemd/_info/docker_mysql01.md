@@ -56,7 +56,7 @@ docker commit -m "before add other mysql-nodes" c3d7a5d7309a260543684a2dc1d5bdd9
 docker exec -it mysql01 bash
 ```
 
-запускаем и настраиваем ноды [mysql02](/flies/innodb_nosystemd/_info/docker_mysql02.md) и [mysql03](/flies/innodb_nosystemd/_info/docker_mysql03.md)
+запускаем и настраиваем ноды [mysql02](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysql02.md) и [mysql03](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysql03.md)
 
 вторую и третью ноду добавляем в кластер (можно выполнить на любой ноде)
 ```bash
@@ -132,4 +132,4 @@ docker run \
 #--name mysql01-nosysd local/c7-mysql-clean bash
 ```
 
-после запуска и [настройки mysqlrouter](/flies/innodb_nosystemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
+после запуска и [настройки mysqlrouter](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит

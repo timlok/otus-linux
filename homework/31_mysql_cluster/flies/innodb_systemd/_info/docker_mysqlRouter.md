@@ -1,7 +1,7 @@
 # docker_mysqlRouter
 
 создаём новый образ из локального образа с systemd local/c7-systemd в котором устанавливаем только mysql-router и mysql-shell
-[Dockerfile:](/flies/innodb_systemd/mysqlRouter/Dockerfile)
+[Dockerfile:](/homework/31_mysql_cluster/flies/innodb_systemd/mysqlRouter/Dockerfile)
 
 ```dockerfile
 FROM local/c7-systemd

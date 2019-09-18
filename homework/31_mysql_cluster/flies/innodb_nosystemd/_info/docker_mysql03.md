@@ -40,7 +40,7 @@ ps aux | grep "\/usr\/sbin\/mysqld" | grep -v grep | awk ' { print $2} ' | xargs
 mysqlsh --uri cladmin@mysql03:3306 -p'StrongPassword!#1' -e "dba.checkInstanceConfiguration()"
 ```
 добавляем эту ноду кластер
-это не принципиально, но я делал это на [первой ноде](/flies/innodb_nosystemd/_info/docker_mysql01.md)
+это не принципиально, но я делал это на [первой ноде](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysql01.md)
 
 после добавления всех нод в кластер (у меня это выполнялось на первой ноде) выходим из контейнера и делаем коммит контейнера
 ```bash
@@ -58,4 +58,4 @@ docker run \
 --name mysql03-nosysd timlok/mysql03-nosysd:v1 /usr/sbin/mysqld --user=mysql
 #--name mysql03-nosysd local/c7-mysql-clean bash
 ```
-если это делалось вместе с другими нодами, то после запуска и [настройки mysqlrouter](/flies/innodb_nosystemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
+если это делалось вместе с другими нодами, то после запуска и [настройки mysqlrouter](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит

@@ -50,7 +50,7 @@ docker commit -m "before add other mysql-nodes" c3d7a5d7309a260543684a2dc1d5bdd9
 ```bash
 docker exec -it mysql01 bash
 ```
-Запускаем и настраиваем ноды [mysql02](/flies/innodb_systemd/_info/docker_mysql02.md) и [mysql03](/flies/innodb_systemd/_info/docker_mysql03.md)
+Запускаем и настраиваем ноды [mysql02](/homework/31_mysql_cluster/flies/innodb_systemd/_info/docker_mysql02.md) и [mysql03](/homework/31_mysql_cluster/flies/innodb_systemd/_info/docker_mysql03.md)
 
 Вторую и третью ноду добавляем в кластер (можно выполнить на любой ноде)
 ```js
@@ -113,7 +113,7 @@ SELECT * FROM performance_schema.replication_group_members;
 ```bash
 docker commit -m "after add all mysql-nodes" c3d7a5d7309a timlok/mysql01-cl:v2
 ```
-После [запуска и настройки mysqlrouter](/flies/innodb_systemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
+После [запуска и настройки mysqlrouter](/homework/31_mysql_cluster/flies/innodb_systemd/_info/docker_mysqlRouter.md) тоже необходимо сделать коммит
 ```bash
 docker commit -m "after add mysql-router" 58e85cd00d1f timlok/mysql01-cl:v3
 ```

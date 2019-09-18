@@ -1,7 +1,7 @@
 # docker_mysqlRouter
 
 на основе образа centos:7 создаём образ в котором устанавливаем только mysql-router и mysql-shell, ну и пакеты по мелочи
-[Dockerfile:](/flies/innodb_nosystemd/mysqlRouter/Dockerfile)
+[Dockerfile:](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/Dockerfile)
 
 ```dockerfile
 FROM centos:7
@@ -176,7 +176,7 @@ timlok/mysqlrouter-nosysd:v2 mysqlrouter -c /etc/mysqlrouter/mysqlrouter.conf
 #local/c7-nosysd-mysqlrouter bash
 ```
 
-в ENTRYPOINT указан скрипт [cluster_reconfigure.sh](/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh), который при запуске docker-контейнера ждёт 2 минуты, пытается подключиться к каждой ноде и переконфигурировать  кластер (пересобрать кластер возможно только на RW-ноде)
+в ENTRYPOINT указан скрипт [cluster_reconfigure.sh](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh), который при запуске docker-контейнера ждёт 2 минуты, пытается подключиться к каждой ноде и переконфигурировать  кластер (пересобрать кластер возможно только на RW-ноде)
 
 выходим из контейнера и делаем коммит контейнера
 ```bash
