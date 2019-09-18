@@ -18,9 +18,9 @@
 
 Все подготовленные мною образы основаны на официальном docker-образе centos:7.
 
-Для удобной проверки ДЗ достаточно выкачать всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/31_mysql_cluster/) и запустить ```vagrant up```. В результате будет развернута виртуальная машина, на которую с помощью ansible помимо других полезных пакетов будет установлен последний стабильный релиз docker, docker-compose, percona-server-client, percona-mysql-shell, а так же будет выполнен деплой [docker-compose_swarm.yml](/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml).
+Для удобной проверки ДЗ достаточно выкачать всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/31_mysql_cluster/) и запустить ```vagrant up```. В результате будет развернута виртуальная машина, на которую с помощью ansible помимо других полезных пакетов будет установлен последний стабильный релиз docker, docker-compose, percona-server-client, percona-mysql-shell, а так же будет выполнен деплой [docker-compose_swarm.yml](/homework/31_mysql_cluster/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml).
 
-К сожалению, тесты деплоя на только что развернутую ВМ в Vagrant показали, что двух минут, указанных в скрипте [пересборки кластера](/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) бывает недостаточно для завершения GTID репликации между нодами. Лог ноды mysqlrouter будет таким:
+К сожалению, тесты деплоя на только что развернутую ВМ в Vagrant показали, что двух минут, указанных в скрипте [пересборки кластера](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) бывает недостаточно для завершения GTID репликации между нодами. Лог ноды mysqlrouter будет таким:
 ```bash
 [root@dockermysql ~]# docker logs -f -t percona-mysql8-innodb_mysqlrouter.1.veacu68x6i8g3ydk422uu1u8b
 2019-09-18T16:31:23.100242518Z
@@ -95,13 +95,13 @@ Fine! mysql01 is RW
 #########################################################
 ```
 
-[Ручная проверка ДЗ](/flies/innodb_nosystemd/_info/проверка_кластера.md)
+[Ручная проверка ДЗ](/homework/31_mysql_cluster/flies/innodb_nosystemd/_info/проверка_кластера.md)
 
 Ниже будет приведено короткое описание проделанной работы. Ссылки на интересующие файлы и листинги указаны в соответствующих заголовках.
 
-### [Файлы и описание работы с systemd (только Docker Compose)](/flies/innodb_systemd/)
+### [Файлы и описание работы с systemd (только Docker Compose)](/homework/31_mysql_cluster/flies/innodb_systemd/)
 
-[docker-compose.yml](/files/innodb_systemd/compose/docker-compose.yml)
+[docker-compose.yml](/homework/31_mysql_cluster/files/innodb_systemd/compose/docker-compose.yml)
 
 Первоначально были подготовлены образы с использованием systemd, но из-за ограничений технологии такие образы оказались мало пригодны для использования в Docker Swarm. В частности, для полноценного запуска systemd в контейнере, контейнер должен быть запущен, как привилегированный, т.к. systemd требуется возможность (capability) CAP_SYS_ADMIN, но Docker отбрасывает эту возможность в непривилегированных контейнерах, чтобы повысить безопасность. В свою очередь, в Docker Swarm нельзя запустить контейнер в привилегированном режиме.
 
@@ -130,9 +130,9 @@ CMD ["/usr/sbin/init"]
 
 Из очевидных минусов использования systemd в docker можно отметить невозможность использовать таких образов в Docker Swarm и небольшое увеличение размера образа.
 
-### [Файлы и описание работы без systemd (Docker Swarm, Docker Stack)](/flies/innodb_nosystemd/)
+### [Файлы и описание работы без systemd (Docker Swarm, Docker Stack)](/homework/31_mysql_cluster/flies/innodb_nosystemd/)
 
-[docker-compose_swarm.yml](/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml)
+[docker-compose_swarm.yml](/homework/31_mysql_cluster/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml)
 
 Помимо необходимы пакетов от percona в образы установлены bash, net-tools, nmap, screen. Это не способствует уменьшению размера образа, но благоприятствует комфортной работе внутри контейнера. ;)
 
@@ -142,6 +142,6 @@ CMD ["/usr/sbin/init"]
 
 На этапе создания кластера в ipWhitelist мною указана вся подсеть 172.20.20.0/24 выделенная для работы запущенных контейнеров. Но этого можно было и не делать, т.к. если ничего не указать в ipWhitelist, то MySQL сам укажет всю локальную сеть.
 
-Переконфигурирование кластера после запуска всех нод происходит там, же на ноде mysqlrouter, но с помощью скрипта [cluster_reconfigure.sh](/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) прописанного в качестве ENTRYPOINT. На этот раз, скрипт ждёт две минуты и до первого удачного результата по очереди подключается к каждой ноде и запускает процесс пересборки кластера. Причина такого подхода - пересборка кластера должна выполняться только на RW-ноде. Результат работы скрипта можно увидеть в логе контейнера mysqlrouter (будет приведён далее).
+Переконфигурирование кластера после запуска всех нод происходит там, же на ноде mysqlrouter, но с помощью скрипта [cluster_reconfigure.sh](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) прописанного в качестве ENTRYPOINT. На этот раз, скрипт ждёт две минуты и до первого удачного результата по очереди подключается к каждой ноде и запускает процесс пересборки кластера. Причина такого подхода - пересборка кластера должна выполняться только на RW-ноде. Результат работы скрипта можно увидеть в логе контейнера mysqlrouter (будет приведён далее).
 
 На этапе финального тестирования заметил, что если увеличить количество реплик mysqlrouter, например, до двух, то скрипт переконфигурирования кластера запускается одновременно на обоих репликах и кластер не может собраться. В связи с этим, становится очевидно, что задачу переконфигурирования кластера необходимо вынести на отдельную ноду.
