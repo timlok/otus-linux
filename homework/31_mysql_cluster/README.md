@@ -20,7 +20,7 @@
 
 Для удобной проверки ДЗ достаточно выкачать всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/31_mysql_cluster/) и запустить ```vagrant up```. В результате будет развернута виртуальная машина, на которую с помощью ansible помимо других полезных пакетов будет установлен последний стабильный релиз docker, docker-compose, percona-server-client, percona-mysql-shell, а так же будет выполнен деплой [docker-compose_swarm.yml](/homework/31_mysql_cluster/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml).
 
-К сожалению, тесты деплоя на только что развернутую ВМ в Vagrant показали, что двух минут, указанных в скрипте [пересборки кластера](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) бывает недостаточно для завершения GTID репликации между нодами. Лог ноды mysqlrouter будет таким:
+К сожалению, тесты деплоя на только что развернутую ВМ в Vagrant показали, что двух минут, указанных в скрипте [пересборки кластера](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) бывает недостаточно для завершения групповой репликации между нодами. Лог ноды mysqlrouter будет таким:
 ```bash
 [root@dockermysql ~]# docker logs -f -t percona-mysql8-innodb_mysqlrouter.1.veacu68x6i8g3ydk422uu1u8b
 2019-09-18T16:31:23.100242518Z
