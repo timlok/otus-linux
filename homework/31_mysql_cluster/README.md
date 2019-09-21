@@ -18,6 +18,8 @@
 
 Все подготовленные мною образы основаны на официальном docker-образе centos:7.
 
+Т.к. провижининг ВМ выполняется с помощью ansible и используются модули docker_swarm и docker_stack, то на хостовой машине необходим ansible >= 2.8.
+
 Для удобной проверки ДЗ достаточно выкачать всё содержимое [текущего каталога](https://github.com/timlok/otus-linux/tree/master/homework/31_mysql_cluster/) и запустить ```vagrant up```. В результате будет развернута виртуальная машина, на которую с помощью ansible помимо других полезных пакетов будет установлен последний стабильный релиз docker, docker-compose, percona-server-client, percona-mysql-shell, а так же будет выполнен деплой [docker-compose_swarm.yml](/homework/31_mysql_cluster/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml).
 
 К сожалению, тесты деплоя на только что развернутую ВМ в Vagrant показали, что двух минут, указанных в скрипте [пересборки кластера](/homework/31_mysql_cluster/flies/innodb_nosystemd/mysqlRouter/cluster_reconfigure.sh) бывает недостаточно для завершения групповой репликации между нодами. Лог ноды mysqlrouter будет таким:
