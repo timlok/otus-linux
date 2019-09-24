@@ -5,7 +5,7 @@
     state: latest
 
 - name: test connection to fileServer
-  shell: smbclient \\\\fileServer\\guest -U nobody% -c "mkdir fileClient; ls; rm fileClient; exit"
+  shell: smbclient \\\\fileServer\\guest -U nobody% -c "mkdir fileClient; ls; rmdir fileClient; ls; exit"
   become_user: vagrant
 
 - name: permissions of mnt directory
