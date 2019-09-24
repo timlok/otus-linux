@@ -1,0 +1,48 @@
+---
+- name: install samba-client
+  yum:
+    name: samba-client
+    state: latest
+
+- name: test connection to fileServer
+  shell: smbclient \\\\fileServer\\guest -U nobody% -c "mkdir fileClient; ls; rm fileClient; exit"
+  become_user: vagrant
+
+- name: permissions of mnt directory
+  file:
+    path: /mnt
+    mode: '0777'
+
+- name: create a directory for share
+  file:
+    path: /mnt/samba
+    owner: vagrant
+    group: vagrant
+    state: directory
+    mode: '0755'
+
+- name: add samba-share to /etc/fstab and mount
+  mount:
+    path: /mnt/samba
+    src: //fileServer/guest
+    fstype: cifs
+    opts: iocharset=utf8,username=nobody,password=nobody,rw,uid=1000,gid=1000,users,auto,x-systemd.automount
+    state: present
+
+- name: systemctl daemon-reload
+  systemd:
+    daemon-reload: yes
+
+- name: systemctl restart remote-fs.target and local-fs.target
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - remote-fs.target
+#    - local-fs.target
+
+- name: сreating a test directory on a mounted share
+  file:
+    path: /mnt/samba/upload
+    state: directory
+  become_user: vagrant

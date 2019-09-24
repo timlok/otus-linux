@@ -1,0 +1,8 @@
+- name: 01_tuning_OS
+  hosts: all
+  become: true
+  gather_facts: true
+
+  roles:
+   - 01_tuning_OS
+

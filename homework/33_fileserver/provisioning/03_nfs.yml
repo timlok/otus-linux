@@ -1,0 +1,13 @@
+- name: 03_nfs_server
+  hosts: fileServer
+  become: true
+  gather_facts: true
+  roles:
+    - 03_nfs_server
+
+- name: 03_nfs_client
+  hosts: fileClient
+  become: true
+  gather_facts: true
+  roles:
+    - 03_nfs_client

@@ -1,0 +1,29 @@
+---
+- name: install samba
+  yum:
+    name: samba
+    state: latest
+
+- name: copy smb.conf file
+  copy: src=smb.conf dest=/etc/samba/smb.conf owner=root group=root mode=0644
+
+- name: create a directory for share
+  file:
+    path: /share/samba/guest
+    state: directory
+    mode: '0755'
+
+- name: recursively change ownership, group and permissions of share directory
+  file:
+    path: /share/samba
+    owner: nobody
+    group: nobody
+    mode: '0700'
+    state: directory
+    recurse: yes
+
+- name: restart samba
+  systemd:
+    name: smb
+    state: restarted
+    enabled: yes

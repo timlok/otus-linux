@@ -1,0 +1,13 @@
+- name: 02_samba_server
+  hosts: fileServer
+  become: true
+  gather_facts: true
+  roles:
+    - 02_samba_server
+
+- name: 02_samba_client
+  hosts: fileClient
+  become: true
+  gather_facts: true
+  roles:
+    - 02_samba_client

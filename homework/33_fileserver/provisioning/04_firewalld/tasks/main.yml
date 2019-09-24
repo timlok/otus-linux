@@ -1,0 +1,25 @@
+---
+- name: firewalld enable
+  service: name=firewalld state=started enabled=yes
+
+- name: add rule for samba, nfs3, rpc-bind services
+  firewalld:
+    service: "{{ item }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - samba
+    - nfs3
+    - rpc-bind
+
+- name: addrule for port 200048 tcp-udp
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  with_items:
+    - 20048/tcp
+    - 20048/udp
+
+- name: firewalld reload
+  shell: firewall-cmd --reload

@@ -1,0 +1,34 @@
+---
+- name: install nfs-utils
+  yum:
+    name: nfs-utils
+    state: latest
+
+- name: create, change ownership, group and permissions of share directory
+  file:
+    path: /share/nfs
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: '0755'
+
+- name: create /etc/exports
+  shell: echo -e "/share/nfs\tfileClient(rw,sync,no_subtree_check,no_root_squash,nohide,anonuid=1000,anongid=1000)" >> /etc/exports
+
+- name: edit /etc/nfs.conf
+  blockinfile:
+    path: /etc/nfs.conf
+    block: |
+      [nfsd]
+      udp=y
+      vers3=y
+      vers4=n
+      vers4.0=n
+      vers4.1=n
+      vers4.2=n
+
+- name: restart nfs-server
+  systemd:
+    name: nfs-server
+    state: restarted
+    enabled: yes

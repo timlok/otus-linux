@@ -1,0 +1,6 @@
+- name: 04_firewalld
+  hosts: fileServer
+  become: true
+  gather_facts: true
+  roles:
+    - 04_firewalld

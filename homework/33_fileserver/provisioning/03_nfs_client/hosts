@@ -1,0 +1,1 @@
+fileClient ansible_host=127.0.0.1 ansible_port=2421 ansible_private_key_file=.vagrant/machines/fileClient/virtualbox/private_key

@@ -1,0 +1,86 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :fileServer => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.11.150', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "file-net"},
+                ]
+  },
+  :fileClient => {
+        :box_name => "centos/7",
+        :net => [
+                   {ip: '192.168.11.151', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "file-net"},
+                ]
+  },
+}
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "fileServer" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2321, id: "ssh", host_ip: '127.0.0.1'
+  end
+  config.vm.define "fileClient" do |c|
+    c.vm.network "forwarded_port", adapter: 1, guest: 22, host: 2421, id: "ssh", host_ip: '127.0.0.1'
+  end
+
+  MACHINES.each do |boxname, boxconfig|
+
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.box_check_update = false
+        box.vm.host_name = boxname.to_s
+
+        #BUGGY!!!
+        #box.vm.synced_folder "for_mysql_dump/", "/tmp/for_mysql_dump", type: "rsync"
+        #box.vbguest.auto_update = true
+        #box.vbguest.auto_update = false
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+
+        if boxconfig.key?(:public)
+          box.vm.network "public_network", boxconfig[:public]
+        end
+
+        box.vm.provider "virtualbox" do |v|
+          v.customize ["modifyvm", :id, "--audio", "none"]
+          v.memory = "256"
+          v.cpus = "1"
+        end
+
+        box.vm.provision "shell", inline: <<-SHELL
+                mkdir -p ~root/.ssh
+                cp ~vagrant/.ssh/auth* ~root/.ssh
+                sed -i 's/^PasswordAuthentication no/#PasswordAuthentication no/g' /etc/ssh/sshd_config
+                sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+                systemctl restart sshd
+        SHELL
+
+        box.vm.provision "ansible" do |ansible|
+          #ansible.verbose = "v"
+          ansible.playbook = "provisioning/01_tuning_OS.yml"
+          ansible.become = "true"
+        end
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "v"
+          ansible.playbook = "provisioning/02_samba.yml"
+          ansible.become = "true"
+        end
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "v"
+          ansible.playbook = "provisioning/03_nfs.yml"
+          ansible.become = "true"
+        end
+        box.vm.provision "ansible" do |ansible|
+          ansible.verbose = "v"
+          ansible.playbook = "provisioning/04_firewalld.yml"
+          ansible.become = "true"
+        end
+
+      end
+  end
+end

@@ -1,0 +1,44 @@
+---
+- name: install nfs-utils
+  yum:
+    name: nfs-utils
+    state: latest
+
+#- name: permissions of mnt directory
+#  file:
+#    path: /mnt
+#    mode: '0777'
+
+- name: create a directory for share
+  file:
+    path: /mnt/nfs
+    owner: vagrant
+    group: vagrant
+    state: directory
+    mode: '0755'
+
+- name: add nfs-share to /etc/fstab and mount
+  mount:
+    path: /mnt/nfs
+    src: fileServer:/share/nfs
+    fstype: nfs
+    opts: noauto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min
+    state: present
+
+- name: systemctl daemon-reload
+  systemd:
+    daemon-reload: yes
+
+- name: systemctl restart remote-fs.target and local-fs.target
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - remote-fs.target
+#    - local-fs.target
+
+- name: сreating a test directory on a mounted share
+  file:
+    path: /mnt/nfs/upload
+    state: directory
+  become_user: vagrant
