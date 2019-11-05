@@ -156,8 +156,8 @@ mysql_innodb_cluster_metadata
 performance_schema
 sys
 ```
-```sql
 или так
+```sql
 [root@mysqlrouter ~]# mysqlsh --uri cladmin@127.0.0.1:6446 -p'StrongPassword!#1' --sql
  MySQL  127.0.0.1:6446 ssl  SQL > show databases;
 +-------------------------------+
