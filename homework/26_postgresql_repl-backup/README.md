@@ -151,7 +151,7 @@ sync_state       | async
 
 ### [Скрипты:](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/scripts)
 
-На витуальных машинах скрипты распологаются по очевидному пути /vagrant/files/scripts/.
+На виртуальных машинах скрипты располагаются по очевидному пути /vagrant/files/scripts/.
 
 Полная версия [README_scripts.md](https://github.com/timlok/otus-linux/tree/master/homework/26_postgresql_repl-backup/files/scripts/README_scripts.md)
 
