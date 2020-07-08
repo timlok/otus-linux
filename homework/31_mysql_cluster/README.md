@@ -136,7 +136,7 @@ CMD ["/usr/sbin/init"]
 
 [docker-compose_swarm.yml](/homework/31_mysql_cluster/flies/innodb_nosystemd/swarm/docker-compose_swarm.yml)
 
-Помимо необходимы пакетов от percona в образы установлены bash, net-tools, nmap, screen. Это не способствует уменьшению размера образа, но благоприятствует комфортной работе внутри контейнера. ;)
+Помимо необходимых пакетов от percona в образы установлены bash, net-tools, nmap, screen. Это не способствует уменьшению размера образа, но благоприятствует комфортной работе внутри контейнера. ;)
 
 Второй вариант образов подготовлен без использования systemd и с docker-compose даже не тестировался. Тем не менее, работает в оркестраторе Docker Swarm через Docker Stack. Для простоты все контейнеры MySQL InnoDB кластера разворачиваются на одной manager-ноде docker swarm.
 
